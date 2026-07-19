@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JetEmlak - İlan Ver & Kazan</title>
+    <!-- Tailwind CSS (Tasarım için harika bir kütüphane) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Üst Menü Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-between">
+            <a href="#" class="text-2xl font-bold text-orange-600 flex items-center gap-1">
+                <span>🔥</span> JetEmlak
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="#ilanlar-bolumu" class="text-gray-600 hover:text-orange-600 font-medium">İlanları Gez</a>
+                <a href="#ilan-ver-formu" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium transition shadow-sm">
+                    + Ücretsiz İlan Ver
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Giriş / Karşılama Alanı (Hero) -->
+    <header class="bg-gradient-to-r from-orange-500 to-red-600 text-white py-16 px-4 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Hayalindeki Evi Bul veya İlan Ver</h1>
+            <p class="text-lg opacity-90 mb-8">Bireysel kullanıcılar için ilk 2 ilan tamamen ücretsiz! Emlakçılar için doping seçenekleriyle öne çıkın.</p>
+            <div class="bg-white p-2 rounded-xl shadow-lg flex flex-col md:flex-row gap-2 max-w-xl mx-auto">
+                <input type="text" placeholder="İl, ilçe veya mahalle ara..." class="flex-1 px-4 py-3 text-gray-800 focus:outline-none rounded-lg">
+                <button class="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-medium transition">Ara</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Ana İçerik Alanı -->
+    <main class="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- SOL TARAF: Yeni İlan Verme Formu -->
+        <section id="ilan-ver-formu" class="lg:col-span-1">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-24">
+                <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900">
+                    📝 Yeni İlan Oluştur
+                </h2>
+                <p class="text-xs text-gray-500 mb-4">Formu doldurarak saniyeler içinde ilanınızı yayına alabilirsiniz.</p>
+                
+                <form id="emlakForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">İlan Başlığı</label>
+                        <input type="text" id="ilanBaslik" required placeholder="Örn: Sultanbeyli'de Satılık 3+1 Ara Kat" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 outline-none text-sm">
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Fiyat (TL)</label>
+                            <input type="number" id="ilanFiyat" required placeholder="3.500.000" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 outline-none text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Oda Sayısı</label>
+                            <select id="ilanOda" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 outline-none text-sm">
+                                <option>1+1</option>
+                                <option>2+1</option>
+                                <option selected>3+1</option>
+                                <option>4+1</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Konum (İlçe / Mahalle)</label>
+                        <input type="text" id="ilanKonum" required placeholder="İstanbul, Sultanbeyli" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 outline-none text-sm">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Görsel Linki (URL)</label>
+                        <input type="url" id="ilanGorsel" placeholder="https://images.unsplash.com/photo-1564013799919-ab600027ffc6" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 outline-none text-sm">
+                        <p class="text-[10px] text-gray-400 mt-1">Boş bırakırsanız örnek bir ev görseli atanacaktır.</p>
+                    </div>
+
+                    <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2.5 rounded-lg transition shadow-sm cursor-pointer">
+                        İlanı Canlıya Al
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- SAĞ TARAF: Aktif İlanlar Listesi -->
+        <section id="ilanlar-bolumu" class="lg:col-span-2">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2 text-gray-900">
+                🏠 Güncel İlanlar <span id="ilanSayac" class="bg-orange-100 text-orange-600 text-xs px-2.5 py-1 rounded-full">3 İlan</span>
+            </h2>
+            
+            <!-- İlan Kartlarının Geleceği Yer -->
+            <div id="ilanListesi" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- JavaScript burayı dinamik dolduracak (Örnek ilanlar aşağıda tanımlı) -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Alt Bilgi (Footer) -->
+    <footer class="bg-gray-900 text-gray-400 py-8 text-center mt-20 border-t border-gray-800">
+        <p class="text-sm">© 2026 JetEmlak Inc. Tüm hakları saklıdır. GitHub ile deploy edilmiştir.</p>
+        <p class="text-xs text-orange-400 mt-2">Komisyon Modeli: Başarılı satışlarda %2 hizmet bedeli alınır.</p>
+    </footer>
+
+    <!-- SİTENİN ÇALIŞMASINI SAĞLAYAN MANTIK (JAVASCRIPT) -->
+    <script>
+        // Başlangıçta listelenecek örnek ilan verileri
+        let ilanlar = [
+            {
+                id: 1,
+                baslik: "Sultanbeyli Merkezde Geniş ve Ferah Satılık Daire",
+                fiyat: "3.450.000",
+                oda: "3+1",
+                konum: "İstanbul, Sultanbeyli",
+                gorsel: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 2,
+                baslik: "Metroya Yakın Lüx Yapım Sıfır Daire",
+                fiyat: "4.200.000",
+                oda: "2+1",
+                konum: "İstanbul, Kadıköy",
+                gorsel: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 3,
+                baslik: "Manzaralı, Önü Açık Acil Satılık Uygun Fiyat",
+                fiyat: "2.850.000",
+                oda: "3+1",
+                konum: "İstanbul, Pendik",
+                gorsel: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=500&q=80"
+            }
+        ];
+
+        const ilanListesi = document.getElementById('ilanListesi');
+        const emlakForm = document.getElementById('emlakForm');
+        const ilanSayac = document.getElementById('ilanSayac');
+
+        // İlanları ekrana basan fonksiyon
+        function ilanlariRender Et() {
+            ilanListesi.innerHTML = '';
+            ilanSayac.textContent = `${ilanlar.length} İlan`;
+
+            ilanlar.forEach(ilan => {
+                const kart = document.createElement('div');
+                kart.className = 'bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition flex flex-col';
+                kart.innerHTML = `
+                    <div class="h-48 bg-gray-200 relative">
+                        <img src="${ilan.gorsel}" alt="${ilan.baslik}" class="w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 bg-orange-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shadow">SATILIK</span>
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-gray-900 text-base line-clamp-2 mb-2">${ilan.baslik}</h3>
+                            <div class="flex gap-2 text-xs font-semibold text-gray-500 mb-3">
+                                <span class="bg-gray-100 px-2 py-1 rounded">🛏️ ${ilan.oda}</span>
+                                <span class="bg-gray-100 px-2 py-1 rounded">📍 ${ilan.konum}</span>
+                            </div>
+                        </div>
+                        <div class="border-t pt-3 mt-2 flex justify-between items-center">
+                            <span class="text-lg font-extrabold text-orange-600">${ilan.fiyat} TL</span>
+                            <button onclick="alert('Bu ilan üzerinden kurulacak satış ortaklığından %2 komisyon hesabınıza tanımlanacaktır.')" class="text-xs bg-gray-900 hover:bg-gray-700 text-white font-medium px-3 py-1.5 rounded-lg transition">
+                                Komisyon Detayı
+                            </button>
+                        </div>
+                    </div>
+                `;
+                ilanListesi.appendChild(kart);
+            });
+        }
+
+        // Yeni ilan ekleme formu gönderildiğinde çalışan olay
+        emlakForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const baslik = document.getElementById('ilanBaslik').value;
+            let fiyat = document.getElementById('ilanFiyat').value;
+            const oda = document.getElementById('ilanOda').value;
+            const konum = document.getElementById('ilanKonum').value;
+            let gorsel = document.getElementById('ilanGorsel').value;
+
+            // Fiyatı formatlayalım (3500000 -> 3.500.000)
+            fiyat = Number(fiyat).toLocaleString('tr-TR');
+
+            // Eğer görsel girilmediyse varsayılan bir ev görseli koyalım
+            if (!gorsel) {
+                gorsel = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=500&q=80";
+            }
+
+            // Yeni ilanı diziye ekle
+            ilanlar.unshift({
+                id: Date.now(),
+                baslik: baslik,
+                fiyat: fiyat,
+                oda: oda,
+                konum: konum,
+                gorsel: gorsel
+            });
+
+            // Listeyi yenile ve formu temizle
+            ilanlariRenderEt();
+            emlakForm.reset();
+            
+            // Başarı mesajı verip ilanlar bölümüne kaydır
+            alert("Harika! İlanınız başarıyla eklendi ve listeye yerleşti.");
+            document.getElementById('ilanlar-bolumu').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Sayfa ilk açıldığında ilanları yükle
+        ilanlariRenderEt();
+    </script>
+</body>
+</html>
+
