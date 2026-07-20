@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mülkjet - Hızlı İlan & Güvenli Emlak Platformu</title>
+    <title>Mülkjet - Detaylı İlan & Güvenli Emlak/Vasıta Platformu</title>
     <!-- Tailwind CSS v4 -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
@@ -16,129 +16,245 @@
 
     <!-- Üst Menü Navbar -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <a href="#" id="logoBtn" class="text-2xl font-black text-red-600 flex items-center gap-1 tracking-tight">
                 <span>🚀</span> MÜLK<span class="text-gray-900">JET</span>
             </a>
             <div class="flex items-center gap-4">
-                <a href="#ilanlar-bolumu" id="ilanlariGezBtn" class="text-gray-600 hover:text-red-600 font-medium text-sm hidden sm:inline">İlanları Gez</a>
+                <button type="button" id="ilanlariGezBtn" class="text-gray-600 hover:text-red-600 font-medium text-sm">Ana Sayfa</button>
                 <button type="button" id="ilanlarımMenuBtn" class="text-gray-600 hover:text-red-600 font-medium text-sm hidden">İlanlarım</button>
                 <button type="button" id="profilimMenuBtn" class="text-gray-600 hover:text-red-600 font-medium text-sm hidden">Profilim</button>
                 
-                <!-- Dinamik Giriş/Çıkış Buton Alanı -->
                 <div id="authButonAlani"></div>
 
-                <a href="#ilan-ver-formu" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition shadow-sm">
+                <a href="#ilan-ver-formu" id="yeniIlanEkleLink" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition shadow-sm">
                     + İlan Ver
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- Giriş / Karşılama Alanı -->
-    <header class="bg-gradient-to-r from-red-600 to-orange-500 text-white py-16 px-4 text-center">
-        <div class="max-w-3xl mx-auto">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Mülkünü Jet Hızıyla Bul veya İlan Ver</h1>
-            <p class="text-lg opacity-90 mb-8">Kayıtlı kullanıcılar için ilan sınırı yoktur! Satış ortaklığı ile her başarılı işlemden kazanç sağlayın.</p>
-            <div class="bg-white p-2 rounded-xl shadow-lg flex flex-col md:flex-row gap-2 max-w-xl mx-auto">
-                <input type="text" id="hizliAraInput" placeholder="İl, ilçe veya mahalle ismi ile hızlı ara..." class="flex-1 px-4 py-3 text-gray-800 focus:outline-none rounded-lg">
-                <button id="hizliAraBtn" class="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-medium transition">Ara</button>
+    <!-- ANA SAYFA GÖRÜNÜMÜ -->
+    <div id="anaSayfaGorunumu" class="block">
+        <!-- Arama ve Karşılama Alanı -->
+        <header class="bg-gradient-to-r from-red-600 to-orange-500 text-white py-12 px-4 text-center">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl font-extrabold mb-4">Sahibinden Gibi Jet Hızıyla Ara ve Keşfet</h1>
+                <p class="text-sm opacity-90 mb-6">Emlak ve Vasıta kategorilerinde binlerce güncel ilana anında ulaşın.</p>
+                <div class="bg-white p-2 rounded-xl shadow-lg flex flex-col md:flex-row gap-2 max-w-2xl mx-auto">
+                    <input type="text" id="hizliAraInput" placeholder="Kelimelerle arayın (Örn: kiralık daire, twister moped...)" class="flex-1 px-4 py-3 text-gray-800 focus:outline-none rounded-lg text-sm">
+                    <button id="hizliAraBtn" class="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-medium transition text-sm">Detaylı Ara</button>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- Ana İçerik Alanı -->
-    <main class="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        <!-- SOL TARAF: Giriş Durumuna Göre Değişen İlan Verme Alanı -->
-        <section id="ilan-ver-formu" class="lg:col-span-1">
-            
-            <!-- GİRİŞ YAPILMADIĞINDA GÖZÜKECEK KİLİT EKRANI -->
-            <div id="formKilitliAlan" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 sticky top-24 text-center py-16">
-                <div class="text-5xl mb-4 text-gray-400">🔒</div>
-                <h2 class="text-lg font-bold text-gray-900 mb-2">İlan Vermek İçin Giriş Yapın</h2>
-                <p class="text-xs text-gray-500 mb-6">Mülkjet güvenliği ve yanıltıcı ilanları önlemek amacıyla yalnızca kayıtlı üyeler ilan verir.</p>
-                <button type="button" id="kilitliAlanGirisBtn" class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded-xl transition shadow-sm flex justify-center items-center gap-2 cursor-pointer text-sm">
-                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-4 h-4 bg-white rounded-full p-0.5 shadow-xs" alt="Google">
-                    Google ile Hızlı Giriş Yap
-                </button>
-            </div>
+        <!-- Kategori Ağacı ve Listeleme -->
+        <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- SOL PANEL: Kategori Listesi ve Filtreler -->
+            <aside class="lg:col-span-1 space-y-6">
+                <!-- Sol Kategori Menüsü -->
+                <div class="bg-white p-4 rounded-xl shadow-xs border border-gray-100">
+                    <h3 class="font-bold text-gray-900 text-sm border-b pb-2 mb-3">📁 Kategoriler</h3>
+                    <ul class="space-y-1 text-xs text-gray-600">
+                        <li><button class="kategoriFiltreBtn w-full text-left py-1.5 px-2 rounded-sm bg-gray-100 font-bold" data-kat="hepsi">Tüm İlanlar</button></li>
+                        <li class="pl-2 font-semibold mt-2 text-gray-900">🏠 Emlak</li>
+                        <li><button class="kategoriFiltreBtn w-full text-left py-1 px-4 rounded-sm hover:bg-red-50 hover:text-red-600" data-kat="Satılık Konut">Satılık Konut</button></li>
+                        <li><button class="kategoriFiltreBtn w-full text-left py-1 px-4 rounded-sm hover:bg-red-50 hover:text-red-600" data-kat="Kiralık Daire">Kiralık Daire</button></li>
+                        <li><button class="kategoriFiltreBtn w-full text-left py-1 px-4 rounded-sm hover:bg-red-50 hover:text-red-600" data-kat="Satılık Arsa">Satılık Arsa</button></li>
+                        <li class="pl-2 font-semibold mt-2 text-gray-900">🚗 Vasıta</li>
+                        <li><button class="kategoriFiltreBtn w-full text-left py-1 px-4 rounded-sm hover:bg-red-50 hover:text-red-600" data-kat="Otomobil">Otomobil</button></li>
+                        <li><button class="kategoriFiltreBtn w-full text-left py-1 px-4 rounded-sm hover:bg-red-50 hover:text-red-600" data-kat="Motosiklet / Moped">Motosiklet / Moped</button></li>
+                    </ul>
+                </div>
 
-            <!-- GİRİŞ YAPILDIĞINDA AÇILACAK GERÇEK FORM -->
-            <div id="formAcikAlan" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-24 hidden">
-                <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900">
-                    📝 Yeni İlan Oluştur
-                </h2>
-                
-                <form id="emlakForm" class="space-y-4">
+                <!-- Gelişmiş Filtreleme Modülü -->
+                <div class="bg-white p-4 rounded-xl shadow-xs border border-gray-100 space-y-4">
+                    <h3 class="font-bold text-gray-900 text-sm border-b pb-2">🎛️ Filtrele ve Sırala</h3>
+                    
                     <div>
-                        <label class="block text-sm font-medium mb-1">İlan Başlığı</label>
-                        <input type="text" id="ilanBaslik" required placeholder="Ev veya arsa hakkında kısa açıklama yazın" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm">
+                        <label class="block text-xs font-semibold mb-1">Sıralama Ölçütü</label>
+                        <select id="filtreSiralama" class="w-full p-2 border rounded-md text-xs outline-none bg-white">
+                            <option value="yeni">Tarihe Göre (En Yeni)</option>
+                            <option value="fiyatArtan">Fiyat (Düşükten Yükseğe)</option>
+                            <option value="fiyatAzalan">Fiyat (Yüksekten Düşüğe)</option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs font-semibold mb-1">Min Fiyat</label>
+                            <input type="number" id="filtreMinFiyat" placeholder="TL" class="w-full p-1.5 border rounded-md text-xs outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold mb-1">Max Fiyat</label>
+                            <input type="number" id="filtreMaxFiyat" placeholder="TL" class="w-full p-1.5 border rounded-md text-xs outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Emlak Filtreleri -->
+                    <div id="ozelEmlakFiltreleri" class="pt-2 border-t hidden">
+                        <label class="block text-xs font-semibold mb-1">Oda Sayısı</label>
+                        <select id="filtreOdaSayisi" class="w-full p-2 border rounded-md text-xs outline-none bg-white">
+                            <option value="">Tümü</option>
+                            <option value="1+1">1+1</option>
+                            <option value="2+1">2+1</option>
+                            <option value="3+1">3+1</option>
+                            <option value="4+1">4+1</option>
+                        </select>
+                    </div>
+
+                    <!-- Vasıta Filtreleri -->
+                    <div id="ozelVasitaFiltreleri" class="pt-2 border-t hidden">
+                        <label class="block text-xs font-semibold mb-1">Model Yılı (Min)</label>
+                        <input type="number" id="filtreModelYili" placeholder="Örn: 2020" class="w-full p-1.5 border rounded-md text-xs outline-none">
+                    </div>
+
+                    <button id="filtreleriUygulaBtn" class="w-full bg-red-600 text-white font-bold py-2 rounded-md text-xs hover:bg-red-700 transition cursor-pointer">Filtreleri Uygula</button>
+                </div>
+            </aside>
+
+            <!-- SAĞ PANEL: İlan Kartı Listesi -->
+            <section class="lg:col-span-3">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 id="ilanListesiBaslik" class="text-xl font-bold text-gray-900">🏠 Tüm Güncel İlanlar</h2>
+                    <span id="ilanSayac" class="bg-red-100 text-red-600 text-xs px-2.5 py-1 rounded-full font-bold">0 İlan</span>
+                </div>
+                <div id="ilanListesi" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- İLAN DETAY SAYFASI GÖRÜNÜMÜ -->
+    <div id="ilanDetayGorunumu" class="hidden max-w-5xl mx-auto px-4 py-8">
+        <button type="button" id="detaydanGeriDonBtn" class="inline-flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-red-600 mb-6 bg-white px-4 py-2 rounded-lg shadow-xs border border-gray-100 cursor-pointer">
+            ⬅️ İlan Listesine Geri Dön
+        </button>
+        
+        <div id="ilanDetayIcerikAlani"></div>
+    </div>
+
+    <!-- İLAN VERME FORMU GÖRÜNÜMÜ -->
+    <div id="ilanVerFormGorunumu" class="hidden max-w-3xl mx-auto px-4 py-8">
+        <!-- GİRİŞ YAPILMADIĞINDA -->
+        <div id="formKilitliAlan" class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 text-center py-16">
+            <div class="text-5xl mb-4 text-gray-400">🔒</div>
+            <h2 class="text-xl font-bold text-gray-900 mb-2">İlan Vermek İçin Giriş Yapın</h2>
+            <p class="text-sm text-gray-500 mb-6">Mülkjet güvenliği ve sahte ilanları engellemek amacıyla yalnızca kayıtlı üyeler ilan oluşturabilir.</p>
+            <button type="button" id="kilitliAlanGirisBtn" class="mx-auto bg-red-600 hover:bg-red-700 text-white font-medium px-6 py-3 rounded-xl transition shadow-sm flex items-center gap-2 cursor-pointer text-sm">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-4 h-4 bg-white rounded-full p-0.5 shadow-xs" alt="Google">
+                Google ile Hızlı Giriş Yap
+            </button>
+        </div>
+
+        <!-- GİRİŞ YAPILDIĞINDA -->
+        <div id="formAcikAlan" class="bg-white p-6 rounded-2xl shadow-md border border-gray-100 hidden">
+            <h2 class="text-2xl font-black mb-6 flex items-center gap-2 text-gray-900 border-b pb-3">
+                ➕ Yeni İlan Kategorisi Seçerek Başlayın
+            </h2>
+            
+            <form id="emlakForm" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Ana Kategori</label>
+                        <select id="formAnaKategori" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm bg-white">
+                            <option value="Emlak">🏠 Emlak</option>
+                            <option value="Vasıta">🚗 Vasıta</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Alt Kategori</label>
+                        <select id="formAltKategori" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm bg-white"></select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">İlan Başlığı</label>
+                    <input type="text" id="ilanBaslik" required placeholder="Sahibinden kiralık geniş 3+1 daire vb." class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">İlan Açıklaması (Detaylı Bilgi)</label>
+                    <textarea id="ilanAciklama" required placeholder="Mülkün veya aracın tüm özelliklerini, avantajlarını buraya ayrıntılı olarak yazın..." class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm h-28"></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-xl">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Fiyat (TL)</label>
+                        <input type="number" id="ilanFiyat" required placeholder="Fiyatı giriniz" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm bg-white">
                     </div>
                     
-                    <div class="grid grid-cols-2 gap-2">
-                        <div>
-                            <label class="block text-sm font-medium mb-1">Fiyat (TL)</label>
-                            <input type="number" id="ilanFiyat" required placeholder="Fiyat giriniz" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-1">Oda Sayısı</label>
-                            <select id="ilanOda" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm">
-                                <option>1+1</option>
-                                <option>2+1</option>
-                                <option selected>3+1</option>
-                                <option>4+1</option>
-                            </select>
-                        </div>
+                    <!-- Dinamik Emlak Alanları -->
+                    <div id="formEmlakAlanlari" class="block">
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Oda Sayısı</label>
+                        <select id="ilanOda" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm bg-white">
+                            <option>1+1</option>
+                            <option>2+1</option>
+                            <option selected>3+1</option>
+                            <option>4+1</option>
+                        </select>
                     </div>
 
+                    <!-- Dinamik Vasıta Alanları -->
+                    <div id="formVasitaAlanlari" class="hidden">
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Model Yılı</label>
+                        <input type="number" id="ilanModelYili" placeholder="2026" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm bg-white">
+                    </div>
+                </div>
+
+                <!-- Detaylı Konum Bilgisi -->
+                <div class="bg-gray-50 p-4 rounded-xl space-y-3">
+                    <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider">📍 Ayrıntılı Adres & Konum Ayarı</h4>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="block text-sm font-medium mb-1">İl</label>
-                            <select id="ilanIl" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm">
-                                <option value="">Seçiniz</option>
-                            </select>
+                            <label class="block text-xs text-gray-600 mb-1">İl</label>
+                            <select id="ilanIl" required class="w-full px-3 py-2 border rounded-lg text-sm bg-white"></select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium mb-1">İlçe</label>
-                            <select id="ilanIlce" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm">
+                            <label class="block text-xs text-gray-600 mb-1">İlçe</label>
+                            <select id="ilanIlce" required class="w-full px-3 py-2 border rounded-lg text-sm bg-white">
                                 <option value="">Önce İl Seçin</option>
                             </select>
                         </div>
                     </div>
-
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Mahalle / Semt / Açık Adres</label>
-                        <input type="text" id="ilanMahalleAdres" required placeholder="Mahalle adı ve sokak detaylarını girin" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm">
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs text-gray-600 mb-1">Mahalle</label>
+                            <input type="text" id="ilanMahalle" required placeholder="Fatih Mah." class="w-full px-3 py-2 border rounded-lg text-sm bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-600 mb-1">Cadde / Sokak</label>
+                            <input type="text" id="ilanSokak" required placeholder="Atatürk Cad. 104. Sokak" class="w-full px-3 py-2 border rounded-lg text-sm bg-white">
+                        </div>
                     </div>
-
-                    <div>
-                        <label class="block text-sm font-medium mb-1">İlan İletişim Numarası</label>
-                        <select id="ilanTelefonSecimi" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm"></select>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div>
+                            <label class="block text-xs text-gray-600 mb-1">Dış Kapı No</label>
+                            <input type="text" id="ilanKapiNo" required placeholder="No: 14" class="w-full px-3 py-2 border rounded-lg text-sm bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-600 mb-1">İç Kapı / Daire No</label>
+                            <input type="text" id="ilanDaireNo" placeholder="Kat: 3 D: 5" class="w-full px-3 py-2 border rounded-lg text-sm bg-white">
+                        </div>
                     </div>
+                </div>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium mb-1">Fotoğraflar (En fazla 10 adet)</label>
-                        <input type="file" id="ilanDosyalar" accept="image/*" multiple required class="w-full px-2 py-1.5 border rounded-lg text-xs text-gray-600 focus:ring-2 focus:ring-red-500 outline-none bg-gray-50 cursor-pointer">
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">İletişim Numarası</label>
+                        <select id="ilanTelefonSecimi" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-500 outline-none text-sm bg-white"></select>
                     </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Fotoğraflar (En fazla 10 adet)</label>
+                        <input type="file" id="ilanDosyalar" accept="image/*" multiple required class="w-full px-2 py-1.5 border rounded-lg text-xs text-gray-600 focus:ring-2 focus:ring-red-500 outline-none bg-white cursor-pointer">
+                    </div>
+                </div>
 
-                    <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded-lg transition shadow-sm cursor-pointer text-sm">
-                        İlanı Canlıya Al
-                    </button>
-                </form>
-            </div>
-        </section>
-
-        <!-- SAĞ TARAF: Aktif İlanlar Listesi -->
-        <section id="ilanlar-bolumu" class="lg:col-span-2">
-            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2 text-gray-900">
-                <span id="ilanListesiBaslik">🏠 Güncel İlanlar</span> 
-                <span id="ilanSayac" class="bg-red-100 text-red-600 text-xs px-2.5 py-1 rounded-full">0 İlan</span>
-            </h2>
-            <div id="ilanListesi" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-        </section>
-
-    </main>
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg transition shadow-md cursor-pointer text-sm">
+                    🚀 İlanı Canlıya Al ve Listele
+                </button>
+            </form>
+        </div>
+    </div>
 
     <!-- PROFİL AYARLARI MODALI -->
     <div id="profilModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4">
@@ -149,7 +265,7 @@
             <div class="flex items-center gap-4 mb-6 bg-gray-50 p-3 rounded-xl">
                 <div id="profilAvatarAlani" class="w-16 h-16 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-xl shadow overflow-hidden">U</div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-500 mb-1">Profil Fotoğrafı Değiştir</label>
+                    <label class="block text-xs font-bold text-gray-500 mb-1">Profil Fotoğrafı</label>
                     <input type="file" id="profilFotoGiris" accept="image/*" class="text-xs text-gray-600 cursor-pointer">
                 </div>
             </div>
@@ -164,7 +280,7 @@
                     </div>
                 </div>
 
-                <div class="border-t pt-4 mt-6 flex flex-col gap-2">
+                <div class="border-t pt-4 mt-6">
                     <button type="button" id="hesabimiSilTetikleyiciBtn" class="w-full text-center text-xs bg-red-50 hover:bg-red-100 text-red-600 font-bold py-2 rounded-lg transition cursor-pointer">
                         🚨 Hesabımı Sil (Profilimi Kapat)
                     </button>
@@ -181,23 +297,19 @@
             
             <form id="profilSilmeForm" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-2">Neden ayrılmak istiyorsunuz? (Lütfen birini seçin)</label>
+                    <label class="block text-xs font-bold text-gray-700 mb-2">Neden ayrılmak istiyorsunuz?</label>
                     <div class="space-y-2 text-xs text-gray-600">
                         <label class="flex items-center gap-2"><input type="radio" name="silmeNedeni" value="Aradığım mülkü buldum" required> Aradığım mülkü buldum / Satışı tamamladım</label>
                         <label class="flex items-center gap-2"><input type="radio" name="silmeNedeni" value="Platformu karmaşık buldum"> Platformu kullanışlı bulmadım</label>
-                        <label class="flex items-center gap-2"><input type="radio" name="silmeNedeni" value="Güvenlik endişelerim var"> Güvenlik endişelerim var</label>
                         <label class="flex items-center gap-2"><input type="radio" name="silmeNedeni" value="Diğer"> Diğer nedenler</label>
                     </div>
                 </div>
-
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">Görüşleriniz bizim için çok değerli (Açıklama):</label>
                     <textarea id="silmeNedeniMetin" required placeholder="Bizleri geliştirmek adına detay belirtebilirsiniz..." class="w-full p-2 border rounded-lg text-xs h-20 outline-none focus:ring-2 focus:ring-red-500"></textarea>
                 </div>
-
                 <div class="flex gap-2">
-                    <button type="button" id="silmeVazgecBtn" class="flex-1 bg-gray-100 text-gray-700 font-bold py-2 rounded-lg text-xs text-center cursor-pointer">Vazgeç</button>
-                    <button type="submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg text-xs text-center cursor-pointer">Hesabımı Kalıcı Olarak Sil</button>
+                    <button type="button" id="silmeVazgecBtn" class="flex-1 bg-gray-100 text-gray-700 font-bold py-2 rounded-lg text-xs cursor-pointer">Vazgeç</button>
+                    <button type="submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg text-xs cursor-pointer">Hesabımı Sil</button>
                 </div>
             </form>
         </div>
@@ -205,7 +317,6 @@
 
     <footer class="bg-gray-900 text-gray-400 py-8 text-center mt-20 border-t border-gray-800">
         <p class="text-sm">© 2026 Mülkjet Platformu. Tüm hakları saklıdır.</p>
-        <p class="text-xs text-red-400 mt-2">İş Ortaklığı Modeli: Bu platform üzerinden yapılan gayrimenkul işlemlerinde %2 hizmet komisyonu uygulanır.</p>
     </footer>
 
     <!-- TÜM UYGULAMA MANTIĞI VE FIREBASE ENTEGRASYONU -->
@@ -231,28 +342,41 @@
         const provider = new GoogleAuthProvider();
         provider.setCustomParameters({ prompt: 'select_account' });
 
-        // Global Durum Yönetimi
+        // Global Durum Değişkenleri
         let kullaniciGirisYapti = localStorage.getItem('mulkjet_giris_durum') === 'true';
         let aktifKullaniciEposta = localStorage.getItem('mulkjet_aktif_user') || "";
-        let aktifFiltre = "hepsi"; 
-        let aramaSorgusu = "";
+        let aktifKategoriFiltre = "hepsi";
+        let genelAramaMetni = "";
+        let globalIlanlarDeposu = [];
+
+        const altKategoriler = {
+            "Emlak": ["Satılık Konut", "Kiralık Daire", "Satılık Arsa"],
+            "Vasıta": ["Otomobil", "Motosiklet / Moped"]
+        };
 
         const sehirVeritabi = {
-            "İstanbul": [
-                "Sultanbeyli", "Kadıköy", "Ümraniye", "Pendik", "Kartal", "Maltepe", "Ataşehir", "Sancaktepe", "Üsküdar", "Beykoz", "Tuzla", "Çekmeköy", "Şile", "Adalar",
-                "Esenyurt", "Küçükçekmece", "Bağcılar", "Avcılar", "Bahçelievler", "Sultangazi", "Başakşehir", "Kağıthane", "Esenler", "Gaziosmanpaşa", "Beylikdüzü", "Sarıyer", "Fatih", "Güngören", "Arnavutköy", "Şişli", "Zeytinburnu", "Beşiktaş", "Bakırköy", "Beyoğlu", "Silivri", "Çatalca", "Büyükçekmece"
-            ],
-            "Ankara": ["Çankaya", "Keçiören", "Yenimahalle", "Mamak", "Etimesgut", "Sincan", "Altındağ", "Gölbaşı", "Pursaklar"],
-            "İzmir": ["Konak", "Karşıyaka", "Bornova", "Buca", "Çiğli", "Gaziemir", "Karabağlar", "Bayraklı", "Çeşme", "Urla", "Aliağa", "Menemen", "Torbalı"],
-            "Bursa": ["Osmangazi", "Nilüfer", "Yıldırım", "İnegöl", "Mudanya", "Gemlik", "Kestel", "Gürsu"],
-            "Antalya": ["Muratpaşa", "Kepez", "Konyaaltı", "Alanya", "Manavgat", "Serik", "Kemer", "Döşemealtı"],
-            "Kocaeli": ["İzmit", "Gebze", "Gölcük", "Darıca", "Körfez", "Kartepe", "Başiskele", "Çayırova", "Dilovası"]
+            "İstanbul": ["Sultanbeyli", "Kadıköy", "Ümraniye", "Pendik", "Kartal", "Maltepe", "Esenyurt", "Beşiktaş", "Fatih"],
+            "Ankara": ["Çankaya", "Keçiören", "Yenimahalle", "Mamak"],
+            "İzmir": ["Konak", "Karşıyaka", "Bornova", "Buca"]
         };
-        const tumIller = ["Adana","Adıyaman","Afyonkarahisar","Ağrı","Aksaray","Amasya","Ankara","Antalya","Ardahan","Artvin","Aydın","Balıkesir","Bartın","Batman","Bayburt","Bilecik","Bingöl","Bitlis","Bolu","Burdur","Bursa","Çanakkale","Çankırı","Çorum","Denizli","Diyarbakır","Düzce","Edirne","Elazığ","Erzincan","Erzurum","Eskişehir","Gaziantep","Giresun","Gümüşhane","Hakkari","Hatay","Iğdır","Isparta","İstanbul","İzmir","Kahramanmaraş","Karabük","Karaman","Kars","Kastamonu","Kayseri","Kırıkkale","Kırklareli","Kırşehir","Kilis","Kocaeli","Konya","Kütahya","Malatya","Manisa","Mardin","Muğla","Muş","Nevşehir","Niğde","Ordu","Osmaniye","Rize","Sakarya","Samsun","Siirt","Sinop","Sivas","Şanlıurfa","Şırnak","Tekirdağ","Tokat","Trabzon","Tunceli","Uşak","Van","Yalova","Yozgat","Zonguldak"];
+        const tumIller = ["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Kocaeli"];
 
-        // Modal Tetikleyicileri
-        const modalAc = (id) => document.getElementById(id).classList.remove('hidden');
-        const modalKapat = (id) => document.getElementById(id).classList.add('hidden');
+        // Ekran Görünüm Yöneticisi (Router Mantığı)
+        const ekranGoster = (ekranAdi) => {
+            document.getElementById('anaSayfaGorunumu').classList.add('hidden');
+            document.getElementById('ilanDetayGorunumu').classList.add('hidden');
+            document.getElementById('ilanVerFormGorunumu').classList.add('hidden');
+
+            if(ekranAdi === 'ana') {
+                document.getElementById('anaSayfaGorunumu').classList.remove('hidden');
+                // URL temizleme (Geri çıkınca temiz görünsün)
+                window.history.pushState({}, '', window.location.origin + window.location.pathname);
+            } else if(ekranAdi === 'detay') {
+                document.getElementById('ilanDetayGorunumu').classList.remove('hidden');
+            } else if(ekranAdi === 'form') {
+                document.getElementById('ilanVerFormGorunumu').classList.remove('hidden');
+            }
+        };
 
         // Oturum Kontrol Arayüz Yönetimi
         const arayuzOturumKontrol = () => {
@@ -278,7 +402,7 @@
 
                 authButonAlani.innerHTML = `
                     <div class="flex items-center gap-3 bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
-                        <span class="text-xs font-black text-red-600 tracking-tight">🚀 MÜLK<span class="text-gray-900">JET</span></span>
+                        <span class="text-xs font-black text-red-600 tracking-tight">🚀 MÜLKJET</span>
                         <div class="w-7 h-7 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-xs shadow overflow-hidden">${avatarHtml}</div>
                         <button type="button" id="cikisYapBtn" class="text-[11px] text-gray-500 hover:text-red-600 font-semibold ml-1 cursor-pointer">Çıkış</button>
                     </div>
@@ -294,227 +418,296 @@
                 authButonAlani.innerHTML = `
                     <button type="button" id="navGirisBtn" class="flex items-center gap-2 border border-red-500 hover:bg-red-50 text-red-600 px-3 py-1.5 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer">
                         <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-4 h-4" alt="Google">
-                        <span>Google ile Giriş Yap</span>
+                        <span>Giriş Yap</span>
                     </button>
                 `;
                 document.getElementById('navGirisBtn').addEventListener('click', aksiyonFirebaseGoogleGiris);
             }
         };
 
-        // Veri Listeleme ve Render İşlemi (Firestore Öncelikli Entegrasyon)
-        const ilanlariRenderEt = async () => {
+        // Firestore'dan İlanları Çekme ve Filtreleme Düzenleyici
+        const ilanlariYukleVeRenderEt = async () => {
             const ilanListesi = document.getElementById('ilanListesi');
             const ilanSayac = document.getElementById('ilanSayac');
-            const ilanListesiBaslik = document.getElementById('ilanListesiBaslik');
             
             if(!ilanListesi) return;
-            ilanListesi.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500">İlanlar güncelleniyor...</div>`;
+            ilanListesi.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 text-xs">İlanlar yükleniyor...</div>`;
 
             try {
                 let q = query(collection(db, "ilanlar"), orderBy("tarih", "desc"));
-                
-                if (aktifFiltre === "benim" && aktifKullaniciEposta) {
-                    ilanListesiBaslik.textContent = "📂 Benim İlanlarım";
-                    q = query(collection(db, "ilanlar"), where("sahip", "==", aktifKullaniciEposta.toLowerCase()));
-                } else {
-                    ilanListesiBaslik.textContent = "🏠 Güncel İlanlar";
-                }
-
                 const querySnapshot = await getDocs(q);
-                let gosterilecekIlanlar = [];
+                
+                globalIlanlarDeposu = [];
                 querySnapshot.forEach((doc) => {
-                    gosterilecekIlanlar.push({ firebaseId: doc.id, ...doc.data() });
+                    globalIlanlarDeposu.push({ id: doc.id, ...doc.data() });
                 });
 
-                // Arama Filtrelemesi
-                if(aramaSorgusu.trim() !== "") {
-                    const sorgu = aramaSorgusu.toLowerCase();
-                    gosterilecekIlanlar = gosterilecekIlanlar.filter(ilan => 
-                        ilan.baslik.toLowerCase().includes(sorgu) || 
-                        ilan.konum.toLowerCase().includes(sorgu)
-                    );
-                }
-
-                ilanSayac.textContent = `${gosterilecekIlanlar.length} İlan`;
-
-                if (gosterilecekIlanlar.length === 0) {
-                    ilanListesi.className = "col-span-full text-center py-12 bg-white rounded-2xl border border-dashed border-gray-200";
-                    ilanListesi.innerHTML = `
-                        <div class="text-4xl mb-3">📭</div>
-                        <p class="text-gray-500 font-medium">Henüz listelenecek ilan bulunmuyor.</p>
-                    `;
-                    return;
-                }
-
-                ilanListesi.className = "grid grid-cols-1 md:grid-cols-2 gap-6";
-                ilanListesi.innerHTML = '';
-
-                gosterilecekIlanlar.forEach(ilan => {
-                    let slaytHtml = '';
-                    if(ilan.gorseller && ilan.gorseller.length > 0) {
-                        ilan.gorseller.forEach((imgUrl, index) => {
-                            slaytHtml += `<img src="${imgUrl}" class="w-full h-full object-cover flex-shrink-0 snap-start" alt="Görsel ${index+1}">`;
-                        });
-                    } else {
-                        slaytHtml = `<img src="https://via.placeholder.com/400x250" class="w-full h-full object-cover flex-shrink-0 snap-start">`;
-                    }
-
-                    const siteTamLinki = window.location.href;
-                    const wpSablonu = `Merhaba, Mülkjet üzerinden verdiğiniz ilan için ulaşıyorum.%0A%0A🏠 *İlan:* ${encodeURIComponent(ilan.baslik)}%0A💰 *Fiyat:* ${ilan.fiyat} TL%0A📍 *Konum:* ${encodeURIComponent(ilan.konum)}`;
-                    const ilanSahibiMi = kullaniciGirisYapti && (ilan.sahip.toLowerCase() === aktifKullaniciEposta.toLowerCase());
-
-                    const kart = document.createElement('div');
-                    kart.className = 'bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition flex flex-col';
-                    
-                    // Fiyat formatlama kontrolü
-                    let hamFiyat = String(ilan.fiyat).replace(/\./g, '').replace(/,/g, '');
-                    let formatliFiyat = Number(hamFiyat) ? Number(hamFiyat).toLocaleString('tr-TR') : ilan.fiyat;
-
-                    kart.innerHTML = `
-                        <div class="h-48 bg-gray-200 relative overflow-hidden flex snap-x snap-mandatory overflow-x-auto no-scrollbar">
-                            ${slaytHtml}
-                            <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow z-10">JET İLAN</span>
-                            <span class="absolute bottom-2 right-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full z-10">↔ Kaydır (${ilan.gorseller ? ilan.gorseller.length : 0} Foto)</span>
-                        </div>
-                        <div class="p-4 flex-1 flex flex-col justify-between">
-                            <div>
-                                <h3 class="font-bold text-gray-900 text-base line-clamp-2 mb-2">${ilan.baslik}</h3>
-                                <div class="flex gap-2 text-xs font-semibold text-gray-500 mb-3">
-                                    <span class="bg-gray-100 px-2 py-1 rounded">🛏️ ${ilan.oda}</span>
-                                    <span class="bg-gray-100 px-2 py-1 rounded">📍 ${ilan.konum}</span>
-                                </div>
-                            </div>
-                            <div class="border-t pt-3 mt-2 flex flex-col gap-2">
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-lg font-extrabold text-red-600">${formatliFiyat} TL</span>
-                                    <button type="button" data-konum="${ilan.konum}" class="haritaGitBtn text-[11px] bg-gray-900 hover:bg-gray-700 text-white font-medium px-2 py-1 rounded-lg transition cursor-pointer">Harita</button>
-                                </div>
-                                <div class="grid grid-cols-2 gap-2 mt-1">
-                                    <button type="button" data-tel="${ilan.tel}" class="telAraBtn bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 rounded-lg transition shadow-xs">📞 Telefonla Ara</button>
-                                    <button type="button" data-tel="${ilan.tel}" data-wp="${wpSablonu}" class="wpMesajBtn bg-green-600 hover:bg-green-700 text-white text-xs font-bold py-2 rounded-lg transition shadow-xs">💬 WhatsApp</button>
-                                </div>
-                                ${ilanSahibiMi ? `
-                                <button type="button" data-id="${ilan.firebaseId}" class="ilanSilBtn w-full text-center text-[10px] bg-red-50 hover:bg-red-100 text-red-500 font-semibold py-1 rounded-lg transition mt-1 cursor-pointer">🗑️ İlanı Kaldır</button>
-                                ` : ''}
-                            </div>
-                        </div>
-                    `;
-                    ilanListesi.appendChild(kart);
-                });
-
-                // Dinamik Buton Olay Atamaları
-                document.querySelectorAll('.haritaGitBtn').forEach(b => b.addEventListener('click', (e) => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.target.dataset.konum)}`, '_blank')));
-                document.querySelectorAll('.telAraBtn').forEach(b => b.addEventListener('click', (e) => window.location.href = `tel:${e.target.dataset.tel}`));
-                document.querySelectorAll('.wpMesajBtn').forEach(b => b.addEventListener('click', (e) => {
-                    let temizNo = e.target.dataset.tel.replace(/\s+/g, '');
-                    if(!temizNo.startsWith('90') && temizNo.startsWith('0')) { temizNo = '90' + temizNo.substring(1); }
-                    window.open(`https://wa.me/${temizNo}?text=${e.target.dataset.wp}`, '_blank');
-                }));
-                document.querySelectorAll('.ilanSilBtn').forEach(b => b.addEventListener('click', (e) => ilanSilFirestore(e.target.dataset.id)));
-
+                ilanListesiniFiltreleVeYazdir();
             } catch (error) {
-                console.error("Yükleme Hatası:", error);
-                ilanListesi.innerHTML = `<div class="col-span-full text-center py-12 text-red-500">Veritabanı bağlantı hatası oluştu.</div>`;
+                console.error(error);
+                ilanListesi.innerHTML = `<div class="col-span-full text-center py-12 text-red-500 text-xs">İlanlar listelenirken hata oluştu.</div>`;
             }
         };
 
-        // Yeni İlan Ekleme Operasyonu
+        const ilanListesiniFiltreleVeYazdir = () => {
+            const ilanListesi = document.getElementById('ilanListesi');
+            const ilanSayac = document.getElementById('ilanSayac');
+            
+            let sonIlanlar = [...globalIlanlarDeposu];
+
+            // 1. Kategori Ağacı Filtresi
+            if (aktifKategoriFiltre !== "hepsi") {
+                sonIlanlar = sonIlanlar.filter(i => i.altKategori === aktifKategoriFiltre || i.anaKategori === aktifKategoriFiltre);
+            }
+
+            // 2. Arama Çubuğu Akıllı Filtreleme (kiralık daire yazınca kategori veya başlık eşleşmesi)
+            if (genelAramaMetni.trim() !== "") {
+                const s = genelAramaMetni.toLowerCase();
+                sonIlanlar = sonIlanlar.filter(i => 
+                    i.baslik.toLowerCase().includes(s) || 
+                    i.altKategori.toLowerCase().includes(s) ||
+                    i.anaKategori.toLowerCase().includes(s) ||
+                    (i.aciklama && i.aciklama.toLowerCase().includes(s)) ||
+                    i.konum.toLowerCase().includes(s)
+                );
+            }
+
+            // 3. Yan Panel Gelişmiş Filtre Değerleri
+            const minF = document.getElementById('filtreMinFiyat').value;
+            const maxF = document.getElementById('filtreMaxFiyat').value;
+            if(minF) sonIlanlar = sonIlanlar.filter(i => Number(i.fiyat) >= Number(minF));
+            if(maxF) sonIlanlar = sonIlanlar.filter(i => Number(i.fiyat) <= Number(maxF));
+
+            if (aktifKategoriFiltre.includes("Konut") || aktifKategoriFiltre.includes("Daire")) {
+                const odaSecim = document.getElementById('filtreOdaSayisi').value;
+                if(odaSecim) sonIlanlar = sonIlanlar.filter(i => i.oda === odaSecim);
+            }
+
+            if (aktifKategoriFiltre.includes("Motosiklet") || aktifKategoriFiltre.includes("Otomobil")) {
+                const modelYilSecim = document.getElementById('filtreModelYili').value;
+                if(modelYilSecim) sonIlanlar = sonIlanlar.filter(i => Number(i.modelYili) >= Number(modelYilSecim));
+            }
+
+            // 4. Sıralama Algoritması
+            const siraTipi = document.getElementById('filtreSiralama').value;
+            if(siraTipi === "fiyatArtan") {
+                sonIlanlar.sort((a,b) => Number(a.fiyat) - Number(b.fiyat));
+            } else if(siraTipi === "fiyatAzalan") {
+                sonIlanlar.sort((a,b) => Number(b.fiyat) - Number(a.fiyat));
+            }
+
+            ilanSayac.textContent = `${sonIlanlar.length} İlan`;
+            ilanListesi.innerHTML = '';
+
+            if (sonIlanlar.length === 0) {
+                ilanListesi.className = "col-span-full text-center py-12 bg-white rounded-xl border border-dashed";
+                ilanListesi.innerHTML = `<p class="text-gray-400 text-xs">Aradığınız kriterlere uygun ilan bulunamadı.</p>`;
+                return;
+            }
+
+            ilanListesi.className = "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6";
+            
+            sonIlanlar.forEach(ilan => {
+                const img = (ilan.gorseller && ilan.gorseller.length > 0) ? ilan.gorseller[0] : "https://via.placeholder.com/400x250";
+                const formatFiyat = Number(ilan.fiyat) ? Number(ilan.fiyat).toLocaleString('tr-TR') : ilan.fiyat;
+                
+                const kart = document.createElement('div');
+                kart.className = 'bg-white rounded-xl shadow-xs border border-gray-100 overflow-hidden hover:shadow-md transition flex flex-col cursor-pointer ilanKartTetikleyici';
+                kart.dataset.id = ilan.id;
+
+                kart.innerHTML = `
+                    <div class="h-40 bg-gray-200 relative overflow-hidden">
+                        <img src="${img}" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-black/70 text-white text-[9px] font-bold px-2 py-0.5 rounded">${ilan.altKategori}</span>
+                    </div>
+                    <div class="p-3 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-gray-900 text-xs line-clamp-2 mb-1">${ilan.baslik}</h3>
+                            <p class="text-[10px] text-gray-400 line-clamp-1">📍 ${ilan.konum.split(", No:")[0]}</p>
+                        </div>
+                        <div class="flex justify-between items-center mt-3 border-t pt-2">
+                            <span class="text-sm font-black text-red-600">${formatFiyat} TL</span>
+                            <span class="text-[9px] text-gray-400">${ilan.oda || (ilan.modelYili ? ilan.modelYili + ' Model' : '')}</span>
+                        </div>
+                    </div>
+                `;
+                ilanListesi.appendChild(kart);
+            });
+
+            // Kart Tıklama Dinamiği (Detay Sayfasına Geçiş)
+            document.querySelectorAll('.ilanKartTetikleyici').forEach(k => {
+                k.addEventListener('click', () => ilanDetay SayfasiAc(k.dataset.id));
+            });
+        };
+
+        // SAHİBİNDEN TARZI DETAY SAYFASI VE WHATSAPP ENTEGRASYONU
+        const ilanDetaySayfasiAc = (ilanId) => {
+            const ilan = globalIlanlarDeposu.find(i => i.id === ilanId);
+            if(!ilan) return;
+
+            // URL Parametresini Güncelle (Paylaşılabilir Dinamik Link Yapısı)
+            const yeniUrl = window.location.origin + window.location.pathname + `?ilan=${ilanId}`;
+            window.history.pushState({ ilanId: ilanId }, '', yeniUrl);
+
+            ekranGoster('detay');
+
+            let gorsellerHtml = '';
+            if(ilan.gorseller && ilan.gorseller.length > 0) {
+                ilan.gorseller.forEach(g => {
+                    gorsellerHtml += `<img src="${g}" class="w-full max-h-96 object-contain bg-gray-900 rounded-xl flex-shrink-0 snap-start">`;
+                });
+            }
+
+            const formatliFiyat = Number(ilan.fiyat) ? Number(ilan.fiyat).toLocaleString('tr-TR') : ilan.fiyat;
+            
+            // WhatsApp Paylaşım Şablonu (Dinamik İlan Linki Eklendi)
+            const wpSablonu = `Merhaba, Mülkjet üzerinden ilanınız için ulaşıyorum.%0A%0A📢 *İlan:* ${encodeURIComponent(ilan.baslik)}%0A💰 *Fiyat:* ${formatliFiyat} TL%0A📍 *Konum:* ${encodeURIComponent(ilan.konum)}%0A🔗 *İlan Detay Linki:* ${encodeURIComponent(yeniUrl)}`;
+
+            const detayAlani = document.getElementById('ilanDetayIcerikAlani');
+            detayAlani.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <!-- Sol Taraf: Fotoğraf Galerisi -->
+                    <div class="lg:col-span-2 space-y-4">
+                        <div class="flex snap-x snap-mandatory overflow-x-auto gap-2 no-scrollbar bg-black p-2 rounded-xl">
+                            ${gorsellerHtml}
+                        </div>
+                        <p class="text-xs text-center text-gray-400">↔ Fotoğrafları görmek için kaydırın</p>
+                        
+                        <div class="pt-4">
+                            <h3 class="font-extrabold text-gray-900 text-sm mb-2 border-b pb-2">📋 İlan Açıklaması</h3>
+                            <p class="text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">${ilan.aciklama || 'Açıklama belirtilmemiş.'}</p>
+                        </div>
+                    </div>
+
+                    <!-- Sağ Taraf: Fiyat, Konum Detayı ve İletişim Bilgileri -->
+                    <div class="space-y-6">
+                        <div>
+                            <span class="text-[10px] bg-red-100 text-red-600 font-bold px-2 py-1 rounded uppercase">${ilan.altKategori}</span>
+                            <h1 class="text-lg font-bold text-gray-900 mt-2">${ilan.baslik}</h1>
+                            <div class="text-2xl font-black text-red-600 mt-2 border-b pb-3">${formatliFiyat} TL</div>
+                        </div>
+
+                        <!-- Teknik Bilgi Tablosu -->
+                        <div class="bg-gray-50 p-3 rounded-xl text-xs space-y-2">
+                            <div class="flex justify-between border-b pb-1"><strong>İlan No:</strong> <span class="text-gray-500">${ilan.id.substring(0,8)}...</span></div>
+                            <div class="flex justify-between border-b pb-1"><strong>Kategori:</strong> <span>${ilan.anaKategori}</span></div>
+                            ${ilan.oda ? `<div class="flex justify-between border-b pb-1"><strong>Oda Sayısı:</strong> <span>${ilan.oda}</span></div>` : ''}
+                            ${ilan.modelYili ? `<div class="flex justify-between border-b pb-1"><strong>Model Yılı:</strong> <span>${ilan.modelYili}</span></div>` : ''}
+                            <div class="flex justify-between text-red-600 font-bold"><strong>Tam Adres:</strong> <span class="text-right text-[11px]">${ilan.konum}</span></div>
+                        </div>
+
+                        <!-- İletişim Buton Modülleri -->
+                        <div class="space-y-2">
+                            <button type="button" id="detayWpBtn" class="w-full bg-green-600 hover:bg-green-700 text-white text-xs font-bold py-3 rounded-xl transition shadow-xs flex justify-center items-center gap-2 cursor-pointer">
+                                💬 WhatsApp İle İletişime Geç
+                            </button>
+                            <a href="tel:${ilan.tel}" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-3 rounded-xl transition shadow-xs flex justify-center items-center gap-2 text-center">
+                                📞 Telefonla Ara (${ilan.tel})
+                            </a>
+                            <button type="button" id="detayHaritaBtn" class="w-full bg-gray-900 hover:bg-gray-800 text-white text-xs font-bold py-3 rounded-xl transition cursor-pointer">
+                                🗺️ Haritada Konumu Göster
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Buton Olay Yönetimleri
+            document.getElementById('detayWpBtn').addEventListener('click', () => {
+                let temizNo = ilan.tel.replace(/\s+/g, '');
+                if(!temizNo.startsWith('90') && temizNo.startsWith('0')) { temizNo = '90' + temizNo.substring(1); }
+                window.open(`https://wa.me/${temizNo}?text=${wpSablonu}`, '_blank');
+            });
+
+            document.getElementById('detayHaritaBtn').addEventListener('click', () => {
+                // Kapı numarasına kadar ayrıntılı harita araması açar
+                window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ilan.konum)}`, '_blank');
+            });
+        };
+
+        // Kategori Seçimine Göre Form Alanlarını Düzenleme
+        const formKategoriAyariniGuncelle = () => {
+            const anaKategori = document.getElementById('formAnaKategori').value;
+            const altSecim = document.getElementById('formAltKategori');
+            const emlakBlok = document.getElementById('formEmlakAlanlari');
+            const vasitaBlok = document.getElementById('formVasitaAlanlari');
+
+            altSecim.innerHTML = '';
+            altKategoriler[anaKategori].forEach(k => {
+                altSecim.innerHTML += `<option value="${k}">${k}</option>`;
+            });
+
+            if(anaKategori === "Emlak") {
+                emlakBlok.classList.remove('hidden');
+                vasitaBlok.classList.add('hidden');
+            } else {
+                emlakBlok.classList.add('hidden');
+                vasitaBlok.classList.remove('hidden');
+            }
+        };
+
+        // Filtre Panelindeki Alanları Dinamik Gizleme/Gösterme
+        const solFiltrePaneliniGuncelle = (kat) => {
+            const emlakFiltre = document.getElementById('ozelEmlakFiltreleri');
+            const vasitaFiltre = document.getElementById('ozelVasitaFiltreleri');
+
+            if (kat.includes("Konut") || kat.includes("Daire") || kat === "Emlak") {
+                emlakFiltre.classList.remove('hidden');
+                vasitaFiltre.classList.add('hidden');
+            } else if (kat.includes("Motosiklet") || kat.includes("Otomobil") || kat === "Vasıta") {
+                emlakFiltre.classList.add('hidden');
+                vasitaFiltre.classList.remove('hidden');
+            } else {
+                emlakFiltre.classList.add('hidden');
+                vasitaFiltre.classList.add('hidden');
+            }
+        };
+
+        // Yeni İlan Veritabanı Kayıt Aşaması
         const yeniIlanYayinla = async (ilanVerisi) => {
             try {
                 await addDoc(collection(db, "ilanlar"), {
                     sahip: aktifKullaniciEposta.toLowerCase(),
+                    anaKategori: ilanVerisi.anaKategori,
+                    altKategori: ilanVerisi.altKategori,
                     baslik: ilanVerisi.baslik,
+                    aciklama: ilanVerisi.aciklama,
                     fiyat: ilanVerisi.fiyat,
-                    oda: ilanVerisi.oda,
+                    oda: ilanVerisi.oda || "",
+                    modelYili: ilanVerisi.modelYili || "",
                     konum: ilanVerisi.konum,
                     tel: ilanVerisi.tel,
                     gorseller: ilanVerisi.gorseller,
                     tarih: new Date().toISOString()
                 });
-                alert("Harika! İlanınız başarıyla Firestore veritabanına kaydedildi.");
-                ilanlariRenderEt();
+                alert("Tebrikler! İlanınız başarıyla sahibinden formatında yayına alındı.");
+                ekranGoster('ana');
+                ilanlariYukleVeRenderEt();
             } catch (error) {
-                alert("Veritabanına eklenirken yetki hatası oluştu.");
+                alert("Veritabanına kayıt eklenirken yetki hatası oluştu.");
             }
         };
 
-        const ilanSilFirestore = async (firebaseId) => {
-            if (confirm("Bu ilanı kaldırmak istediğinize emin misiniz?")) {
-                try {
-                    await deleteDoc(doc(db, "ilanlar", firebaseId));
-                    ilanlariRenderEt();
-                } catch (error) {
-                    alert("Silme yetkiniz bulunmuyor.");
-                }
-            }
-        };
-
-        // Profil Yönetimi İşlemleri
+        // Profil Telefon ve Arayüz Fonksiyonları
         const profilArayuzunuDoldur = () => {
             let uyeler = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
             let u = uyeler.find(user => user.email.toLowerCase() === aktifKullaniciEposta.toLowerCase());
             if(!u) return;
-
-            const avatarAlani = document.getElementById('profilAvatarAlani');
-            avatarAlani.innerHTML = u.foto ? `<img src="${u.foto}" class="w-full h-full object-cover">` : aktifKullaniciEposta.charAt(0).toUpperCase();
-
             const telListesi = document.getElementById('profilTelefonListesi');
             telListesi.innerHTML = '';
-            if(!u.telefonlar || u.telefonlar.length === 0) {
-                telListesi.innerHTML = `<p class="text-[11px] text-gray-400">Kayıtlı numara yok.</p>`;
-            } else {
+            if(u.telefonlar) {
                 u.telefonlar.forEach((tel, index) => {
                     const div = document.createElement('div');
                     div.className = "flex justify-between items-center bg-gray-100 p-1.5 rounded text-xs";
-                    div.innerHTML = `<span>📞 ${tel}</span><button type="button" class="telSilTetikleyici text-red-500 font-bold cursor-pointer" data-idx="${index}">×</button>`;
+                    div.innerHTML = `<span>📞 ${tel}</span><button type="button" class="telSilTetikleyici text-red-500 font-bold" data-idx="${index}">×</button>`;
                     telListesi.appendChild(div);
                 });
-                document.querySelectorAll('.telSilTetikleyici').forEach(b => b.addEventListener('click', (e) => profilTelefonSil(Number(e.target.dataset.idx))));
-            }
-        };
-
-        const profilFotoGuncelle = () => {
-            const file = document.getElementById('profilFotoGiris').files[0];
-            if(!file) return;
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                let uyeler = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
-                let idx = uyeler.findIndex(user => user.email.toLowerCase() === aktifKullaniciEposta.toLowerCase());
-                if(idx !== -1) {
-                    uyeler[idx].foto = reader.result;
+                document.querySelectorAll('.telSilTetikleyici').forEach(b => b.addEventListener('click', (e) => {
+                    u.telefonlar.splice(Number(e.target.dataset.idx), 1);
                     localStorage.setItem('mulkjet_uyeler', JSON.stringify(uyeler));
                     profilArayuzunuDoldur();
                     arayuzOturumKontrol();
-                }
-            };
-            reader.readAsDataURL(file);
-        };
-
-        const profilTelefonEkle = () => {
-            const telInput = document.getElementById('yeniProfilTel');
-            const tel = telInput.value.trim();
-            if(!tel) return;
-
-            let uyeler = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
-            let idx = uyeler.findIndex(user => user.email.toLowerCase() === aktifKullaniciEposta.toLowerCase());
-            if(idx !== -1) {
-                if(!uyeler[idx].telefonlar) uyeler[idx].telefonlar = [];
-                uyeler[idx].telefonlar.push(tel);
-                localStorage.setItem('mulkjet_uyeler', JSON.stringify(uyeler));
-                telInput.value = '';
-                profilArayuzunuDoldur();
-                arayuzOturumKontrol();
-            }
-        };
-
-        const profilTelefonSil = (index) => {
-            let uyeler = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
-            let idx = uyeler.findIndex(user => user.email.toLowerCase() === aktifKullaniciEposta.toLowerCase());
-            if(idx !== -1) {
-                uyeler[idx].telefonlar.splice(index, 1);
-                localStorage.setItem('mulkjet_uyeler', JSON.stringify(uyeler));
-                profilArayuzunuDoldur();
-                arayuzOturumKontrol();
+                }));
             }
         };
 
@@ -533,167 +726,184 @@
         const aksiyonFirebaseGoogleGiris = async () => { 
             try { 
                 const result = await signInWithPopup(auth, provider);
-                if(result && result.user) kullaniciyiSistemeKaydet(result.user);
-            } catch (error) { 
-                alert(`Giriş Başarısız! Hata Kodu: ${error.code}`); 
-            } 
-        };
-
-        const kullaniciyiSistemeKaydet = (user) => {
-            kullaniciGirisYapti = true;
-            aktifKullaniciEposta = user.email;
-            localStorage.setItem('mulkjet_giris_durum', 'true');
-            localStorage.setItem('mulkjet_aktif_user', user.email);
-            
-            let uyeler = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
-            let varMi = uyeler.find(u => u.email.toLowerCase() === user.email.toLowerCase());
-            if(!varMi) {
-                uyeler.push({ email: user.email.toLowerCase(), foto: user.photoURL || "", telefonlar: [] });
-                localStorage.setItem('mulkjet_uyeler', JSON.stringify(uyeler));
-            }
-            arayuzOturumKontrol();
-            ilanlariRenderEt();
+                if(result && result.user) {
+                    kullaniciGirisYapti = true;
+                    aktifKullaniciEposta = result.user.email;
+                    localStorage.setItem('mulkjet_giris_durum', 'true');
+                    localStorage.setItem('mulkjet_aktif_user', result.user.email);
+                    
+                    let uyeler = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
+                    if(!uyeler.find(u => u.email.toLowerCase() === result.user.email.toLowerCase())) {
+                        uyeler.push({ email: result.user.email.toLowerCase(), foto: result.user.photoURL || "", telefonlar: [] });
+                        localStorage.setItem('mulkjet_uyeler', JSON.stringify(uyeler));
+                    }
+                    arayuzOturumKontrol();
+                    ilanlariYukleVeRenderEt();
+                }
+            } catch (error) { alert("Giriş başarısız."); } 
         };
 
         const sanalCikisYap = async () => { 
             await signOut(auth); 
             localStorage.setItem('mulkjet_giris_durum', 'false'); 
             localStorage.removeItem('mulkjet_aktif_user'); 
-            kullaniciGirisYapti = false; 
-            aktifKullaniciEposta = "";
-            arayuzOturumKontrol(); 
-            ilanlariRenderEt(); 
-        };
-
-        // Hesap Kalıcı Kapatma ve İlan Temizliği
-        const aksiyonProfilKaliciSil = async (e) => {
-            e.preventDefault();
-            const neden = document.querySelector('input[name="silmeNedeni"]:checked').value;
-            
-            if(confirm("Hesabınızla birlikte tüm ilanlarınız da silinecektir. Emin misiniz?")) {
-                try {
-                    const q = query(collection(db, "ilanlar"), where("sahip", "==", aktifKullaniciEposta.toLowerCase()));
-                    const snap = await getDocs(q);
-                    const silmeSozleri = [];
-                    snap.forEach((d) => silmeSozleri.push(deleteDoc(doc(db, "ilanlar", d.id))));
-                    await Promise.all(silmeSozleri);
-
-                    let uyeler = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
-                    uyeler = uyeler.filter(user => user.email.toLowerCase() !== aktifKullaniciEposta.toLowerCase());
-                    localStorage.setItem('mulkjet_uyeler', JSON.stringify(uyeler));
-
-                    modalKapat('profilSilModal');
-                    alert(`Geri bildiriminiz alındı. Hesabınız kalıcı olarak kapatılmıştır.`);
-                    sanalCikisYap();
-                } catch(err) {
-                    alert("Hesap silinirken hata oluştu.");
-                }
-            }
+            kullaniciGirisYapti = false; aktifKullaniciEposta = "";
+            arayuzOturumKontrol(); ekranGoster('ana'); ilanlariYukleVeRenderEt();
         };
 
         // İl / İlçe Arayüz Dinamikleri
         const illeriDoldur = () => {
             const ilSelect = document.getElementById('ilanIl');
-            ilSelect.innerHTML = '<option value="">-- İl Seçin --</option>';
+            ilSelect.innerHTML = '<option value="">-- Seçiniz --</option>';
             tumIller.forEach(il => { ilSelect.innerHTML += `<option value="${il}">${il}</option>`; });
         };
 
-        const ilceleriDoldur = () => {
-            const secilenIl = document.getElementById('ilanIl').value;
+        // Eylemsel Olay Dinleyicileri (Event Listeners)
+        document.getElementById('logoBtn').addEventListener('click', () => { ekranGoster('ana'); });
+        document.getElementById('ilanlariGezBtn').addEventListener('click', () => { ekranGoster('ana'); });
+        document.getElementById('detaydanGeriDonBtn').addEventListener('click', () => { ekranGoster('ana'); });
+        
+        document.getElementById('yeniIlanEkleLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            ekranGoster('form');
+        });
+
+        document.getElementById('formAnaKategori').addEventListener('change', formKategoriAyariniGuncelle);
+        document.getElementById('ilanIl').addEventListener('change', () => {
+            const il = document.getElementById('ilanIl').value;
             const ilceSelect = document.getElementById('ilanIlce');
             ilceSelect.innerHTML = '<option value="">-- İlçe Seçin --</option>';
-            if (sehirVeritabi[secilenIl]) {
-                sehirVeritabi[secilenIl].forEach(ilce => { ilceSelect.innerHTML += `<option value="${ilce}">${ilce}</option>`; });
-            } else if(secilenIl) {
-                ilceSelect.innerHTML += `<option value="Merkez">Merkez</option>`;
+            if(sehirVeritabi[il]) {
+                sehirVeritabi[il].forEach(c => { ilceSelect.innerHTML += `<option value="${c}">${c}</option>`; });
             }
-        };
+        });
 
-        // Olay Dinleyicilerinin Atanması (Event Listeners)
-        document.getElementById('logoBtn').addEventListener('click', () => { aktifFiltre = "hepsi"; ilanlariRenderEt(); });
-        document.getElementById('ilanlariGezBtn').addEventListener('click', () => { aktifFiltre = "hepsi"; ilanlariRenderEt(); });
-        document.getElementById('ilanlarımMenuBtn').addEventListener('click', () => { aktifFiltre = "benim"; ilanlariRenderEt(); });
         document.getElementById('profilimMenuBtn').addEventListener('click', () => { modalAc('profilModal'); profilArayuzunuDoldur(); });
-        document.getElementById('kilitliAlanGirisBtn').addEventListener('click', aksiyonFirebaseGoogleGiris);
         document.getElementById('profilModalKapatBtn').addEventListener('click', () => modalKapat('profilModal'));
-        document.getElementById('profilFotoGiris').addEventListener('change', profilFotoGuncelle);
-        document.getElementById('profilTelefonEkleBtn').addEventListener('click', profilTelefonEkle);
-        document.getElementById('ilanIl').addEventListener('change', ilceleriDoldur);
-        
-        document.getElementById('hesabimiSilTetikleyiciBtn').addEventListener('click', () => {
-            modalKapat('profilModal');
-            modalAc('profilSilModal');
+        document.getElementById('profilTelefonEkleBtn').addEventListener('click', () => {
+            const val = document.getElementById('yeniProfilTel').value.trim();
+            if(!val) return;
+            let uyeler = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
+            let u = uyeler.find(user => user.email.toLowerCase() === aktifKullaniciEposta.toLowerCase());
+            if(u){
+                if(!u.telefonlar) u.telefonlar = [];
+                u.telefonlar.push(val);
+                localStorage.setItem('mulkjet_uyeler', JSON.stringify(uyeler));
+                document.getElementById('yeniProfilTel').value = '';
+                profilArayuzunuDoldur(); arayuzOturumKontrol();
+            }
         });
-        document.getElementById('silmeVazgecBtn').addEventListener('click', () => {
-            modalKapat('profilSilModal');
-            modalAc('profilModal');
-        });
-        document.getElementById('profilSilmeForm').addEventListener('submit', aksiyonProfilKaliciSil);
 
-        // Arama Motoru Olay Arayüzü
-        const tetiklemeArama = () => {
-            aramaSorgusu = document.getElementById('hizliAraInput').value;
-            ilanlariRenderEt();
+        // Sol Panel Kategori Butonları
+        document.querySelectorAll('.kategoriFiltreBtn').forEach(b => {
+            b.addEventListener('click', (e) => {
+                aktifKategoriFiltre = e.target.dataset.kat;
+                document.querySelectorAll('.kategoriFiltreBtn').forEach(x => x.classList.remove('bg-red-600', 'text-white', 'font-bold'));
+                e.target.classList.add('bg-red-600', 'text-white', 'font-bold');
+                
+                document.getElementById('ilanListesiBaslik').textContent = `📁 ${aktifKategoriFiltre === 'hepsi' ? 'Tüm İlanlar' : aktifKategoriFiltre}`;
+                solFiltrePaneliniGuncelle(aktifKategoriFiltre);
+                ilanListesiniFiltreleVeYazdir();
+            });
+        });
+
+        // Filtreleri Uygula Tetikleyicisi
+        document.getElementById('filtreleriUygulaBtn').addEventListener('click', ilanListesiniFiltreleVeYazdir);
+
+        // Arama Çubuğu Tetikleyicisi
+        const aramaAksiyonu = () => {
+            genelAramaMetni = document.getElementById('hizliAraInput').value;
+            ilanListesiniFiltreleVeYazdir();
         };
-        document.getElementById('hizliAraBtn').addEventListener('click', tetiklemeArama);
-        document.getElementById('hizliAraInput').addEventListener('keyup', (e) => { if(e.key === 'Enter') tetiklemeArama(); });
+        document.getElementById('hizliAraBtn').addEventListener('click', aramaAksiyonu);
+        document.getElementById('hizliAraInput').addEventListener('keyup', (e) => { if(e.key === 'Enter') aramaAksiyonu(); });
 
-        // İlan Gönderim Yönetimi
+        // İlan Form Post Yönetimi
         document.getElementById('emlakForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if(!kullaniciGirisYapti) { alert("İlan eklemek için öncelikle giriş yapmalısınız!"); return; }
+            const tel = document.getElementById('ilanTelefonSecimi').value;
+            if(!tel) { alert("Lütfen önce profilinizden telefon ekleyin."); return; }
 
-            const telefon = document.getElementById('ilanTelefonSecimi').value;
-            if(!telefon) { alert("Lütfen profilinizden en az bir telefon numarası ekleyin!"); return; }
-
-            const baslik = document.getElementById('ilanBaslik').value;
-            const fiyat = document.getElementById('ilanFiyat').value;
-            const oda = document.getElementById('ilanOda').value;
-            const ilAdi = document.getElementById('ilanIl').value;
-            const ilceAdi = document.getElementById('ilanIlce').value;
-            const mahalleDetay = document.getElementById('ilanMahalleAdres').value;
             const dosyaElementi = document.getElementById('ilanDosyalar');
-            
-            if (dosyaElementi.files.length > 10) { alert("En fazla 10 adet fotoğraf yükleyebilirsiniz!"); return; }
+            if(dosyaElementi.files.length > 10) { alert("En fazla 10 görsel yüklenebilir."); return; }
+
+            const il = document.getElementById('ilanIl').value;
+            const ilce = document.getElementById('ilanIlce').value;
+            const mah = document.getElementById('ilanMahalle').value;
+            const sok = document.getElementById('ilanSokak').value;
+            const kapi = document.getElementById('ilanKapiNo').value;
+            const daire = document.getElementById('ilanDaireNo').value;
+
+            // Kapı numarasına kadar ayrıntılı adres metni oluşturma
+            const tamAdres = `${il}, ${ilce}, ${mah} Mah., ${sok}, Dış Kapı: ${kapi}, ${daire ? 'Daire/İç No: ' + daire : ''}`;
 
             let yuklenenGorseller = [];
-            let yuklendiCount = 0;
+            let count = 0;
 
-            for (let i = 0; i < dosyaElementi.files.length; i++) {
-                const reader = new FileReader();
-                reader.onloadend = function() {
-                    yuklenenGorseller.push(reader.result);
-                    yuklendiCount++;
-                    
-                    if (yuklendiCount === dosyaElementi.files.length) {
-                        yeniIlanYayinla({
-                            baslik: baslik,
-                            fiyat: fiyat,
-                            oda: oda,
-                            konum: `${ilAdi}, ${ilceAdi}, ${mahalleDetay}`,
-                            tel: telefon,
-                            gorseller: yuklenenGorseller
-                        });
-                        document.getElementById('emlakForm').reset();
-                        document.getElementById('ilanIlce').innerHTML = '<option value="">Önce İl Seçin</option>';
-                    }
-                };
-                reader.readAsDataURL(dosyaElementi.files[i]);
+            const kaydetmeAdimi = () => {
+                yeniIlanYayinla({
+                    anaKategori: document.getElementById('formAnaKategori').value,
+                    altKategori: document.getElementById('formAltKategori').value,
+                    baslik: document.getElementById('ilanBaslik').value,
+                    aciklama: document.getElementById('ilanAciklama').value,
+                    fiyat: document.getElementById('ilanFiyat').value,
+                    oda: document.getElementById('ilanOda').value,
+                    modelYili: document.getElementById('ilanModelYili').value,
+                    konum: tamAdres,
+                    tel: tel,
+                    gorseller: yuklenenGorseller
+                });
+                document.getElementById('emlakForm').reset();
+            };
+
+            if(dosyaElementi.files.length === 0) {
+                kaydetmeAdimi();
+            } else {
+                for(let i=0; i<dosyaElementi.files.length; i++) {
+                    const reader = new FileReader();
+                    reader.onloadend = function() {
+                        yuklenenGorseller.push(reader.result);
+                        count++;
+                        if(count === dosyaElementi.files.length) kaydetmeAdimi();
+                    };
+                    reader.readAsDataURL(dosyaElementi.files[i]);
+                }
             }
         });
 
-        // Başlangıç Yüklemeleri
+        // Başlangıç Kurulumları & Derin Link (Direct URL Link) Desteği
         auth.onAuthStateChanged((user) => {
-            if (user) {
+            if(user) {
                 kullaniciGirisYapti = true;
                 aktifKullaniciEposta = user.email;
-                localStorage.setItem('mulkjet_giris_durum', 'true');
-                localStorage.setItem('mulkjet_aktif_user', user.email);
             }
             illeriDoldur();
+            formKategoriAyariniGuncelle();
             arayuzOturumKontrol();
-            ilanlariRenderEt();
+            
+            // Eğer URL'de doğrudan bir ilan parametresi varsa (?ilan=xxxxx) direkt o detayı aç
+            const urlParams = new URLSearchParams(window.location.search);
+            const direktIlanId = urlParams.get('ilan');
+
+            // Önce tüm verileri çekiyoruz
+            let q = query(collection(db, "ilanlar"), orderBy("tarih", "desc"));
+            getDocs(q).then(querySnapshot => {
+                globalIlanlarDeposu = [];
+                querySnapshot.forEach((doc) => {
+                    globalIlanlarDeposu.push({ id: doc.id, ...doc.data() });
+                });
+                
+                if (direktIlanId) {
+                    ilanDetaySayfasiAc(direktIlanId);
+                } else {
+                    ekranGoster('ana');
+                    ilanListesiniFiltreleVeYazdir();
+                }
+            });
         });
+
+        const modalAc = (id) => document.getElementById(id).classList.remove('hidden');
+        const modalKapat = (id) => document.getElementById(id).classList.add('hidden');
     </script>
 </body>
 </html>
