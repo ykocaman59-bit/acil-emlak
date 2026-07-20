@@ -311,7 +311,7 @@
     </div>
 
     <footer class="bg-gray-900 text-gray-400 py-8 text-center mt-20">
-        <p class="text-sm">© 2026 Mülkjet Platformu. Tüm hakları sablıdır.</p>
+        <p class="text-sm">© 2026 Mülkjet Platformu. Tüm hakları saklıdır.</p>
     </footer>
 
     <!-- FIREBASE & UYGULAMA MANTIĞI -->
@@ -367,12 +367,10 @@
             if(ekranAdi === 'form') document.getElementById('ilanVerFormGorunumu').classList.remove('hidden');
         };
 
-        // Ekran Kapanma Hatasını Çözen Mobil Uyumlu Google Giriş Metodu
         const aksiyonFirebaseGoogleGiris = () => {
             signInWithRedirect(auth, provider);
         };
 
-        // Redirect Dönüş Kontrolü
         getRedirectResult(auth).then((result) => {
             if (result && result.user) {
                 kullaniciGirisYapti = true;
@@ -425,7 +423,6 @@
             }
         };
 
-        // Dinamik Ağaç Yapısı ve Sayıcı Algoritması (Sahibinden Tarzı)
         const dinamikKategoriAgaciniUret = () => {
             const alan = document.getElementById('dinamikKategoriAgaci');
             alan.innerHTML = "";
@@ -441,15 +438,13 @@
                 }).length;
             };
 
-            // Hepsi Kökü
             let tumSayi = sayGetir('hepsi', 'root');
             let kokBtn = document.createElement('button');
-            kokBtn.className = `w-full text-left p-1 rounded font-bold ${seciliFiltreKategoriPath[0]==='hepsi'?'bg-red-600 text-white':''}`;
+            kokBtn.className = `w-full text-left p-1 rounded font-bold cursor-pointer ${seciliFiltreKategoriPath[0]==='hepsi'?'bg-red-600 text-white':''}`;
             kokBtn.innerHTML = `Tüm İlanlar <span class="opacity-70">(${tumSayi})</span>`;
             kokBtn.onclick = () => { seciliFiltreKategoriPath = ['hepsi']; filtreleriYonetVeUygula(); };
             alan.appendChild(kokBtn);
 
-            // Ana Kategoriler
             ["Emlak", "Vasıta"].forEach(ana => {
                 let anaSayi = sayGetir(ana, 'ana');
                 let divAna = document.createElement('div');
@@ -467,7 +462,6 @@
                         divAlt.onclick = (e) => { e.stopPropagation(); seciliFiltreKategoriPath = [ana, alt]; filtreleriYonetVeUygula(); };
                         alan.appendChild(divAlt);
 
-                        // Markalar (Genişletilmiş Görünüm)
                         if(seciliFiltreKategoriPath[1] === alt && aracHiyerarsisi[alt]) {
                             Object.keys(aracHiyerarsisi[alt]).forEach(marka => {
                                 let markaSayi = sayGetir(marka, 'marka');
@@ -477,7 +471,6 @@
                                 divMarka.onclick = (e) => { e.stopPropagation(); seciliFiltreKategoriPath = [ana, alt, marka]; filtreleriYonetVeUygula(); };
                                 alan.appendChild(divMarka);
 
-                                // Modeller
                                 if(seciliFiltreKategoriPath[2] === marka) {
                                     aracHiyerarsisi[alt][marka].forEach(model => {
                                         let modelSayi = sayGetir(model, 'model');
@@ -505,7 +498,6 @@
         };
 
         const filtreleriYonetVeUygula = () => {
-            // Panel Görünürlük Ayarı
             const path = seciliFiltreKategoriPath;
             if(path[0] === 'Emlak') {
                 document.getElementById('ozelEmlakFiltreleri').classList.remove('hidden');
@@ -525,7 +517,6 @@
             const liste = document.getElementById('ilanListesi');
             let sonIlanlar = [...globalIlanlarDeposu];
 
-            // Kategori Path Filtrelemesi
             const path = seciliFiltreKategoriPath;
             if(path[0] !== 'hepsi') {
                 sonIlanlar = sonIlanlar.filter(i => i.anaKategori === path[0]);
@@ -534,13 +525,11 @@
                 if(path[3]) sonIlanlar = sonIlanlar.filter(i => i.model === path[3]);
             }
 
-            // Arama Metni Filtresi
             if(genelAramaMetni.trim() !== "") {
                 let s = genelAramaMetni.toLowerCase();
                 sonIlanlar = sonIlanlar.filter(i => i.baslik.toLowerCase().includes(s) || i.aciklama.toLowerCase().includes(s));
             }
 
-            // Adres Filtreleri
             const fIl = document.getElementById('filtreIl').value;
             const fIlce = document.getElementById('filtreIlce').value;
             const fMah = document.getElementById('filtreMahalle').value.trim().toLowerCase();
@@ -549,19 +538,29 @@
             if(fIlce) sonIlanlar = sonIlanlar.filter(i => i.ilce === fIlce);
             if(fMah) sonIlanlar = sonIlanlar.filter(i => i.mahalle && i.mahalle.toLowerCase().includes(fMah));
 
-            // Fiyat Filtreleri
             const minF = document.getElementById('filtreMinFiyat').value;
             const maxF = document.getElementById('filtreMaxFiyat').value;
             if(minF) sonIlanlar = sonIlanlar.filter(i => Number(i.fiyat) >= Number(minF));
             if(maxF) sonIlanlar = sonIlanlar.filter(i => Number(i.fiyat) <= Number(maxF));
 
-            // Vites ve KM Filtresi (Vasıta İçin Kesin Uyuşma)
+            if(path[0] === 'Emlak') {
+                const fOda = document.getElementById('filtreOdaSayisi').value;
+                if(fOda) sonIlanlar = sonIlanlar.filter(i => i.oda === fOda);
+            }
+
             if(path[0] === 'Vasıta') {
                 const fVites = document.getElementById('filtreVites').value;
                 const fMaxKm = document.getElementById('filtreMaxKm').value;
 
                 if(fVites) sonIlanlar = sonIlanlar.filter(i => i.vites === fVites);
                 if(fMaxKm) sonIlanlar = sonIlanlar.filter(i => Number(i.km || 0) <= Number(fMaxKm));
+            }
+
+            const siralama = document.getElementById('filtreSiralama').value;
+            if(siralama === 'fiyatArtan') {
+                sonIlanlar.sort((a, b) => Number(a.fiyat) - Number(b.fiyat));
+            } else if(siralama === 'fiyatAzalan') {
+                sonIlanlar.sort((a, b) => Number(b.fiyat) - Number(a.fiyat));
             }
 
             document.getElementById('ilanSayac').textContent = `${sonIlanlar.length} İlan`;
@@ -587,7 +586,6 @@
             });
         };
 
-        // Haritada Göster Özellikli Detay Sayfası
         const ilanDetaySayfasiAc = (ilanId) => {
             const ilan = globalIlanlarDeposu.find(i => i.id === ilanId);
             if(!ilan) return;
@@ -625,7 +623,6 @@
             `;
         };
 
-        // Form Kategori Değişim Dinamik Yönetimi
         const formKategoriDinamikYonetim = () => {
             const ana = document.getElementById('formAnaKategori').value;
             const alt = document.getElementById('formAltKategori');
@@ -659,7 +656,6 @@
             }
         };
 
-        // İlan  Kaydetme
         document.getElementById('emlakForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const tel = document.getElementById('ilanTelefonSecimi').value;
@@ -716,7 +712,6 @@
             filtreleriYonetVeUygula();
         };
 
-        // Profil Telefon Yönetimi (3 Sınırı)
         const profilArayuzunuDoldur = () => {
             let uyeler = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
             let u = uyeler.find(user => user.email.toLowerCase() === aktifKullaniciEposta.toLowerCase());
@@ -725,7 +720,7 @@
             liste.innerHTML = '';
             if(!u.telefonlar) u.telefonlar = [];
             u.telefonlar.forEach((t, idx) => {
-                liste.innerHTML += `<div class="flex justify-between bg-gray-50 p-1 text-xs rounded"><span>${t}</span><button class="text-red-500 font-bold" onclick="window.telSil(${idx})">×</button></div>`;
+                liste.innerHTML += `<div class="flex justify-between bg-gray-50 p-1 text-xs rounded"><span>${t}</span><button class="text-red-500 font-bold cursor-pointer" onclick="window.telSil(${idx})">×</button></div>`;
             });
             document.getElementById('telefonEklemeFormAlani').classList.toggle('hidden', u.telefonlar.length >= 3);
             document.getElementById('telLimitUyari').classList.toggle('hidden', u.telefonlar.length < 3);
@@ -759,7 +754,27 @@
             } else { s.innerHTML = '<option value="">Önce profilden tel ekleyin</option>'; }
         };
 
-        // Event Dinleyiciler
+        // Hesap Silme / Profil Kapatma Akışı (Tamamlandı)
+        document.getElementById('hesabimiSilTetikleyiciBtn').onclick = () => {
+            document.getElementById('profilModal').classList.add('hidden');
+            document.getElementById('profilSilModal').classList.remove('hidden');
+        };
+
+        document.getElementById('silmeVazgecBtn').onclick = () => {
+            document.getElementById('profilSilModal').classList.add('hidden');
+        };
+
+        document.getElementById('profilSilmeForm').onsubmit = async (e) => {
+            e.preventDefault();
+            let uyeler = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
+            uyeler = uyeler.filter(u => u.email.toLowerCase() !== aktifKullaniciEposta.toLowerCase());
+            localStorage.setItem('mulkjet_uyeler', JSON.stringify(uyeler));
+            
+            alert("Profiliniz ve verileriniz başarıyla silindi.");
+            document.getElementById('profilSilModal').classList.add('hidden');
+            await sanalCikisYap();
+        };
+
         document.getElementById('logoBtn').onclick = () => { seciliFiltreKategoriPath=['hepsi']; filtreleriYonetVeUygula(); ekranGoster('ana'); };
         document.getElementById('detaydanGeriDonBtn').onclick = () => ekranGoster('ana');
         document.getElementById('yeniIlanEkleLink').onclick = () => ekranGoster('form');
@@ -770,7 +785,6 @@
         document.getElementById('profilModalKapatBtn').onclick = () => document.getElementById('profilModal').classList.add('hidden');
         document.getElementById('hizliAraBtn').onclick = () => { genelAramaMetni = document.getElementById('hizliAraInput').value; ilanListesiniFiltreleVeYazdir(); };
 
-        // Şehir Seçimlerini Doldurma
         const illerYukle = () => {
             const iIl = document.getElementById('ilanIl'); const fIl = document.getElementById('filtreIl');
             iIl.innerHTML = '<option value="">Seçiniz</option>'; fIl.innerHTML = '<option value="">Tüm İller</option>';
@@ -781,7 +795,7 @@
         };
 
         document.getElementById('ilanIl').onchange = (e) => {
-            const ilce = document.getElementById('ilanIlce'); ilce.innerHTML = '';
+            const ilce = document.getElementById('ilanIlce'); ilce.innerHTML = '<option value="">Seçiniz</option>';
             if(sehirVeritabi[e.target.value]) sehirVeritabi[e.target.value].forEach(i => ilce.innerHTML += `<option value="${i}">${i}</option>`);
         };
         document.getElementById('filtreIl').onchange = (e) => {
@@ -789,7 +803,6 @@
             if(sehirVeritabi[e.target.value]) sehirVeritabi[e.target.value].forEach(i => ilce.innerHTML += `<option value="${i}">${i}</option>`);
         };
 
-        // Başlangıç
         auth.onAuthStateChanged(user => {
             if(user) { kullaniciGirisYapti = true; aktifKullaniciEposta = user.email; }
             illerYukle(); formKategoriDinamikYonetim(); arayuzOturumKontrol(); ilanlariYukleVeCek();
