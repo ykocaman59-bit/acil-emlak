@@ -222,12 +222,13 @@
         <p class="text-xs text-red-400 mt-2">İş Ortaklığı Modeli: Bu platform üzerinden yapılan gayrimenekul işlemlerinde %2 hizmet komisyonu uygulanır.</p>
     </footer>
 
-    <!-- FIREBASE KÜTÜPHANELERİ (Modül Olarak Eklendi) -->
+        <!-- FIREBASE KÜTÜPHANELERİ -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        // Veritabanı için Firestore modüllerini ekledik
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Firebase Proje Yapılandırmanız (Senin Projene Göre Güncellendi)
         const firebaseConfig = {
             apiKey: "AIzaSyD7mIxqpIYuYSK2RCVl9p1gKMREpizyzIQ",
             authDomain: "mulkjet-app.firebaseapp.com",
@@ -238,62 +239,107 @@
             measurementId: "G-JGP7GN60XF"
         };
 
-        // Firebase Başlatma
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app); // Firestore bağlantısı tanımlandı
         const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
 
-        // Cihazdaki Gmail Hesaplarını Listelemeyi Sağlayan Tetikleyici Fonksiyon
-        window.aksiyonFirebaseGoogleGiris = async () => {
+        // 1. Ortak Veritabanından İlanları Çekme Fonksiyonu
+        window.ilanlariRenderEt = async () => {
+            const ilanlarKutusu = document.getElementById("ilanlarListesiContainer"); 
+            if(!ilanlarKutusu) return;
+
+            ilanlarKutusu.innerHTML = `<div style="text-align:center; padding:20px;">İlanlar yükleniyor...</div>`;
+
             try {
-                // Bu metot cihazdaki kayıtlı maimleri pencere olarak listeler
-                const result = await signInWithPopup(auth, provider);
-                const user = result.user;
-
-                // Giriş başarılıysa bilgileri yerel veritabanıyla eşleştir
-                window.kullaniciGirisYapti = true;
-                window.aktifKullaniciEposta = user.email;
+                // İlanları tarihe göre sıralı çekiyoruz (En yeni en üstte)
+                const q = query(collection(db, "ilanlar"), orderBy("tarih", "desc"));
+                const querySnapshot = await getDocs(q);
                 
-                localStorage.setItem('mulkjet_giris_durum', 'true');
-                localStorage.setItem('mulkjet_aktif_user', user.email);
+                let htmlIcerik = "";
+                let ilanSayisi = 0;
 
-                // Eğer kullanıcı veritabanımızda yoksa yeni bir kayıt nesnesi oluştur
-                let veriTabaniUyeleri = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
-                const kullanıcıVarMi = veriTabaniUyeleri.find(u => u.email.toLowerCase() === user.email.toLowerCase());
-                
-                if (!kullanıcıVarMi) {
-                    veriTabaniUyeleri.push({ 
-                        email: user.email, 
-                        foto: user.photoURL || "", 
-                        telefonlar: [] 
-                    });
-                    localStorage.setItem('mulkjet_uyeler', JSON.stringify(veriTabaniUyeleri));
+                querySnapshot.forEach((doc) => {
+                    const ilan = doc.data();
+                    ilanSayisi++;
+                    
+                    // Jet İlan (Öne çıkan) ise kartın etrafına renkli border ekliyoruz
+                    const jetClass = ilan.jetIlan ? 'style="border: 2px solid #ff4757; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.2);"' : '';
+                    const jetRozet = ilan.jetIlan ? '<span style="background:#ff4757; color:white; padding:2px 8px; border-radius:4px; font-size:12px; font-weight:bold; position:absolute; top:10px; left:10px;">JET İLAN</span>' : '';
+
+                    htmlIcerik += `
+                        <div class="ilan-kart" ${jetClass} style="position:relative; margin-bottom:20px; background:white; border-radius:12px; overflow:hidden;">
+                            ${jetRozet}
+                            <img src="${ilan.foto || 'https://via.placeholder.com/400x250'}" style="width:100%; height:200px; object-fit:cover;">
+                            <div style="padding:15px;">
+                                <h3 style="margin:0 0 10px 0;">${ilan.tip}</h3>
+                                <p style="color:#555; font-size:14px;"><i class="fas fa-map-marker-alt"></i> ${ilan.adres}</p>
+                                <hr style="border:0; border-top:1px solid #eee;">
+                                <div style="display:flex; justify-content:between; align-items:center;">
+                                    <span style="font-size:18px; font-weight:bold; color:#ff4757;">${ilan.fiyat} TL</span>
+                                    <div>
+                                        <a href="tel:${ilan.telefon}" style="background:#2f3542; color:white; padding:8px 12px; border-radius:6px; text-decoration:none; margin-right:5px;">Ara</a>
+                                        <a href="https://wa.me/${ilan.telefon}" style="background:#2ed573; color:white; padding:8px 12px; border-radius:6px; text-decoration:none;">WhatsApp</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // Toplam ilan sayısını arayüzde güncelle
+                const adetRozet = document.getElementById("güncelIlanAdetRozet");
+                if(adetRozet) adetRozet.innerText = `${ilanSayisi} İlan`;
+
+                if (ilanSayisi === 0) {
+                    ilanlarKutusu.innerHTML = `<div style="text-align:center; padding:40px; color:#777;">Henüz listelenecek aktif ilan bulunmuyor.</div>`;
+                } else {
+                    ilanlarKutusu.innerHTML = htmlIcerik;
                 }
-
-                window.arayuzOturumKontrol();
-                alert(`Google ile Giriş Başarılı! Hoş geldiniz.`);
-                window.ilanlariRenderEt();
             } catch (error) {
-                console.error("Giriş sırasında bir hata oluştu: ", error);
-                alert("Giriş işlemi iptal edildi veya bir hata oluştu.");
+                console.error("İlanlar çekilirken hata oluştu: ", error);
+                ilanlarKutusu.innerHTML = `<div style="text-align:center; padding:20px; color:red;">İlanlar yüklenemedi.</div>`;
             }
         };
 
-        // Çıkış fonksiyonunu Firebase uyumlu hale getirme
-        window.sanalCikisYap = async () => {
-            await signOut(auth);
-            window.kullaniciGirisYapti = false;
-            window.aktifKullaniciEposta = "";
-            window.aktifFiltre = "hepsi";
-            
-            localStorage.setItem('mulkjet_giris_durum', 'false');
-            localStorage.removeItem('mulkjet_aktif_user');
-            
-            window.arayuzOturumKontrol();
-            alert("Oturum kapatıldı.");
-            window.ilanlariRenderEt();
+        // 2. Ortak Veritabanına Yeni İlan Ekleme Fonksiyonu
+        window.yeniIlanYayinla = async (ilanVerisi) => {
+            try {
+                // İlana otomatik tarih ve varsayılan doping durumu ekliyoruz
+                const eklenecekVeri = {
+                    ...ilanVerisi,
+                    tarih: new Date().toISOString(),
+                    jetIlan: false, // İlk etapta normal ilan, ödeme geldikçe otomatik true olacak
+                    ekleyenUye: window.aktifKullaniciEposta || "anonim"
+                };
+
+                await addDoc(collection(db, "ilanlar"), eklenecekVeri);
+                alert("İlanınız başarıyla tüm cihazlarda yayına alındı!");
+                window.ilanlariRenderEt();
+            } catch (error) {
+                console.error("İlan veritabanına kaydedilemedi:", error);
+                alert("İlan yayınlanırken bir hata oluştu.");
+            }
         };
+
+        // Oturum Yönetimi ve Diğer Firebase Tetikleyicileri
+        function kullaniciyiSistemeKaydet(user) {
+            window.kullaniciGirisYapti = true;
+            window.aktifKullaniciEposta = user.email;
+            localStorage.setItem('mulkjet_giris_durum', 'true');
+            localStorage.setItem('mulkjet_aktif_user', user.email);
+            if (typeof window.arayuzOturumKontrol === 'function') window.arayuzOturumKontrol();
+            window.ilanlariRenderEt();
+        }
+
+        getRedirectResult(auth).then((result) => { if (result && result.user) kullaniciyiSistemeKaydet(result.user); });
+        onAuthStateChanged(auth, (user) => { if (user) kullaniciyiSistemeKaydet(user); else window.ilanlariRenderEt(); });
+
+        window.aksiyonFirebaseGoogleGiris = async () => { try { await signInWithRedirect(auth, provider); } catch (error) { alert("Giriş başlatılamadı."); } };
+        window.sanalCikisYap = async () => { await signOut(auth); localStorage.setItem('mulkjet_giris_durum', 'false'); localStorage.removeItem('mulkjet_aktif_user'); window.kullaniciGirisYapti = false; if (typeof window.arayuzOturumKontrol === 'function') window.arayuzOturumKontrol(); window.ilanlariRenderEt(); };
     </script>
+    
 
     <!-- GENEL UYGULAMA MANTIĞI SCRIPTİ -->
     <script>
