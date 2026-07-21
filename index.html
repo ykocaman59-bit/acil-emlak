@@ -86,7 +86,7 @@
             <div class="max-w-4xl mx-auto">
                 <h1 class="text-2xl font-black mb-2">Mülkjet Detaylı Arama Motoru</h1>
                 <div class="bg-white p-1.5 rounded-xl shadow-md flex flex-col sm:flex-row gap-2 max-w-xl mx-auto mt-2">
-                    <input type="text" id="hizliAraInput" placeholder="Kelime, marka veya model arayın..." class="flex-1 px-4 py-2 text-gray-800 focus:outline-none text-xs">
+                    <input type="text" id="hizliAraInput" placeholder="Kelime, marka, model, kategori (kiralık daire vb.) veya oda arayın..." class="flex-1 px-4 py-2 text-gray-800 focus:outline-none text-xs">
                     <button type="button" id="hizliAraBtn" class="bg-gray-900 text-white px-5 py-2 rounded-lg font-bold text-xs cursor-pointer">Ara</button>
                 </div>
             </div>
@@ -113,13 +113,40 @@
                         </select>
                     </div>
 
-                    <!-- Kategori -->
+                    <!-- Ana Kategori -->
                     <div class="space-y-1">
-                        <label class="block text-[11px] font-bold text-gray-500">📁 Kategori</label>
+                        <label class="block text-[11px] font-bold text-gray-500">📁 Ana Kategori</label>
                         <select id="filtreKategori" class="w-full p-2 border rounded-lg text-xs bg-white">
                             <option value="hepsi">Tüm İlanlar</option>
                             <option value="Otomobil">Otomobil</option>
                             <option value="Emlak">Emlak</option>
+                        </select>
+                    </div>
+
+                    <!-- Gelişmiş Emlak Filtre Katmanı -->
+                    <div id="filtreEmlakDetayKutusu" class="hidden space-y-2 bg-gray-50 p-2 rounded-lg">
+                        <label class="block text-[10px] font-bold text-gray-600">Emlak Detayları</label>
+                        <select id="filtreEmlakAltKat" class="w-full p-1.5 border rounded-lg text-xs bg-white">
+                            <option value="">Tüm Emlak Tipleri</option>
+                            <option value="Satılık Konut">Satılık Konut</option>
+                            <option value="Kiralık Daire">Kiralık Daire</option>
+                            <option value="Satılık Daire">Satılık Daire</option>
+                            <option value="Satılık Arsa">Satılık Arsa</option>
+                        </select>
+                        <select id="filtreOdaSayisi" class="w-full p-1.5 border rounded-lg text-xs bg-white">
+                            <option value="">Tüm Oda Seçenekleri</option>
+                            <option value="1+1">1+1</option>
+                            <option value="2+1">2+1</option>
+                            <option value="3+1">3+1</option>
+                            <option value="4+1">4+1</option>
+                            <option value="5+1 ve üzeri">5+1 ve üzeri</option>
+                        </select>
+                        <select id="filtreYapiTipi" class="w-full p-1.5 border rounded-lg text-xs bg-white">
+                            <option value="">Tüm Yapı Tipleri</option>
+                            <option value="Düz Daire">Düz Daire</option>
+                            <option value="Alt Dubleks">Alt Dubleks</option>
+                            <option value="Üst Dubleks">Üst Dubleks</option>
+                            <option value="Ters Dubleks">Ters Dubleks</option>
                         </select>
                     </div>
 
@@ -195,7 +222,42 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-600">Başlık</label>
-                        <input type="text" id="formBaslik" required class="w-full p-2 border rounded-lg text-xs" placeholder="Örn: Sahibinden Temiz Aile Aracı">
+                        <input type="text" id="formBaslik" required class="w-full p-2 border rounded-lg text-xs" placeholder="Örn: Kiralık 4+1 Dubleks Ev veya Araç Bilgisi">
+                    </div>
+                </div>
+
+                <!-- EMLAK TEKNİK KUTUSU -->
+                <div id="formEmlakTeknikKutusu" class="hidden bg-blue-50/40 p-4 rounded-xl border border-blue-100 space-y-3">
+                    <h4 class="font-bold text-blue-800 text-xs">🏢 Emlak Teknik Detayları</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold">Emlak Tipi</label>
+                            <select id="formEmlakAltKat" class="w-full p-2 border rounded-lg bg-white text-xs">
+                                <option value="Satılık Konut">Satılık Konut</option>
+                                <option value="Kiralık Daire">Kiralık Daire</option>
+                                <option value="Satılık Daire">Satılık Daire</option>
+                                <option value="Satılık Arsa">Satılık Arsa</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold">Oda Sayısı</label>
+                            <select id="formOdaSayisi" class="w-full p-2 border rounded-lg bg-white text-xs">
+                                <option value="1+1">1+1</option>
+                                <option value="2+1">2+1</option>
+                                <option value="3+1">3+1</option>
+                                <option value="4+1">4+1</option>
+                                <option value="5+1 ve üzeri">5+1 ve üzeri</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold">Yapı Tipi</label>
+                            <select id="formYapiTipi" class="w-full p-2 border rounded-lg bg-white text-xs">
+                                <option value="Düz Daire">Düz Daire</option>
+                                <option value="Alt Dubleks">Alt Dubleks</option>
+                                <option value="Üst Dubleks">Üst Dubleks</option>
+                                <option value="Ters Dubleks">Ters Dubleks</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -373,7 +435,7 @@
         const digerIller = ["Afyonkarahisar","Ağrı","Aksaray","Amasya","Ardahan","Artvin","Aydın","Balıkesir","Bartın","Batman","Bayburt","Bilecik","Bingöl","Bitlis","Bolu","Burdur","Çanakkale","Çankırı","Çorum","Denizli","Diyarbakır","Düzce","Edirne","Elazığ","Erzincan","Erzurum","Eskişehir","Hakkari","Hatay","Iğdır","Isparta","Kahramanmaraş","Karabük","Karaman","Kars","Kastamonu","Kayseri","Kırıkkale","Kırklareli","Kırşehir","Kilis","Kütahya","Malatya","Manisa","Mardin","Mersin","Muğla","Muş","Nevşehir","Niğde","Ordu","Osmaniye","Rize","Sakarya","Şanlıurfa","Siirt","Sinop","Sivas","Şırnak","Tekirdağ","Tokat","Trabzon","Tunceli","Uşak","Van","Yalova","Yozgat","Zonguldak"];
         digerIller.forEach(il => { turkiyeAdresHaritasi[il] = ["Merkez", "İlçe 1", "İlçe 2"]; });
 
-        // DEV ARABA VERİTABANI (Tüm Marka, Zengin Model, Paket ve Motor Kombinasyonları)
+        // DEV ARABA VERİTABANI
         const devArabaVeritabani = {
             "Renault": {
                 "Megane": { pakets: ["Joy", "Touch", "Icon", "Limited", "GT-Line", "Techno"], motors: ["1.3 TCe (140 bg)", "1.3 TCe (160 bg)", "1.5 dCi (110 bg)", "1.5 dCi EDC", "1.6 16V", "1.2 TCe"] },
@@ -584,6 +646,13 @@
                     if(fMo) sonuclar = sonuclar.filter(i => i.model === fMo);
                     if(fP) sonuclar = sonuclar.filter(i => i.paket === fP);
                     if(fMoH) sonuclar = sonuclar.filter(i => i.motor === fMoH);
+                } else if(kat === 'Emlak') {
+                    const fEmlakAlt = document.getElementById('filtreEmlakAltKat').value;
+                    const fOda = document.getElementById('filtreOdaSayisi').value;
+                    const fYapi = document.getElementById('filtreYapiTipi').value;
+                    if(fEmlakAlt) sonuclar = sonuclar.filter(i => i.emlakAltKategori === fEmlakAlt);
+                    if(fOda) sonuclar = sonuclar.filter(i => i.odaSayisi === fOda);
+                    if(fYapi) sonuclar = sonuclar.filter(i => i.yapiTipi === fYapi);
                 }
             }
 
@@ -597,9 +666,26 @@
             if(minF) sonuclar = sonuclar.filter(i => Number(i.fiyat) >= Number(minF));
             if(maxF) sonuclar = sonuclar.filter(i => Number(i.fiyat) <= Number(maxF));
 
-            const txt = document.getElementById('hizliAraInput').value.toLowerCase();
+            // GELİŞMİŞ AKILLI KATEGORİ BAZLI KELİME ARAMA MOTORU
+            const txt = document.getElementById('hizliAraInput').value.toLowerCase().trim();
             if(txt) {
-                sonuclar = sonuclar.filter(i => i.baslik.toLowerCase().includes(txt) || i.aciklama.toLowerCase().includes(txt) || (i.marka && i.marka.toLowerCase().includes(txt)));
+                sonuclar = sonuclar.filter(i => {
+                    const baslikVar = i.baslik.toLowerCase().includes(txt);
+                    const aciklamaVar = i.aciklama.toLowerCase().includes(txt);
+                    const markaVar = i.marka ? i.marka.toLowerCase().includes(txt) : false;
+                    const modelVar = i.model ? i.model.toLowerCase().includes(txt) : false;
+                    const emlakAltVar = i.emlakAltKategori ? i.emlakAltKategori.toLowerCase().includes(txt) : false;
+                    const odaVar = i.odaSayisi ? i.odaSayisi.toLowerCase().includes(txt) : false;
+                    const yapiVar = i.yapiTipi ? i.yapiTipi.toLowerCase().includes(txt) : false;
+                    
+                    // Kiralık ev yazıp arattığında kiralık daireyi veya dubleksi de bulabilmesi için esnek eşleşme
+                    const esnekEmlakEşleşme = (txt.includes("kiralık") && emlakAltVar && i.emlakAltKategori.toLowerCase().includes("kiralık")) ||
+                                              (txt.includes("satılık") && emlakAltVar && i.emlakAltKategori.toLowerCase().includes("satılık")) ||
+                                              (txt.includes("daire") && emlakAltVar && i.emlakAltKategori.toLowerCase().includes("daire")) ||
+                                              (txt.includes("ev") && i.altKategori === "Emlak");
+
+                    return baslikVar || aciklamaVar || markaVar || modelVar || emlakAltVar || odaVar || yapiVar || esnekEmlakEşleşme;
+                });
             }
 
             const sira = document.getElementById('filtreSiralama').value;
@@ -628,13 +714,16 @@
                     <div class="h-40 bg-gray-100"><img src="${img}" class="w-full h-full object-cover"></div>
                     <div class="p-3 flex-1 flex flex-col justify-between space-y-2">
                         <div>
-                            <span class="text-[10px] bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-bold">${i.altKategori}</span>
+                            <span class="text-[10px] bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-bold">
+                                ${i.altKategori === 'Emlak' ? (i.emlakAltKategori || 'Emlak') : i.altKategori}
+                            </span>
                             <h4 class="font-bold text-gray-900 mt-1 line-clamp-1">${i.baslik}</h4>
                             <p class="text-[11px] text-gray-400">📍 ${i.il} / ${i.ilce}</p>
                             ${i.altKategori === 'Otomobil' ? `<p class="text-[11px] text-blue-600 font-bold">🚗 ${i.marka} ${i.model} (${i.yil || ''})</p>` : ''}
+                            ${i.altKategori === 'Emlak' ? `<p class="text-[11px] text-green-600 font-bold">🏢 ${i.odaSayisi || ''} - ${i.yapiTipi || ''}</p>` : ''}
                         </div>
                         <div class="flex justify-between items-center pt-2 border-t">
-                            <span class="text-xs font-semibold text-gray-500">${i.km ? i.km + ' KM' : ''}</span>
+                            <span class="text-xs font-semibold text-gray-500">${i.altKategori === 'Otomobil' ? (i.km ? i.km + ' KM' : '') : (i.odaSayisi || '')}</span>
                             <span class="font-black text-red-600 text-md">${Number(i.fiyat).toLocaleString('tr-TR')} TL</span>
                         </div>
                     </div>
@@ -655,20 +744,25 @@
             const tamKonumMetni = `${i.il} ${i.ilce} ${i.mahalle || ''} ${i.sokak || ''}`;
             const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(tamKonumMetni)}`;
             
-            // SAHİBİNDEN.COM TARZI DETAYLI WHATSAPP PAYLAŞIM METNİ
+            // DİNAMİK İLAN LİNKİ EKLEME (WhatsApp Paylaşım İçin Sitenin URL + Parametresini Alır)
+            const guncelIlanLinki = `${window.location.origin}${window.location.pathname}?ilanId=${i.id}`;
+
+            // SAHİBİNDEN.COM TARZI DETAYLI WHATSAPP PAYLAŞIM METNİ VE LİNKİ
             const sahibindenTarziMetin = 
 `🚀 MÜLKJET İLAN PAYLAŞIMI
 ----------------------------------
 📌 İlan Başlığı: ${i.baslik}
-🏷️ Kategori: ${i.altKategori}
+🏷️ Kategori: ${i.altKategori} ${i.emlakAltKategori ? `(${i.emlakAltKategori})` : ''}
 💰 Fiyat: ${Number(i.fiyat).toLocaleString('tr-TR')} TL
 📍 Konum: ${i.il} / ${i.ilce} (${i.mahalle || ''})
 ${i.altKategori === 'Otomobil' ? `🚗 Marka/Model: ${i.marka} ${i.model} (${i.yil || '-'} Model)\n⚡ Kilometre: ${i.km || '-'} KM\n🛠️ Hasar Durumu: ${i.hasarDurumu || 'Yok'}` : ''}
+${i.altKategori === 'Emlak' ? `🏢 Oda Sayısı: ${i.odaSayisi || '-'}\n📐 Yapı Tipi: ${i.yapiTipi || '-'}` : ''}
 ----------------------------------
 📞 İletişim Telefonu: ${i.telefon1 || 'Belirtilmemiş'}
 💬 Açıklama: ${i.aciklama}
 
-Detaylar için Mülkjet Pro'yu ziyaret edin!`;
+🔗 İlanı web sitesinde açmak için tıklayın:
+${guncelIlanLinki}`;
 
             const waUrl = `https://wa.me/?text=${encodeURIComponent(sahibindenTarziMetin)}`;
 
@@ -685,6 +779,17 @@ Detaylar için Mülkjet Pro'yu ziyaret edin!`;
                             <div><strong>KM Durumu:</strong> ${i.km || '-'}</div>
                             <div><strong>Hasar Kaydı:</strong> ${i.hasarDurumu || 'Yok'}</div>
                             <div><strong>Tramer Tutarı:</strong> ${i.tramer ? i.tramer + ' TL' : '0 TL'}</div>
+                        </div>
+                    </div>
+                `;
+            } else if(i.altKategori === 'Emlak') {
+                otoEkstraHtml = `
+                    <div class="bg-white p-3 border rounded-xl space-y-2 text-xs">
+                        <h4 class="font-bold border-b pb-1 text-gray-700">📋 Emlak Yapı Detayları</h4>
+                        <div class="grid grid-cols-2 gap-2 text-gray-600">
+                            <div><strong>Emlak Türü:</strong> ${i.emlakAltKategori || '-'}</div>
+                            <div><strong>Oda Sayısı:</strong> ${i.odaSayisi || '-'}</div>
+                            <div><strong>Yapı Tipi:</strong> ${i.yapiTipi || '-'}</div>
                         </div>
                     </div>
                 `;
@@ -745,6 +850,9 @@ Detaylar için Mülkjet Pro'yu ziyaret edin!`;
             const veriGonder = async () => {
                 await addDoc(collection(db, "ilanlar"), {
                     altKategori: document.getElementById('formAltKat').value,
+                    emlakAltKategori: document.getElementById('formEmlakAltKat').value || "",
+                    odaSayisi: document.getElementById('formOdaSayisi').value || "",
+                    yapiTipi: document.getElementById('formYapiTipi').value || "",
                     baslik: document.getElementById('formBaslik').value,
                     aciklama: document.getElementById('formAciklama').value,
                     fiyat: document.getElementById('formFiyat').value,
@@ -806,15 +914,30 @@ Detaylar için Mülkjet Pro'yu ziyaret edin!`;
         };
 
         document.getElementById('filtreKategori').onchange = (e) => {
-            const kutu = document.getElementById('filtreOtoDetayKutusu');
-            if(e.target.value === 'Otomobil') kutu.classList.remove('hidden');
-            else kutu.classList.add('hidden');
+            const otoKutu = document.getElementById('filtreOtoDetayKutusu');
+            const emlakKutu = document.getElementById('filtreEmlakDetayKutusu');
+            if(e.target.value === 'Otomobil') {
+                otoKutu.classList.remove('hidden');
+                emlakKutu.classList.add('hidden');
+            } else if(e.target.value === 'Emlak') {
+                emlakKutu.classList.remove('hidden');
+                otoKutu.classList.add('hidden');
+            } else {
+                otoKutu.classList.add('hidden');
+                emlakKutu.classList.add('hidden');
+            }
         };
 
         document.getElementById('formAltKat').onchange = (e) => {
-            const kutu = document.getElementById('formOtomobilTeknikKutusu');
-            if(e.target.value === 'Otomobil') kutu.classList.remove('hidden');
-            else kutu.classList.add('hidden');
+            const otoKutu = document.getElementById('formOtomobilTeknikKutusu');
+            const emlakKutu = document.getElementById('formEmlakTeknikKutusu');
+            if(e.target.value === 'Otomobil') {
+                otoKutu.classList.remove('hidden');
+                emlakKutu.classList.add('hidden');
+            } else if(e.target.value === 'Emlak') {
+                emlakKutu.classList.remove('hidden');
+                otoKutu.classList.add('hidden');
+            }
         };
 
         document.getElementById('profilimBtn').onclick = () => {
