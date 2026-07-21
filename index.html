@@ -155,7 +155,7 @@
     <!-- PROFİL AYARLARI MODALI -->
     <div id="profilModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-xl relative max-h-[90vh] overflow-y-auto">
-            <button type="button" onclick="modalKapat('profilModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold cursor-pointer">&times;</button>
+            <button type="button" onclick="modalKapat('profilModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold cursor-pointer">×</button>
             <h3 class="text-xl font-bold text-gray-900 mb-4">Profil Ayarlarım</h3>
             
             <div class="flex items-center gap-4 mb-6 bg-gray-50 p-3 rounded-xl">
@@ -225,9 +225,9 @@
     <!-- FIREBASE KÜTÜPHANELERİ (Modül Olarak Eklendi) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // Firebase Proje Yapılandırmanız (Senin Projene Göre Güncellendi)
+        // Firebase Proje Yapılandırmanız
         const firebaseConfig = {
             apiKey: "AIzaSyD7mIxqpIYuYSK2RCVl9p1gKMREpizyzIQ",
             authDomain: "mulkjet-app.firebaseapp.com",
@@ -242,44 +242,62 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
 
-        // Cihazdaki Gmail Hesaplarını Listelemeyi Sağlayan Tetikleyici Fonksiyon
+        // Kullanıcı Giriş Bilgilerini Kaydeden Ortak Fonksiyon
+        function kullaniciyiSistemeKaydet(user) {
+            window.kullaniciGirisYapti = true;
+            window.aktifKullaniciEposta = user.email;
+            
+            localStorage.setItem('mulkjet_giris_durum', 'true');
+            localStorage.setItem('mulkjet_aktif_user', user.email);
+
+            let veriTabaniUyeleri = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
+            const kullanıcıVarMi = veriTabaniUyeleri.find(u => u.email.toLowerCase() === user.email.toLowerCase());
+            
+            if (!kullanıcıVarMi) {
+                veriTabaniUyeleri.push({ 
+                    email: user.email, 
+                    foto: user.photoURL || "", 
+                    telefonlar: [] 
+                });
+                localStorage.setItem('mulkjet_uyeler', JSON.stringify(veriTabaniUyeleri));
+            }
+
+            // Arayüz fonksiyonlarının varlığını kontrol ederek tetikliyoruz
+            if (typeof window.arayuzOturumKontrol === 'function') window.arayuzOturumKontrol();
+            if (typeof window.ilanlariRenderEt === 'function') window.ilanlariRenderEt();
+        }
+
+        // 1. Yönlendirme Dönüşünü Yakalama
+        getRedirectResult(auth)
+            .then((result) => {
+                if (result && result.user) {
+                    kullaniciyiSistemeKaydet(result.user);
+                }
+            })
+            .catch((error) => {
+                console.error("Yönlendirme hatası:", error);
+            });
+
+        // 2. Dinamik Durum Takipçisi (Giriş yapılıp yönlenince tetiklenir)
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                kullaniciyiSistemeKaydet(user);
+            }
+        });
+
+        // Butona Basıldığında Tetiklenen Yönlendirme Fonksiyonu
         window.aksiyonFirebaseGoogleGiris = async () => {
             try {
-                // Bu metot cihazdaki kayıtlı maimleri pencere olarak listeler
-                const result = await signInWithPopup(auth, provider);
-                const user = result.user;
-
-                // Giriş başarılıysa bilgileri yerel veritabanıyla eşleştir
-                window.kullaniciGirisYapti = true;
-                window.aktifKullaniciEposta = user.email;
-                
-                localStorage.setItem('mulkjet_giris_durum', 'true');
-                localStorage.setItem('mulkjet_aktif_user', user.email);
-
-                // Eğer kullanıcı veritabanımızda yoksa yeni bir kayıt nesnesi oluştur
-                let veriTabaniUyeleri = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
-                const kullanıcıVarMi = veriTabaniUyeleri.find(u => u.email.toLowerCase() === user.email.toLowerCase());
-                
-                if (!kullanıcıVarMi) {
-                    veriTabaniUyeleri.push({ 
-                        email: user.email, 
-                        foto: user.photoURL || "", 
-                        telefonlar: [] 
-                    });
-                    localStorage.setItem('mulkjet_uyeler', JSON.stringify(veriTabaniUyeleri));
-                }
-
-                window.arayuzOturumKontrol();
-                alert(`Google ile Giriş Başarılı! Hoş geldiniz.`);
-                window.ilanlariRenderEt();
+                await signInWithRedirect(auth, provider);
             } catch (error) {
-                console.error("Giriş sırasında bir hata oluştu: ", error);
-                alert("Giriş işlemi iptal edildi veya bir hata oluştu.");
+                console.error("Giriş başlatılamadı: ", error);
+                alert("Giriş işlemi başlatılamadı.");
             }
         };
 
-        // Çıkış fonksiyonunu Firebase uyumlu hale getirme
+        // Çıkış fonksiyonu
         window.sanalCikisYap = async () => {
             await signOut(auth);
             window.kullaniciGirisYapti = false;
@@ -289,12 +307,12 @@
             localStorage.setItem('mulkjet_giris_durum', 'false');
             localStorage.removeItem('mulkjet_aktif_user');
             
-            window.arayuzOturumKontrol();
+            if (typeof window.arayuzOturumKontrol === 'function') window.arayuzOturumKontrol();
             alert("Oturum kapatıldı.");
-            window.ilanlariRenderEt();
+            if (typeof window.ilanlariRenderEt === 'function') window.ilanlariRenderEt();
         };
     </script>
-
+    
     <!-- GENEL UYGULAMA MANTIĞI SCRIPTİ -->
     <script>
         // Global Durum Değişkenleri
