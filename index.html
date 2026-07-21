@@ -222,19 +222,20 @@
         <p class="text-xs text-red-400 mt-2">İş Ortaklığı Modeli: Bu platform üzerinden yapılan gayrimenekul işlemlerinde %2 hizmet komisyonu uygulanır.</p>
     </footer>
 
-    <!-- FIREBASE KÜTÜPHANELERİ (Modül Olarak Eklendi) -->
+        <!-- FIREBASE KÜTÜPHANELERİ (Modül Olarak Eklendi) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // BURAYI KENDİ FIREBASE PROJE AYARLARINLA DEĞİŞTİRMELİSİN
+        // Firebase Proje Yapılandırmanız
         const firebaseConfig = {
-            apiKey: "BURAYA_KENDI_API_KEYINIZI_YAZIN",
-            authDomain: "BURAYA_PROJE_ADINIZ.firebaseapp.com",
-            projectId: "BURAYA_PROJE_ADINIZ",
-            storageBucket: "BURAYA_PROJE_ADINIZ.appspot.com",
-            messagingSenderId: "BURAYA_ID_YAZIN",
-            appId: "BURAYA_APP_ID_YAZIN"
+            apiKey: "AIzaSyD7mIxqpIYuYSK2RCVl9p1gKMREpizyzIQ",
+            authDomain: "mulkjet-app.firebaseapp.com",
+            projectId: "mulkjet-app",
+            storageBucket: "mulkjet-app.firebasestorage.app",
+            messagingSenderId: "115312263927",
+            appId: "1:115312263927:web:ec07adacc4b0ec94cb49f2",
+            measurementId: "G-JGP7GN60XF"
         };
 
         // Firebase Başlatma
@@ -242,43 +243,49 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        // Cihazdaki Gmail Hesaplarını Listelemeyi Sağlayan Tetikleyici Fonksiyon
+        // 1. Yönlendirme Sonrası Geri Dönüşü Yakalayan Fonksiyon
+        getRedirectResult(auth)
+            .then((result) => {
+                if (result && result.user) {
+                    const user = result.user;
+                    window.kullaniciGirisYapti = true;
+                    window.aktifKullaniciEposta = user.email;
+                    
+                    localStorage.setItem('mulkjet_giris_durum', 'true');
+                    localStorage.setItem('mulkjet_aktif_user', user.email);
+
+                    let veriTabaniUyeleri = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
+                    const kullanıcıVarMi = veriTabaniUyeleri.find(u => u.email.toLowerCase() === user.email.toLowerCase());
+                    
+                    if (!kullanıcıVarMi) {
+                        veriTabaniUyeleri.push({ 
+                            email: user.email, 
+                            foto: user.photoURL || "", 
+                            telefonlar: [] 
+                        });
+                        localStorage.setItem('mulkjet_uyeler', JSON.stringify(veriTabaniUyeleri));
+                    }
+
+                    window.arayuzOturumKontrol();
+                    window.ilanlariRenderEt();
+                }
+            })
+            .catch((error) => {
+                console.error("Yönlendirme sonucu alınırken hata:", error);
+            });
+
+        // 2. Butona Basıldığında Tetiklenen Yönlendirme Fonksiyonu (Mobil Uyumlu)
         window.aksiyonFirebaseGoogleGiris = async () => {
             try {
-                // Bu metot cihazdaki kayıtlı mailleri pencere olarak listeler
-                const result = await signInWithPopup(auth, provider);
-                const user = result.user;
-
-                // Giriş başarılıysa bilgileri yerel veritabanıyla eşleştir
-                window.kullaniciGirisYapti = true;
-                window.aktifKullaniciEposta = user.email;
-                
-                localStorage.setItem('mulkjet_giris_durum', 'true');
-                localStorage.setItem('mulkjet_aktif_user', user.email);
-
-                // Eğer kullanıcı veritabanımızda yoksa yeni bir kayıt nesnesi oluştur
-                let veriTabaniUyeleri = JSON.parse(localStorage.getItem('mulkjet_uyeler')) || [];
-                const kullanıcıVarMi = veriTabaniUyeleri.find(u => u.email.toLowerCase() === user.email.toLowerCase());
-                
-                if (!kullanıcıVarMi) {
-                    veriTabaniUyeleri.push({ 
-                        email: user.email, 
-                        foto: user.photoURL || "", 
-                        telefonlar: [] 
-                    });
-                    localStorage.setItem('mulkjet_uyeler', JSON.stringify(veriTabaniUyeleri));
-                }
-
-                window.arayuzOturumKontrol();
-                alert(`Google ile Giriş Başarılı! Hoş geldiniz.`);
-                window.ilanlariRenderEt();
+                // Pop-up yerine Redirect kullanarak tarayıcı kilitlerini kırıyoruz
+                await signInWithRedirect(auth, provider);
             } catch (error) {
-                console.error("Giriş sırasında bir hata oluştu: ", error);
-                alert("Giriş işlemi iptal edildi veya bir hata oluştu.");
+                console.error("Giriş başlatılamadı: ", error);
+                alert("Giriş işlemi başlatılamadı.");
             }
         };
 
-        // Çıkış fonksiyonunu Firebase uyumlu hale getirme
+        // Çıkış fonksiyonu
         window.sanalCikisYap = async () => {
             await signOut(auth);
             window.kullaniciGirisYapti = false;
@@ -293,6 +300,7 @@
             window.ilanlariRenderEt();
         };
     </script>
+    
 
     <!-- GENEL UYGULAMA MANTIĞI SCRIPTİ -->
     <script>
@@ -339,7 +347,6 @@
                     avatarHtml = `<img src="${aktifUyeObj.foto}" class="w-full h-full object-cover">`;
                 }
 
-                // K HARFİ/YAZISI YERİNE BURAYA TAM İSTEDİĞİNİZ MÜLKJET YAZISINI VE AVATARI KOYDUK
                 document.getElementById('authButonAlani').innerHTML = `
                     <div class="flex items-center gap-3 bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
                         <span class="text-xs font-black text-red-600 tracking-tight">🚀 MÜLK<span class="text-gray-900">JET</span></span>
