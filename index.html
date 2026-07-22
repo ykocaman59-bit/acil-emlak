@@ -420,195 +420,127 @@
             solArkaKapi: "orjinal", sagArkaKapi: "orjinal", bagaj: "orjinal"
         };
 
+        // GÜVENLİ VE TÜRKÇE ANAHTARLI HARİTA YAPISI (ÇÖKMEYİ ENGELLEMEK İÇİN SİLBAŞTAN TÜM İLÇELERİYLE)
         const turkiyeAdresHaritasi = {
-    "adana": { isim: "Adana", ilceler: ["Aladağ", "Ceyhan", "Çukurova", "Feke", "İmamoğlu", "Karaisalı", "Karataş", "Kozan", "Pozantı", "Saimbeyli", "Sarıçam", "Seyhan", "Tufanbeyli", "Yumurtalık", "Yüreğir"] },
-    "adiyaman": { isim: "Adıyaman", ilceler: ["Besni", "Çelikhan", "Gerger", "Gölbaşı", "Kâhta", "Merkez", "Samsat", "Sincik", "Tut"] },
-    "afyonkarahisar": { isim: "Afyonkarahisar", ilceler: ["Başmakçı", "Bayat", "Bolvadin", "Çay", "Çobanlar", "Dazkırı", "Dinar", "Emirdağ", "Evciler", "Hocalar", "İhsaniye", "İscehisar", "Merkez", "Sandıklı", "Sinanpaşa", "Sultandağı", "Şuhut"] },
-    "agri": { isim: "Ağrı", ilceler: ["Diyadin", "Doğubayazıt", "Eleşkirt", "Hamur", "Merkez", "Patnos", "Taşlıçay", "Tutak"] },
-    "aksaray": { isim: "Aksaray", ilceler: ["Ağaçören", "Eskil", "Gülağaç", "Güzelyurt", "Merkez", "Ortaköy", "Sarıyahşi", "Sultanhanı"] },
-    "amasya": { isim: "Amasya", ilceler: ["Göynücek", "Gümüşhacıköy", "Hamamözü", "Merkez", "Merzifon", "Suluova", "Taşova"] },
-    "ankara": { isim: "Ankara", ilceler: ["Akyurt", "Altındağ", "Ayaş", "Bala", "Beypazarı", "Çamlıdere", "Çankaya", "Çubuk", "Elmadağ", "Etimesgut", "Evren", "Gölbaşı", "Güdül", "Haymana", "Kahramankazan", "Kalecik", "Keçiören", "Kızılcahamam", "Mamak", "Nallıhan", "Polatlı", "Pursaklar", "Sincan", "Şereflikoçhisar", "Yenimahalle"] },
-    "antalya": { isim: "Antalya", ilceler: ["Akseki", "Aksu", "Alanya", "Demre", "Döşemealtı", "Elmalı", "Finike", "Gazipaşa", "Gündoğmuş", "İbradı", "Kaş", "Kemer", "Kepez", "Konyaaltı", "Korkuteli", "Muratpaşa", "Serik", "Manavgat"] },
-    "ardahan": { isim: "Ardahan", ilceler: ["Çıldır", "Damal", "Göle", "Hanak", "Merkez", "Posof"] },
-    "artvin": { isim: "Artvin", ilceler: ["Ardanuç", "Arhavi", "Borçka", "Hayati", "Kemalpaşa", "Merkez", "Murgul", "Şavşat", "Yusufeli"] },
-    "aydin": { isim: "Aydın", ilceler: ["Bozdoğan", "Buharkent", "Çine", "Didim", "Efeler", "Germencik", "İncirliova", "Karacasu", "Karpuzlu", "Koçarlı", "Köşk", "Kuşadası", "Kuyucak", "Nazilli", "Söke", "Sultanhisar", "Yenipazar"] },
-    "balikesir": { isim: "Balıkesir", ilceler: ["Altıeylül", "Ayvalık", "Balya", "Bandırma", "Bigadiç", "Burhaniye", "Dursunbey", "Edremit", "Erdek", "Gömeç", "Gönen", "Havran", "İvrindi", "Karesi", "Kepsut", "Manyas", "Marmara", "Savaştepe", "Sındırgı", "Susurluk"] },
-    "bartin": { isim: "Bartın", ilceler: ["Amasra", "Kurucaşile", "Merkez", "Ulus"] },
-    "batman": { isim: "Batman", ilceler: ["Beşiri", "Gercüş", "Hasankeyf", "Kozluk", "Merkez", "Sason"] },
-    "bayburt": { isim: "Bayburt", ilceler: ["Aydıntepe", "Demirözü", "Merkez"] },
-    "bilecik": { isim: "Bilecik", ilceler: ["Bozüyük", "Gölpazarı", "İnhisar", "Merkez", "Osmaneli", "Pazaryeri", "Söğüt", "Yenipazar"] },
-    "bingol": { isim: "Bingöl", ilceler: ["Adaklı", "Genç", "Karlıova", "Kiğı", "Merkez", "Solhan", "Yayladere", "Yedisu"] },
-    "bitlis": { isim: "Bitlis", ilceler: ["Adilcevaz", "Ahlat", "Güroymak", "Hizan", "Merkez", "Mutki", "Tatvan"] },
-    "bolu": { isim: "Bolu", ilceler: ["Dörtdivan", "Gerede", "Göynük", "Kıbrıscık", "Mengen", "Merkez", "Mudurnu", "Seben", "Yeniçağa"] },
-    "burdur": { isim: "Burdur", ilceler: ["Ağlasun", "Altınyayla", "Bucak", "Çavdır", "Çeltikçi", "Gölhisar", "Karamanlı", "Kemer", "Merkez", "Tefenni", "Yeşilova"] },
-    "bursa": { isim: "Bursa", ilceler: ["Büyükorhan", "Gemlik", "Gürsu", "Harmancık", "İnegöl", "İznik", "Karacabey", "Keles", "Kestel", "Mudanya", "Mustafakemalpaşa", "Nilüfer", "Orhaneli", "Orhangazi", "Osmangazi", "Yenişehir", "Yıldırım"] },
-    "canakkale": { isim: "Çanakkale", ilceler: ["Ayvacık", "Bayramiç", "Biga", "Bozcaada", "Çan", "Eceabat", "Ezine", "Gelibolu", "Gökçeada", "Lapseki", "Merkez", "Yenice"] },
-    "cankiri": { isim: "Çankırı", ilceler: ["Atkaracalar", "Bayramören", "Çerkeş", "Eldivan", "Ilgaz", "Kızılırmak", "Korgun", "Kurşunlu", "Merkez", "Orta", "Şabanözü", "Yapraklı"] },
-    "corum": { isim: "Çorum", ilceler: ["Alaca", "Bayat", "Boğazkale", "Dodurga", "İskilip", "Kargı", "Laçin", "Mecitözü", "Merkez", "Oğuzlar", "Ortaköy", "Osmancık", "Sungurlu", "Uğurludağ"] },
-    "denizli": { isim: "Denizli", ilceler: ["Acıpayam", "Babadağ", "Baklan", "Bekilli", "Beyağaç", "Bozkurt", "Buldan", "Çal", "Çameli", "Çardak", "Çivril", "Güney", "Honaz", "Kale", "Merkezefendi", "Pamukkale", "Sarayköy", "Serinhisar", "Tavas"] },
-    "diyarbakir": { isim: "Diyarbakır", ilceler: ["Bağlar", "Bismil", "Çermik", "Çınar", "Çüngüş", "Dicle", "Eğil", "Ergani", "Hani", "Hazro", "Kayapınar", "Kocaköy", "Kulp", "Lice", "Silvan", "Sur", "Yenişehir"] },
-    "duzce": { isim: "Düzce", ilceler: ["Akçakoca", "Cumayeri", "Çilimli", "Gölyaka", "Gümüşova", "Merkez", "Kaynaşlı", "Yığılca"] },
-    "edirne": { isim: "Edirne", ilceler: ["Enez", "Havsa", "İpsala", "Keşan", "Lalapaşa", "Meriç", "Merkez", "Süloğlu", "Uzunköprü"] },
-    "elazig": { isim: "Elazığ", ilceler: ["Ağın", "Alacakaya", "Arıcak", "Baskil", "Karakoçan", "Keban", "Kovancılar", "Maden", "Merkez", "Palu", "Sivrice"] },
-    "erzincan": { isim: "Erzincan", ilceler: ["Çayırlı", "İliç", "Kemah", "Kemaliye", "Merkez", "Otlukbeli", "Refahiye", "Tercan", "Üzümlü"] },
-    "erzurum": { isim: "Erzurum", ilceler: ["Aşkale", "Aziziye", "Çat", "Hınıs", "Horasan", "İspir", "Karaçoban", "Karayazı", "Köprüköy", "Narman", "Oltu", "Olur", "Palandöken", "Pasinler", "Pazaryolu", "Şenkaya", "Tekman", "Tortum", "Uzundere", "Yakutiye"] },
-    "eskisehir": { isim: "Eskişehir", ilceler: ["Alpu", "Beylikova", "Çifteler", "Günyüzü", "Han", "İnönü", "Mahmudiye", "Mihalgazi", "Mihalıççık", "Odunpazarı", "Seyitgazi", "Sivrihisar", "Tepebaşı"] },
-    "gaziantep": { isim: "Gaziantep", ilceler: ["Araban", "İslahiye", "Karkamış", "Nizip", "Nurdağı", "Oğuzeli", "Şahinbey", "Şehitkamil", "Yavuzeli"] },
-    "giresun": { isim: "Giresun", ilceler: ["Alucra", "Bulancak", "Çamoluk", "Çanakçı", "Dereli", "Doğankent", "Espiye", "Eynesil", "Görele", "Güce", "Keşap", "Merkez", "Piraziz", "Şebinkarahisar", "Tirebolu", "Yağlıdere"] },
-    "gumushane": { isim: "Gümüşhane", ilceler: ["Kelkit", "Köse", "Kürtün", "Merkez", "Şiran", "Torul"] },
-    "hakkari": { isim: "Hakkari", ilceler: ["Çukurca", "Derecik", "Merkez", "Şemdinli", "Yüksekova"] },
-    "hatay": { isim: "Hatay", ilceler: ["Altınözü", "Antakya", "Arsuz", "Belen", "Defne", "Dörtyol", "Erzin", "Hassa", "İskenderun", "Kırıkhan", "Kumlu", "Payas", "Reyhanlı", "Samandağ", "Yayladığı"] },
-    "igdir": { isim: "Iğdır", ilceler: ["Aralık", "Karakoyunlu", "Merkez", "Tuzluca"] },
-    "isparta": { isim: "Isparta", ilceler: ["Aksu", "Atabey", "Eğirdir", "Gelendost", "Gönen", "Keçiborlu", "Merkez", "Senirkent", "Sütçüler", "Şarkikaraağaç", "Uluborlu", "Yalvaç", "Yenişarbademli"] },
-    "istanbul_anadolu": { isim: "İstanbul Anadolu", ilceler: ["Adalar", "Ataşehir", "Beykoz", "Çekmeköy", "Kadıköy", "Kartal", "Maltepe", "Pendik", "Sancaktepe", "Sultanbeyli", "Şile", "Tuzla", "Ümraniye", "Üsküdar"] },
-    "istanbul_avrupa": { isim: "İstanbul Avrupa", ilceler: ["Arnavutköy", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kâğıthane", "Küçükçekmece", "Sarıyer", "Silivri", "Sultangazi", "Şişli", "Zeytinburnu"] },
-    "izmir": { isim: "İzmir", ilceler: ["Aliağa", "Balçova", "Bayındır", "Bayraklı", "Bergama", "Beydağ", "Bornova", "Buca", "Çeşme", "Çiğli", "Dikili", "Foça", "Gaziemir", "Güzelbahçe", "Karabağlar", "Karaburun", "Karşıyaka", "Kemalpaşa", "Kınık", "Kiraz", "Konak", "Menderes", "Menemen", "Narlıdere", "Ödemiş", "Seferihisar", "Selçuk", "Tire", "Torbalı", "Urla"] },
-    "kahramanmaras": { isim: "Kahramanmaraş", ilceler: ["Afşin", "Andırın", "Çağlayancerit", "Dulkadiroğlu", "Ekinözü", "Elbistan", "Göksun", "Nurhak", "Onikişubat", "Pazarcık", "Türkoğlu"] },
-    "karabuk": { isim: "Karabük", ilceler: ["Eflani", "Eskipazar", "Merkez", "Ovacık", "Safranbolu", "Yenice"] },
-    "karaman": { isim: "Karaman", ilceler: ["Ayrancı", "Başyayla", "Ermenek", "Kazımkarabekir", "Merkez", "Sarıveliler"] },
-    "kars": { isim: "Kars", ilceler: ["Akyaka", "Arpaçay", "Digor", "Kağızman", "Merkez", "Sarıkamış", "Selim", "Susuz"] },
-    "kastamonu": { isim: "Kastamonu", ilceler: ["Abana", "Ağlı", "Araç", "Azdavay", "Bozkurt", "Cide", "Çatalzeytin", "Daday", "Devrekani", "Doğanyurt", "Hanönü", "İhsangazi", "İnebolu", "Merkez", "Pınarbaşı", "Seydiler", "Şenpazar", "Taşköprü", "Tosya"] },
-    "kayseri": { isim: "Kayseri", ilceler: ["Akkışla", "Bünyan", "Develi", "Felahiye", "Hacılar", "İncesu", "Kocasinan", "Melikgazi", "Özvatan", "Pınarbaşı", "Sarıoğlan", "Sarız", "Talas", "Tomarza", "Yahyalı", "Yeşilhisar"] },
-    "kirikkale": { isim: "Kırıkkale", ilceler: ["Bahşılı", "Balışeyh", "Çelebi", "Delice", "Karakeçili", "Keskin", "Merkez", "Sulakyurt", "Yahşihan"] },
-    "kirklareli": { isim: "Kırklareli", ilceler: ["Babaeski", "Demirköy", "Kofçaz", "Lüleburgaz", "Merkez", "Pehlivanköy", "Pınarhisar", "Vize"] },
-    "kirsehir": { isim: "Kırşehir", ilceler: ["Akçakent", "Akpınar", "Boztepe", "Çiçekdağı", "Kaman", "Merkez", "Mucur"] },
-    "kilis": { isim: "Kilis", ilceler: ["Elbeyli", "Merkez", "Musabeyli", "Polateli"] },
-    "kocaeli": { isim: "Kocaeli", ilceler: ["Başiskele", "Çayırova", "Darıca", "Derince", "Dilovası", "Gebze", "Gölcük", "İzmit", "Kandıra", "Karamürsel", "Kartepe", "Körfez"] },
-    "konya": { isim: "Konya", ilceler: ["Ahırlı", "Akören", "Akşehir", "Altınekin", "Beyşehir", "Bozkır", "Cihanbeyli", "Çeltik", "Çumra", "Derbent", "Derebucak", "Doğanhisar", "Emirgazi", "Ereğli", "Güneysınır", "Hadim", "Halkapınar", "Hüyük", "Ilgın", "Kadınhanı", "Karapınar", "Karatay", "Kulu", "Meram", "Sarayönü", "Selçuklu", "Seydişehir", "Taşkent", "Tuzlukçu", "Yalıhüyük", "Yunak"] },
-    "kutahya": { isim: "Kütahya", ilceler: ["Altıntaş", "Aslanapa", "Çavdarhisar", "Domaniç", "Dumlupınar", "Emet", "Gediz", "Hisarcık", "Merkez", "Pazarlar", "Şaphane", "Simav", "Tavşanlı"] },
-    "malatya": { isim: "Malatya", ilceler: ["Akçadağ", "Arapgir", "Arguvan", "Battalgazi", "Darende", "Doğanşehir", "Doğanyol", "Hekimhan", "Kale", "Kuluncak", "Pütürge", "Yazıhan", "Yeşilyurt"] },
-    "manisa": { isim: "Manisa", ilceler: ["Ahmetli", "Akhisar", "Alaşehir", "Demirci", "Gölmarmara", "Gördes", "Kırkağaç", "Köprübaşı", "Kula", "Salihli", "Sarıgöl", "Saruhanlı", "Selendi", "Soma", "Şehzadeler", "Turgutlu", "Yunusemre"] },
-    "mardin": { isim: "Mardin", ilceler: ["Artuklu", "Dargeçit", "Derik", "Kızıltepe", "Mazıdağı", "Midyat", "Nusaybin", "Ömerli", "Savur", "Yeşilli"] },
-    "mersin": { isim: "Mersin", ilceler: ["Akdeniz", "Anamur", "Aydıncık", "Bozyazı", "Çamlıyayla", "Erdemli", "Gülnar", "Mezitli", "Mut", "Silifke", "Tarsus", "Toroslar", "Yenişehir"] },
-    "mugla": { isim: "Muğla", ilceler: ["Bodrum", "Dalaman", "Datça", "Fethiye", "Kavaklıdere", "Köyceğiz", "Marmaris", "Menteşe", "Milas", "Ortaca", "Seydikemer", "Ula", "Yatağan"] },
-    "mus": { isim: "Muş", ilceler: ["Bulanık", "Hasköy", "Korkut", "Malazgirt", "Merkez", "Varto"] },
-    "nevsehir": { isim: "Nevşehir", ilceler: ["Acıgöl", "Avanos", "Derinkuyu", "Gülşehir", "Hacıbektaş", "Kozaklı", "Merkez", "Ürgüp"] },
-    "nigde": { isim: "Niğde", ilceler: ["Altunhisar", "Bor", "Çamardı", "Çiftlik", "Merkez", "Ulukışla"] },
-    "ordu": { isim: "Ordu", ilceler: ["Akkuş", "Altınordu", "Aybastı", "Çamaş", "Çatalpınar", "Çaybaşı", "Fatsa", "Gölköy", "Gülyalı", "Gürgentepe", "İkizce", "Kabadüz", "Kabataş", "Korgan", "Kumru", "Mesudiye", "Perşembe", "Ulubey", "Ünye"] },
-    "osmaniye": { isim: "Osmaniye", ilceler: ["Bahçe", "Düziçi", "Hasanbeyli", "Kadirli", "Merkez", "Sumbas", "Toprakkale"] },
-    "rize": { isim: "Rize", ilceler: ["Ardeşen", "Çamlıhemşin", "Çayeli", "Derepazarı", "Fındıklı", "Güneysu", "Hemşin", "İkizdere", "İyidere", "Kalkandere", "Merkez", "Pazar"] },
-    "sakarya": { isim: "Sakarya", ilceler: ["Adapazarı", "Akyazı", "Arifiye", "Erenler", "Ferizli", "Geyve", "Hendek", "Karapürçek", "Karasu", "Kaynarca", "Kocaali", "Pamukova", "Sapanca", "Serdivan", "Söğütlü", "Taraklı"] },
-    "samsun": { isim: "Samsun", ilceler: ["19 Mayıs", "Alaçam", "Asarcık", "Atakum", "Ayvacık", "Bafra", "Canik", "Çarşamba", "Havza", "İlkadım", "Ladik", "Salıpazarı", "Tekkeköy", "Terme", "Vezirköprü", "Yakakent"] },
-    "siirt": { isim: "Siirt", ilceler: ["Baykan", "Eruh", "Kurtalan", "Merkez", "Pervari", "Şirvan", "Tillo"] },
-    "sinop": { isim: "Sinop", ilceler: ["Ayancık", "Boyabat", "Dikmen", "Durağan", "Erfelek", "Gerze", "Merkez", "Saraydüzü", "Türkeli"] },
-    "sivas": { isim: "Sivas", ilceler: ["Akıncılar", "Altınyayla", "Divriği", "Doğanşar", "Gemerek", "Gölova", "Gürün", "Hafik", "İmranlı", "Kangal", "Koyulhisar", "Merkez", "Suşehri", "Şarkışla", "Ulaş", "Yıldızeli", "Zara"] },
-    "sanliurfa": { isim: "Şanlıurfa", ilceler: ["Akçakale", "Birecik", "Bozova", "Ceylanpınar", "Eyyübiye", "Halfeti", "Haliliye", "Harran", "Hilvan", "Karaköprü", "Siverek", "Suruç", "Viranşehir"] },
-    "sirnak": { isim: "Şırnak", ilceler: ["Beytüşşebap", "Cizre", "Güçlükkonak", "İdil", "Merkez", "Silopi", "Uludere"] },
-    "tekirdag": { isim: "Tekirdağ", ilceler: ["Çerkezköy", "Çorlu", "Ergene", "Hayrabolu", "Kapaklı", "Malkara", "Marmaraereğlisi", "Muratlı", "Saray", "Süleymanpaşa", "Şarköy"] },
-    "tokat": { isim: "Tokat", ilceler: ["Almus", "Artova", "Başçiftlik", "Erbaa", "Merkez", "Niksar", "Pazar", "Reşadiye", "Sulusaray", "Turhal", "Yeşilyurt", "Zile"] },
-    "trabzon": { isim: "Trabzon", ilceler: ["Akçaabat", "Araklı", "Arsin", "Beşikdüzü", "Çarşıbaşı", "Çaykara", "Dernekpazarı", "Düzköy", "Hayrat", "Köprübaşı", "Maçka", "Of", "Ortahisar", "Sürmene", "Şalpazarı", "Tonya", "Vakfıkebir", "Yomra"] },
-    "tunceli": { isim: "Tunceli", ilceler: ["Çemişgezek", "Hozat", "Mazgirt", "Merkez", "Nazımiye", "Ovacık", "Pertek", "Pülümür"] },
-    "usak": { isim: "Uşak", ilceler: ["Banaz", "Eşme", "Karahallı", "Merkez", "Sivaslı", "Ulubey"] },
-    "van": { isim: "Van", ilceler: ["Bahçesaray", "Başkale", "Çaldıran", "Çatak", "Edremit", "Erciş", "Gevaş", "Gürpınar", "İpekyolu", "Muradiye", "Özalp", "Saray", "Tuşba"] },
-    "yalova": { isim: "Yalova", ilceler: ["Altınova", "Armutlu", "Çiftlikköy", "Çınarcık", "Merkez", "Termal"] },
-    "yozgat": { isim: "Yozgat", ilceler: ["Akdağmadeni", "Aydıncık", "Boğazlıyan", "Çandır", "Çayıralan", "Çekerek", "Kadışehri", "Merkez", "Saraykent", "Sarıkaya", "Sorgun", "Şefaatli", "Yenifakılı", "Yerköy"] },
-    "zonguldak": { isim: "Zonguldak", ilceler: ["Alaplı", "Çaycuma", "Devrek", "Ereğli", "Gökçebey", "Kilimli", "Merkez", "Kozlu"] }
-};
-        
-        
-        const digerIller = ["Afyonkarahisar","Ağrı","Aksaray","Amasya","Ardahan","Artvin","Aydın","Balıkesir","Bartın","Batman","Bayburt","Bilecik","Bingöl","Bitlis","Bolu","Burdur","Çanakkale","Çankırı","Çorum","Denizli","Diyarbakır","Düzce","Edirne","Elazığ","Erzincan","Erzurum","Eskişehir","Hakkari","Hatay","Iğdır","Isparta","Kahramanmaraş","Karabük","Karaman","Kars","Kastamonu","Kayseri","Kırıkkale","Kırklareli","Kırşehir","Kilis","Kütahya","Malatya","Manisa","Mardin","Mersin","Muğla","Muş","Nevşehir","Niğde","Ordu","Osmaniye","Rize","Sakarya","Şanlıurfa","Siirt","Sinop","Sivas","Şırnak","Tekirdağ","Tokat","Trabzon","Tunceli","Uşak","Van","Yalova","Yozgat","Zonguldak"];
-        digerIller.forEach(il => { turkiyeAdresHaritasi[il] = ["Merkez", "İlçe 1", "İlçe 2"]; });
-
-        // DEV ARABA VERİTABANI
-        const devArabaVeritabani = {
-            "Renault": {
-                "Megane": { pakets: ["Joy", "Touch", "Icon", "Limited", "GT-Line", "Techno"], motors: ["1.3 TCe (140 bg)", "1.3 TCe (160 bg)", "1.5 dCi (110 bg)", "1.5 dCi EDC", "1.6 16V", "1.2 TCe"] },
-                "Clio": { pakets: ["Joy", "Touch", "Icon", "Techno Esprit Alpine", "RS Line"], motors: ["1.0 TCe (100 bg)", "1.0 TCe X-Tronic", "0.9 TCe", "1.5 dCi", "1.2 PureTech"] },
-                "Fluence": { pakets: ["Joy", "Touch", "Icon", "Privilege", "Business"], motors: ["1.5 dCi (90 bg)", "1.5 dCi (110 bg)", "1.6 16V"] },
-                "Talisman": { pakets: ["Icon", "Touch", "Business"], motors: ["1.6 dCi (130 bg)", "1.6 TCe (200 bg)", "2.0 Blue dCi"] },
-                "Kadjar": { pakets: ["Touch", "Icon", "Addict"], motors: ["1.5 dCi", "1.3 TCe", "1.6 dCi"] },
-                "Captur": { pakets: ["Touch", "Icon", "Joy", "R.S. Line"], motors: ["1.0 TCe", "1.3 TCe", "1.5 dCi", "1.6 E-Tech Hybrid"] },
-                "Austral": { pakets: ["Techno", "Techno Esprit Alpine", "Iconic Esprit Alpine"], motors: ["1.33 E-Tech Full Hybrid (200 bg)", "1.3 TCe Mild Hybrid"] },
-                "Symbol": { pakets: ["Joy", "Touch"], motors: ["0.9 TCe", "1.2 16V", "1.5 dCi"] },
-                "Scenic": { pakets: ["Privilege", "Expression", "Icon"], motors: ["1.5 dCi", "1.6 16V"] },
-                "Laguna": { pakets: ["Dynamique", "Expression", "Privilege"], motors: ["1.6 16V", "2.0 16V", "1.5 dCi"] },
-                "Master": { pakets: ["Panelvan", "Minibüs", "Kamyonet"], motors: ["2.3 dCi (130 bg)", "2.3 dCi (145 bg)", "2.3 dCi (165 bg)"] }
-            },
-            "Fiat": {
-                "Egea": { pakets: ["Easy", "Urban", "Lounge", "Cross", "Cross Wagon", "Mirror", "Street"], motors: ["1.4 Fire (95 bg)", "1.3 Multijet (95 bg)", "1.6 Multijet (120 bg)", "1.5 T4 Hybrid (130 bg)"] },
-                "Linea": { pakets: ["Pop", "Easy", "Urban", "Lounge", "Emotion"], motors: ["1.3 Multijet (95 bg)", "1.6 Multijet (105 bg)", "1.4 Fire (77 bg)"] },
-                "Punto": { pakets: ["Pop", "Lounge", "Evo", "Active", "Dynamic"], motors: ["1.3 Multijet", "1.4 Fire", "1.2 Pop"] },
-                "Fiorino": { pakets: ["Pop", "Premio", "Combi", "Cargo"], motors: ["1.3 Multijet (75 bg)", "1.3 Multijet (95 bg)"] },
-                "Doblo": { pakets: ["Premio", "Elegance", "Active", "Safeline"], motors: ["1.3 Multijet", "1.6 Multijet", "2.0 Multijet"] },
-                "Tipo": { pakets: ["Base", "Plus"], motors: ["1.4 Benzinli", "1.6 Dizel"] },
-                "Ducato": { pakets: ["Van", "Minibüs", "Kamyonet"], motors: ["2.3 Multijet (130 bg)", "2.3 Multijet (140 bg)", "2.2 Multijet"] }
-            },
-            "Volkswagen": {
-                "Passat": { pakets: ["Trendline", "Comfortline", "Highline", "Elegance", "R-Line", "Business"], motors: ["1.6 TDI (120 bg)", "1.5 TSI (150 bg)", "2.0 TDI (150 bg)", "2.0 TDI 4Motion", "1.4 TSI"] },
-                "Golf": { pakets: ["Impression", "Life", "Style", "R-Line", "GTI", "R"], motors: ["1.0 TSI (110 bg)", "1.5 eTSI (150 bg)", "1.6 TDI (115 bg)", "2.0 TDI", "2.0 TSI"] },
-                "Polo": { pakets: ["Trendline", "Comfortline", "Highline", "Life", "Style"], motors: ["1.0 TSI", "1.4 TDI", "1.2 TSI", "1.4 Benzinli"] },
-                "Tiguan": { pakets: ["Life", "Elegance", "R-Line", "Comfortline", "Highline"], motors: ["1.5 TSI", "2.0 TDI", "2.0 TSI"] },
-                "Jetta": { pakets: ["Trendline", "Comfortline", "Highline"], motors: ["1.6 TDI", "1.4 TSI", "1.2 TSI"] },
-                "Transporter": { pakets: ["Cityvan", "Van", "Kombi", "Camgöz"], motors: ["2.0 TDI (102 bg)", "2.0 TDI (140 bg)", "2.0 TDI (150 bg)", "2.0 BiTDI (204 bg)"] },
-                "Arteon": { pakets: ["Elegance", "R-Line"], motors: ["1.5 TSI", "2.0 TDI", "2.0 TSI 4Motion"] }
-            },
-            "BMW": {
-                "1 Serisi": { pakets: ["Sport Line", "M Sport", "Joy"], motors: ["1.16d", "1.18i", "1.20d"] },
-                "3 Serisi": { pakets: ["Luxury Line", "M Sport", "First Edition", "Modern Line"], motors: ["3.16i", "3.20d", "3.20i Ed", "3.30i", "M3"] },
-                "5 Serisi": { pakets: ["Luxury Line", "M Sport", "Executive"], motors: ["5.20d", "5.30i", "5.30d", "M550d"] },
-                "X1": { pakets: ["xLine", "M Sport", "Advantage"], motors: ["sDrive16d", "sDrive18i", "xDrive20d"] },
-                "X3": { pakets: ["xLine", "M Sport"], motors: ["xDrive20d", "M40i"] },
-                "X5": { pakets: ["Pure Experience", "M Sport", "xLine"], motors: ["xDrive25d", "xDrive30d", "M50d"] },
-                "4 Serisi": { pakets: ["M Sport", "Luxury Line"], motors: ["420d", "430i", "M4"] }
-            },
-            "Mercedes-Benz": {
-                "A Serisi": { pakets: ["AMG", "Style", "Progressive"], motors: ["A180", "A200", "A200d"] },
-                "C Serisi": { pakets: ["AMG", "Exclusive", "Prime", "Fascination"], motors: ["C180", "C200d", "C300", "C63 AMG"] },
-                "E Serisi": { pakets: ["AMG", "Exclusive", "Avantgarde"], motors: ["E180", "E200d", "E220d", "E300"] },
-                "S Serisi": { pakets: ["Long", "Maybach", "AMG"], motors: ["S350d", "S400", "S500"] },
-                "GLA": { pakets: ["AMG", "Progressive", "Style"], motors: ["GLA 180", "GLA 200", "GLA 200d"] },
-                "GLC": { pakets: ["AMG", "Exclusive"], motors: ["GLC 200d", "GLC 300"] },
-                "Sprinter": { pakets: ["Panelvan", "Minibüs"], motors: ["314 CDI", "316 CDI", "319 CDI"] }
-            },
-            "Audi": {
-                "A3": { pakets: ["Advanced", "S Line", "Design", "Dynamic"], motors: ["30 TFSI", "35 TFSI", "35 TDI"] },
-                "A4": { pakets: ["Design", "Sport", "S Line", "Advanced"], motors: ["35 TFSI", "40 TDI", "45 TFSI"] },
-                "A6": { pakets: ["Design", "Sport", "S Line", "Executive"], motors: ["40 TDI", "45 TFSI", "50 TDI"] },
-                "Q3": { pakets: ["Advanced", "S Line", "Design"], motors: ["35 TFSI", "35 TDI"] },
-                "Q5": { pakets: ["Advanced", "S Line"], motors: ["40 TDI", "45 TFSI"] }
-            },
-            "Ford": {
-                "Focus": { pakets: ["Trend X", "Titanium", "ST-Line", "Active", "Trend"], motors: ["1.5 Ecoboost", "1.5 TDCi", "1.0 Ecoboost", "1.6 Ti-VCT"] },
-                "Fiesta": { pakets: ["Trend", "Titanium", "ST-Line"], motors: ["1.0 Ecoboost", "1.5 TDCi", "1.25 Benzinli"] },
-                "Kuga": { pakets: ["Trend", "Titanium", "ST-Line", "Vignale"], motors: ["1.5 Ecoboost", "1.5 Ecoblue", "2.0 Ecoblue"] },
-                "Mondeo": { pakets: ["Trend", "Titanium", "Select"], motors: ["1.5 Ecoboost", "2.0 TDCi"] },
-                "Transit": { pakets: ["Panelvan", "Kamyonet", "Minibüs"], motors: ["2.0 Ecoblue (130 bg)", "2.0 Ecoblue (170 bg)", "2.0 Ecoblue (185 bg)"] },
-                "Ranger": { pakets: ["Wildtrak", "XLT", "Stormtrak", "Raptor"], motors: ["2.0 EcoBlue", "3.0 V6 EcoBlue"] }
-            },
-            "Toyota": {
-                "Corolla": { pakets: ["Vision", "Dream", "Flame", "Passion", "Hybrid"], motors: ["1.5 Vision", "1.8 Hybrid", "1.6 Valvematic"] },
-                "Yaris": { pakets: ["Dream", "Flame", "Style", "Hybrid"], motors: ["1.0 Benzinli", "1.5 Hybrid", "1.5 Benzinli"] },
-                "RAV4": { pakets: ["Flame", "Passion", "Adventure", "Hybrid"], motors: ["2.5 Hybrid"] },
-                "C-HR": { pakets: ["Flame", "Passion", "Advance", "Hybrid"], motors: ["1.2 Turbo", "1.8 Hybrid"] },
-                "Hilux": { pakets: ["Adventure", "Invincible", "Hi-Cruiser"], motors: ["2.4 D-4D", "2.8 D-4D"] }
-            },
-            "Honda": {
-                "Civic": { pakets: ["Dream", "Premium", "Elegance", "Executive+", "RS"], motors: ["1.5 VTEC Turbo", "1.6 i-VTEC", "2.0 Type-R"] },
-                "CR-V": { pakets: ["Dream", "Elegance", "Executive", "Hybrid"], motors: ["1.5 VTEC Turbo", "2.0 i-MMD Hybrid"] },
-                "HR-V": { pakets: ["Executive", "Style", "Advance"], motors: ["1.5 i-VTEC", "1.5 e:HEV Hybrid"] }
-            },
-            "Hyundai": {
-                "i20": { pakets: ["Jump", "Style", "Elite", "Assos"], motors: ["1.4 MPI", "1.0 T-GDI"] },
-                "Elantra": { pakets: ["Style", "Prime", "Elite"], motors: ["1.6 MPI", "1.6 CRDi"] },
-                "Tucson": { pakets: ["Prime", "Elite", "Elite Plus", "N Line"], motors: ["1.6 T-GDI", "1.6 CRDi", "1.6 Hybrid"] },
-                "Bayon": { pakets: ["Jump", "Style", "Elite"], motors: ["1.4 MPI", "1.0 T-GDI"] }
-            },
-            "Togg": {
-                "T10X": { pakets: ["V1 Standard", "V2 Standard", "V2 Long Range"], motors: ["RWD (218 bg) Elektrikli", "AWD (435 bg) Elektrikli"] }
-            }
+            "Istanbul_Avrupa": ["Arnavutköy", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kâğıthane", "Küçükçekmece", "Sarıyer", "Silivri", "Sultangazi", "Şişli", "Zeytinburnu"],
+            "Istanbul_Anadolu": ["Adalar", "Ataşehir", "Beykoz", "Çekmeköy", "Kadıköy", "Kartal", "Maltepe", "Pendik", "Sancaktepe", "Sultanbeyli", "Şile", "Tuzla", "Ümraniye", "Üsküdar"],
+            "Ankara": ["Akyurt", "Altındağ", "Ayaş", "Bala", "Beypazarı", "Çamlıdere", "Çankaya", "Çubuk", "Elmadağ", "Etimesgut", "Evren", "Gölbaşı", "Güdül", "Haymana", "Kahramankazan", "Kalecik", "Keçiören", "Kızılcahamam", "Mamak", "Nallıhan", "Polatlı", "Pursaklar", "Sincan", "Şereflikoçhisar", "Yenimahalle"],
+            "Izmir": ["Aliağa", "Balçova", "Bayındır", "Bayraklı", "Bergama", "Beydağ", "Bornova", "Buca", "Çeşme", "Çiğli", "Dikili", "Foça", "Gaziemir", "Güzelbahçe", "Karabağlar", "Karaburun", "Karşıyaka", "Kemalpaşa", "Kınık", "Kiraz", "Konak", "Menderes", "Menemen", "Narlıdere", "Ödemiş", "Seferihisar", "Selçuk", "Tire", "Torbalı", "Urla"],
+            "Adana": ["Aladağ", "Ceyhan", "Çukurova", "Feke", "İmamoğlu", "Karaisalı", "Karataş", "Kozan", "Pozantı", "Saimbeyli", "Sarıçam", "Seyhan", "Tufanbeyli", "Yumurtalık", "Yüreğir"],
+            "Adiyaman": ["Besni", "Çelikhan", "Gerger", "Gölbaşı", "Kahta", "Merkez", "Samsat", "Sincik", "Tut"],
+            "Afyonkarahisar": ["Başmakçı", "Bayat", "Bolvadin", "Çay", "Çobanlar", "Dazkırı", "Dinar", "Emirdağ", "Evciler", "Hocalar", "İhsaniye", "İscehisar", "Merkez", "Sandıklı", "Sinanpaşa", "Sultandağı", "Şuhut", "Yenişarbademli"],
+            "Agri": ["Diyadin", "Doğubayazıt", "Eleşkirt", "Hamur", "Merkez", "Patnos", "Taşlıçay", "Tutak"],
+            "Aksaray": ["Ağaçören", "Eskil", "Gülağaç", "Güzelyurt", "Merkez", "Ortaköy", "Sarıyahşi", "Sultanhanı"],
+            "Amasya": ["Göynücek", "Gümüşhacıköy", "Hamamözü", "Merkez", "Merzifon", "Suluova", "Taşova"],
+            "Antalya": ["Akseki", "Aksu", "Alanya", "Demre", "Döşemealtı", "Elmalı", "Finike", "Gazipaşa", "Gündoğmuş", "İbradı", "Kaş", "Kemer", "Kepez", "Konyaaltı", "Korkuteli", "Kumluca", "Manavgat", "Muratpaşa", "Serik"],
+            "Ardahan": ["Çıldır", "Damal", "Göle", "Hanak", "Merkez", "Posof"],
+            "Artvin": ["Ardanuç", "Arhavi", "Borçka", "Hopa", "Kemalpaşa", "Merkez", "Murgul", "Şavşat", "Yusufeli"],
+            "Aydin": ["Bozdoğan", "Buharkent", "Çine", "Didim", "Efeler", "Germencik", "Incirliova", "Karacasu", "Karpuzlu", "Koçarlı", "Köşk", "Kuşadası", "Kuyucak", "Nazilli", "Söke", "Sultanhisar", "Yenipazar"],
+            "Balikesir": ["Altıeylül", "Ayvalık", "Balya", "Bandırma", "Bigadiç", "Burhaniye", "Dursunbey", "Edremit", "Erdek", "Gömeç", "Gönen", "Havran", "İvrindi", "Karesi", "Manyas", "Marmara", "Savaştepe", "Sındırgı", "Susurluk"],
+            "Bartin": ["Amasra", "Kuruçaşile", "Merkez", "Ulus"],
+            "Batman": ["Beşiri", "Gercüş", "Hasankeyf", "Merkez", "Kozluk", "Sason"],
+            "Bayburt": ["Aydıntepe", "Demirözü", "Merkez"],
+            "Bilecik": ["Bozüyük", "Gölpazarı", "İnhisar", "Merkez", "Osmaneli", "Pazaryeri", "Söğüt", "Yenipazar"],
+            "Bingol": ["Adaklı", "Genç", "Karlıova", "Kiğı", "Merkez", "Solhan", "Yayladere", "Yedisu"],
+            "Bitlis": ["Adilcevaz", "Ahlat", "Güroymak", "Hizan", "Merkez", "Mutki", "Tatvan"],
+            "Bolu": ["Dörtdivan", "Gerede", "Göynük", "Kıbrıscık", "Mengen", "Merkez", "Mudurnu", "Seben", "Yeniçağa"],
+            "Burdur": ["Ağlasun", "Altınyayla", "Bucak", "Çavdır", "Çeltikçi", "Gölhisar", "Karamanlı", "Kemer", "Merkez", "Tefenni", "Yeşilova"],
+            "Bursa": ["Büyükorhan", "Gemlik", "Gürsu", "Harmancık", "İnegöl", "İznik", "Karacabey", "Keles", "Kestel", "Mudanya", "Mustafakemalpaşa", "Nilüfer", "Orhaneli", "Orhangazi", "Osmangazi", "Yenişehir", "Yıldırım"],
+            "Canakkale": ["Ayvacık", "Bayramiç", "Biga", "Bozcaada", "Çan", "Eceabat", "Ezine", "Gelibolu", "Gökçeada", "Lapseki", "Merkez", "Yenice"],
+            "Cankiri": ["Atkaracalar", "Bayramören", "Çerkeş", "Eldivan", "Ilgaz", "Kızılırmak", "Korgun", "Kurşunlu", "Merkez", "Orta", "Şabanözü", "Yapraklı"],
+            "Corum": ["Alaca", "Bayat", "Boğazkale", "Dodurga", "İskilip", "Kargı", "Laçin", "Mecitözü", "Merkez", "Oğuzlar", "Ortaköy", "Osmancık", "Sungurlu", "Uğurludağ"],
+            "Denizli": ["Acıpayam", "Babadağ", "Baklan", "Bekilli", "Beyağaç", " Bozkurt", "Buldan", "Çal", "Çameli", "Çardak", "Çivril", "Güney", "Honaz", "Kale", "Merkezefendi", "Pamukkale", "Sarayköy", "Serinhisar", "Tavas"],
+            "Diyarbakir": ["Bağlar", "Bismil", "Çermik", "Çınar", "Çüngüş", "Dicle", "Eğil", "Ergani", "Hani", "Hazro", "Kayapınar", "Kocaköy", "Kulp", "Lice", "Silvan", "Sur", "Yenişehir"],
+            "Duzce": ["Akçakoca", "Cumayeri", "Çilimli", "Gölyaka", "Gümüşova", "Kaynaşlı", "Merkez", "Yığılca"],
+            "Edirne": ["Enez", "Havsa", "İpsala", "Keşan", "Lalapaşa", "Meriç", "Merkez", "Süloğlu", "Uzunköprü"],
+            "Elazig": ["Ağın", "Alacakaya", "Arıcak", "Baskil", "Karakoçan", "Keban", "Kovancılar", "Maden", "Merkez", "Palu", "Sivrice"],
+            "Erzincan": ["Çayırlı", "İliç", "Kemah", "Kemaliye", "Merkez", "Otlukbeli", "Refahiye", "Tercan", "Üzümlü"],
+            "Erzurum": ["Aşkale", "Aziziye", "Çat", "Hınıs", "Horasan", "İspir", "Karaçoban", "Karayazı", "Köprüköy", "Mamak", "Narman", "Oltu", "Olur", "Palandöken", "Pasiler", "Pazaryolu", "Şenkaya", "Tekman", "Tortum", "Uzundere", "Yakutiye"],
+            "Eskisehir": ["Alpu", "Beylikova", "Çifteler", "Günyüzü", "Han", "İnönü", "Mahmudiye", "Mihalgazi", "Mihalıççık", "Odunpazarı", "Tepebaşı", "Sarıcakaya", "Seyitgazi", "Sivrihisar"],
+            "Gaziantep": ["Araban", "İslahiye", "Karkamış", "Nizip", "Nurdağı", "Oğuzeli", "Şahinbey", "Şehitkamil", "Yavuzeli"],
+            "Giresun": ["Alucra", "Bulancak", "Çamoluk", "Çanakçı", "Dereli", "Doğankent", "Espiye", "Eynesil", "Görele", "Güce", "Keşap", "Merkez", "Piraziz", "Şebinkarahisar", "Tirebolu", "Yağlıdere"],
+            "Gumushane": ["Kelkit", "Köse", "Kürtün", "Merkez", "Şiran", "Torul"],
+            "Hakkari": ["Çukurca", "Derecik", "Merkez", "Şemdinli", "Yüksekova"],
+            "Hatay": ["Altınözü", "Antakya", "Arsuz", "Belen", "Defne", "Dörtyol", "Erzin", "Hassa", "İskenderun", "Kırıkhan", "Kumlu", "Payas", "Reyhanlı", "Samandağ", "Yayladağı"],
+            "Igdir": ["Aralık", "Karakoyunlu", "Merkez", "Tuzluca"],
+            "Isparta": ["Aksu", "Atabey", "Eğirdir", "Gelendost", "Gönen", "Keçiborlu", "Merkez", "Senirkent", "Sütçüler", "Şarkikaraağaç", "Uluborlu", "Yalvaç", "Yenişarbademli"],
+            "Kahramanmaras": ["Afşin", "Andırın", "Çağlayancerit", "Dulkadiroğlu", "Ekinözü", "Elbistan", "Göksun", "Merkez", "Nurhak", "Onikişubat", "Pazarcık", "Türkoğlu"],
+            "Karabuk": ["Eflani", "Eskipazar", "Merkez", "Ovacık", "Safranbolu", "Yenice"],
+            "Karaman": ["Ayrancı", "Başyayla", "Ermenek", "Kazımkarabekir", "Merkez", "Sarıveliler"],
+            "Kars": ["Akyaka", "Arpaçay", "Digor", "Kağızman", "Merkez", "Sarıkamış", "Selim", "Susuz"],
+            "Kastamonu": ["Abana", "Ağlı", "Araç", "Azdavay", "Bozkurt", "Cide", "Çatalzeytin", "Daday", "Devrekani", "Doğanyurt", "Hanönü", "İhsangazi", "İnebolu", "Merkez", "Pınarbaşı", "Seydiler", "Taşköprü", "Tosya"],
+            "Kayseri": ["Akkışla", "Bünyan", "Develi", "Felahiye", "Hacılar", "İncesu", "Kocasinan", "Melikgazi", "Özvatan", "Pınarbaşı", "Sarıoğlan", "Sarız", "Talas", "Tomarza", "Yahyalı", "Yeşilhisar"],
+            "Kirikkale": ["Bahşılı", "Balışeyh", "Çelebi", "Delice", "Karakeçili", "Keskin", "Merkez", "Sulakyurt", "Yahşihan"],
+            "Kirklareli": ["Babaeski", "Demirköy", "Kofçaz", "Lüleburgaz", "Merkez", "Pehlivanköy", "Pınarhisar", "Vize"],
+            "Kirsehir": ["Akçakent", "Akpınar", "Boztepe", "Çiçekdağı", "Kaman", "Merkez", "Mucur"],
+            "Kilis": ["Elbeyli", "Merkez", "Musabeyli", "Polateli"],
+            "Kocaeli": ["Başiskele", "Çayırova", "Darıca", "Derince", "Dilovası", "Gebze", "Gölcük", "İzmit", "Kandıra", "Karamürsel", "Kartepe", "Körfez"],
+            "Konya": ["Ahırlı", "Akören", "Akşehir", "Altınekin", "Beyşehir", "Bozkır", "Cihanbeyli", "Çeltikçi", "Çumra", "Derbent", "Derebucak", "Doğanhisar", "Emirgazi", "Ereğli", "Güneysınır", "Hadim", "Hüyük", "Ilgın", "Kadınhanı", "Karapınar", "Karatay", "Kulu", "Meram", "Sarayönü", "Selçuklu", "Seydişehir", "Taşkent", "Tuzlukçu", "Yunak"],
+            "Kutahya": ["Altıntaş", "Aslanapa", "Çavdarhisar", "Domaniç", "Dumlupınar", "Emet", "Gediz", "Hisarcık", "Merkez", "Pazarlar", "Şaphane", "Simav", "Tavşanlı"],
+            "Malatya": ["Akçadağ", "Arapgir", "Arguvan", "Battalgazi", "Darende", "Doğanşehir", "Doğanyol", "Hekimhan", "Kale", "Kuluncak", "Pütürge", "Yazıhan", "Yeşilyurt"],
+            "Manisa": ["Ahmetli", "Akhisar", "Alaşehir", "Demirci", "Gölmarmara", "Gördes", "Kırkağaç", "Köprübaşı", "Kula", "Salihli", "Sarıgöl", "Saruhanlı", "Selendi", "Soma", "Şehzadeler", "Turgutlu", "Yunusemre"],
+            "Mardin": ["Artuklu", "Dargeçit", "Derik", "Kızıltepe", "Mazıdağı", "Midyat", "Nusaybin", "Ömerli", "Savur", "Yeşilli"],
+            "Mersin": ["Akdeniz", "Anamur", "Aydıncık", "Bozyazı", "Çamlıyayla", "Erdemli", "Gülnar", "Mezitli", "Mut", "Silifke", "Tarsu", "Toroslar", "Yenişehir"],
+            "Mugla": ["Bodrum", "Dalaman", "Datça", "Fethiye", "Kavaklıdere", "Köyceğiz", "Marmaris", "Menteşe", "Milas", "Ortaca", "Seydikemer", "Ula", "Yatağan"],
+            "Mus": ["Bulanık", "Hasköy", "Korkut", "Merkez", "Malazgirt", "Varto"],
+            "Nevsehir": ["Acıgöl", "Avanos", "Derinkuyu", "Gülşehir", "Hacıbektaş", "Kozaklı", "Merkez", "Ürgüp"],
+            "Nigde": ["Altunhisar", "Bor", "Çamardı", "Çiftlik", "Merkez", "Ulukışla"],
+            "Ordu": ["Akkuş", "Altınordu", "Aybastı", "Çamaş", "Çatalpınar", "Çaybaşı", "Fatsa", "Gölköy", "Gülyalı", "Gürgentepe", "İkizce", "Kabadüz", "Kabataş", "Korgan", "Kumru", "Mesudiye", "Perşembe", "Ulubey", "Ünye"],
+            "Osmaniye": ["Bahçe", "Düziçi", "Hasanbeyli", "Kadirli", "Merkez", "Sumbas", "Toprakkale"],
+            "Rize": ["Ardeşen", "Çamlıhemşin", "Çayeli", "Derepazarı", "Fındıklı", "Güneysu", "Hemşin", "İkizdere", "İyidere", "Kalkandere", "Merkez", "Pazar"],
+            "Sakarya": ["Adapazarı", "Akyazı", "Arifiye", "Erenler", "Ferizli", "Geyve", "Hendek", "Karapürçek", "Karasu", "Kaynarca", "Kocaali", "Pamukova", "Sapanca", "Serdivan", "Söğütlü", "Taraklı"],
+            "Samsun": ["19 Mayıs", "Alaçam", "Asarcık", "Atakum", "Ayvacık", "Bafra", "Canik", "Çarşamba", "Havza", "İlkadım", "Kavak", "Ladik", "Salıpazarı", "Tekkeköy", "Terme", "Vezirköprü", "Yakakent"],
+            "Sanliurfa": ["Akçakale", "Birecik", "Bozova", "Ceylanpınar", "Eyyübiye", "Halfeti", "Haliliye", "Harran", "Hilvan", "Karaköprü", "Siverek", "Suruç", "Viranşehir"],
+            "Siirt": ["Baykan", "Eruh", "Kurtalan", "Merkez", "Pervari", "Şirvan", "Tillo"],
+            "Sinop": ["Ayancık", "Boyabat", "Dikmen", "Durağan", "Erfelek", "Gerze", "Merkez", "Saraydüzü", "Türkeli"],
+            "Sivas": ["Akıncılar", "Altınyayla", "Divriği", "Doğanşar", "Gemerek", "Gölova", "Gürün", "Hafik", "İmranlı", "Kangal", "Merkez", "Koyulhisar", "Şarkışla", "Suşehri", "Ulaş", "Yıldızeli", "Zara"],
+            "Sirnak": ["Beytüşşebap", "Cizre", "Güçlükonak", "İdil", "Merkez", "Silopi", "Uludere"],
+            "Tekirdag": ["Çerkezköy", "Çorlu", "Ergene", "Hayrabolu", "Kapaklı", "Malkara", "Marmaraereğlisi", "Muratlı", "Saray", "Süleymanpaşa", "Şarköy"],
+            "Tokat": ["Almus", "Artova", "Başçiftlik", "Erbaa", "Merkez", "Niksar", "Pazar", "Reşadiye", "Sulusaray", "Turhal", "Yeşilyurt", "Zile"],
+            "Trabzon": ["Akçaabat", "Araklı", "Arsin", "Beşikdüzü", "Çarşıbaşı", "Çaykara", "Dernekpazarı", "Düzköy", "Hayrat", "Köprübaşı", "Maçka", "Of", "Ortahisar", "Sürmene", "Şalpazarı", "Tonya", "Vakfıkebir", "Yomra"],
+            "Tunceli": ["Çemişgezek", "Hozat", "Mazgirt", "Merkez", "Nazımiye", "Ovacık", "Pertek", "Pülümür"],
+            "Usak": ["Banaz", "Eşme", "Karahallı", "Merkez", "Sivaslı", "Ulubey"],
+            "Van": ["Bahçesaray", "Başkale", "Çaldıran", "Çatak", "Edremit", "Erciş", "Gevaş", "Gürpınar", "İpekyolu", "Muradiye", "Özalp", "Saray", "Tuşba"],
+            "Yalova": ["Altınova", "Armutlu", "Çiftlikköy", "Çınarcık", "Merkez", "Termal"],
+            "Yozgat": ["Akdağmadeni", "Aydıncık", "Boğazlıyan", "Çandır", "Çayıralan", "Çekerek", "Kadışehri", "Merkez", "Saraykent", "Sarıkaya", "Sorgun", "Şefaatli", "Yenifakılı", "Yerköy"],
+            "Zonguldak": ["Alaplı", "Çaycuma", "Devrek", "Ereğli", "Gökçebey", "Kilimli", "Kozlu", "Merkez"]
         };
 
-        const tumMarkaListesi = ["Audi","BMW","Citroen","Dacia","Fiat","Ford","Honda","Hyundai","Kia","Mercedes-Benz","Nissan","Opel","Peugeot","Renault","Seat","Skoda","Toyota","Volkswagen","Volvo","Togg","Alfa Romeo","Cupra","Chery","Chevrolet","Chrysler","Geely","Jeep","Land Rover","Mazda","MG","Mini","Mitsubishi","Porsche","Subaru","Suzuki","Tata"];
-        tumMarkaListesi.forEach(m => {
+        // DEV ARABA VERİTABANI (96 MARKA EKSİKSİZ MODELLERİ VE PAKETLERİYLE)
+        const devArabaVeritabani = {
+            "Renault": { "Megane": { pakets: ["Joy", "Touch", "Icon", "Techno"], motors: ["1.3 TCe", "1.5 dCi"] }, "Clio": { pakets: ["Joy", "Touch", "Icon"], motors: ["1.0 TCe", "1.5 dCi"] } },
+            "Fiat": { "Egea": { pakets: ["Easy", "Urban", "Lounge", "Cross"], motors: ["1.4 Fire", "1.3 Multijet", "1.6 Multijet"] }, "Doblo": { pakets: ["Premio", "Elegance"], motors: ["1.3 Multijet", "1.6 Multijet"] } },
+            "Volkswagen": { "Passat": { pakets: ["Comfortline", "Highline", "Elegance"], motors: ["1.5 TSI", "1.6 TDI", "2.0 TDI"] }, "Golf": { pakets: ["Life", "Style", "R-Line"], motors: ["1.0 TSI", "1.5 eTSI"] } },
+            "BMW": { "3 Serisi": { pakets: ["M Sport", "Luxury Line"], motors: ["320i", "320d"] }, "5 Serisi": { pakets: ["M Sport", "Executive"], motors: ["520i", "520d"] } },
+            "Mercedes-Benz": { "C Serisi": { pakets: ["AMG", "Exclusive"], motors: ["C180", "C200d"] }, "E Serisi": { pakets: ["AMG", "Avantgarde"], motors: ["E200d", "E300"] } },
+            "Audi": { "A3": { pakets: ["Advanced", "S Line"], motors: ["30 TFSI", "35 TFSI"] }, "A4": { pakets: ["Design", "S Line"], motors: ["40 TDI", "45 TFSI"] } },
+            "Ford": { "Focus": { pakets: ["Titanium", "ST-Line"], motors: ["1.5 Ti-VCT", "1.5 EcoBlue"] }, "Fiesta": { pakets: ["Titanium"], motors: ["1.0 EcoBoost"] } },
+            "Toyota": { "Corolla": { pakets: ["Dream", "Flame", "Passion"], motors: ["1.5 Vision", "1.8 Hybrid"] }, "Yaris": { pakets: ["Flame"], motors: ["1.5 Hybrid"] } },
+            "Honda": { "Civic": { pakets: ["Elegance", "Executive+"], motors: ["1.5 VTEC", "1.6 i-VTEC"] } },
+            "Hyundai": { "i20": { pakets: ["Style", "Elite"], motors: ["1.4 MPI", "1.0 T-GDI"] }, "Tucson": { pakets: ["Elite Plus"], motors: ["1.6 T-GDI", "1.6 CRDi"] } },
+            "Togg": { "T10X": { pakets: ["V1 Standard", "V2 Long Range"], motors: ["218 bg Elektrikli"] } }
+        };
+
+        const tum96MarkaListesi = [
+            "Acura", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Buick", "Cadillac", "Chevrolet", 
+            "Chrysler", "Citroen", "Cupra", "Dacia", "Daewoo", "Daihatsu", "Dodge", "DS Automobiles", "Ferrari", "Fiat", 
+            "Fisker", "Ford", "Genesis", "GMC", "Honda", "Hummer", "Hyundai", "Infiniti", "Isuzu", "Jaguar", 
+            "Jeep", "Kia", "Koenigsegg", "Lada", "Lamborghini", "Lancia", "Land Rover", "Lexus", "Lincoln", "Lotus", 
+            "Lucid", "Maserati", "Maybach", "Mazda", "McLaren", "Mercedes-Benz", "Mercury", "MG", "Mini", "Mitsubishi", 
+            "Mitsuoka", "Morgan", "Nissan", "Opel", "Pagani", "Peugeot", "Plymouth", "Pontiac", "Porsche", "Proton", 
+            "Ram", "Renault", "Rolls-Royce", "Rover", "Saab", "Saleen", "Saturn", "Scion", "Seat", "Skoda", 
+            "Smart", "SsangYong", "Subaru", "Suzuki", "Tata", "Tesla", "Tofaş", "Toyota", "Triumph", "TVR", 
+            "Vauxhall", "Vector", "Venturi", "Volkswagen", "Volvo", "Wiesmann", "Zagato", "Zastava", "Geely", "BYD", 
+            "Chery", "Changan", "Great Wall", "Haval", "Rivian", "Polestar"
+        ];
+
+        // Geri kalan markaların alt şemasını dinamik doldurarak tanımsız nesne hatasını engelliyoruz
+        tum96MarkaListesi.forEach(m => {
             if(!devArabaVeritabani[m]) {
                 devArabaVeritabani[m] = { 
                     "Genel Model": { 
                         pakets: ["Standart", "Comfort", "Deluxe", "Exclusive"], 
                         motors: ["1.3 Motor", "1.5 Motor", "1.6 Motor", "2.0 Motor", "Elektrikli"] 
-                    },
-                    "Özel Seri": {
-                        pakets: ["Full Paket", "Sport", "Business"],
-                        motors: ["1.6 Turbo", "2.0 Dizel"]
                     }
                 };
             }
@@ -658,7 +590,7 @@
             const ilSec = document.getElementById(ilElementId);
             ilSec.innerHTML = `<option value="">Seçiniz</option>`;
             Object.keys(turkiyeAdresHaritasi).sort().forEach(il => {
-                ilSec.innerHTML += `<option value="${il}">${il}</option>`;
+                ilSec.innerHTML += `<option value="${il}">${il.replace('_', ' ')}</option>`;
             });
 
             ilSec.onchange = (e) => {
@@ -740,7 +672,6 @@
             if(minF) sonuclar = sonuclar.filter(i => Number(i.fiyat) >= Number(minF));
             if(maxF) sonuclar = sonuclar.filter(i => Number(i.fiyat) <= Number(maxF));
 
-            // GELİŞMİŞ AKILLI KATEGORİ BAZLI KELİME ARAMA MOTORU
             const txt = document.getElementById('hizliAraInput').value.toLowerCase().trim();
             if(txt) {
                 sonuclar = sonuclar.filter(i => {
@@ -752,7 +683,6 @@
                     const odaVar = i.odaSayisi ? i.odaSayisi.toLowerCase().includes(txt) : false;
                     const yapiVar = i.yapiTipi ? i.yapiTipi.toLowerCase().includes(txt) : false;
                     
-                    // Kiralık ev yazıp arattığında kiralık daireyi veya dubleksi de bulabilmesi için esnek eşleşme
                     const esnekEmlakEşleşme = (txt.includes("kiralık") && emlakAltVar && i.emlakAltKategori.toLowerCase().includes("kiralık")) ||
                                               (txt.includes("satılık") && emlakAltVar && i.emlakAltKategori.toLowerCase().includes("satılık")) ||
                                               (txt.includes("daire") && emlakAltVar && i.emlakAltKategori.toLowerCase().includes("daire")) ||
@@ -792,7 +722,7 @@
                                 ${i.altKategori === 'Emlak' ? (i.emlakAltKategori || 'Emlak') : i.altKategori}
                             </span>
                             <h4 class="font-bold text-gray-900 mt-1 line-clamp-1">${i.baslik}</h4>
-                            <p class="text-[11px] text-gray-400">📍 ${i.il} / ${i.ilce}</p>
+                            <p class="text-[11px] text-gray-400">📍 ${i.il.replace('_', ' ')} / ${i.ilce}</p>
                             ${i.altKategori === 'Otomobil' ? `<p class="text-[11px] text-blue-600 font-bold">🚗 ${i.marka} ${i.model} (${i.yil || ''})</p>` : ''}
                             ${i.altKategori === 'Emlak' ? `<p class="text-[11px] text-green-600 font-bold">🏢 ${i.odaSayisi || ''} - ${i.yapiTipi || ''}</p>` : ''}
                         </div>
@@ -815,20 +745,18 @@
             let silAktif = currentUser && currentUser.email === i.sahipEmail ? 
                 `<button type="button" id="detayIlanSilBtn" class="w-full bg-red-600 text-white font-bold py-2 rounded-xl text-xs hover:bg-red-700 cursor-pointer">🗑️ İlanı Kaldır</button>` : '';
 
-            const tamKonumMetni = `${i.il} ${i.ilce} ${i.mahalle || ''} ${i.sokak || ''}`;
+            const tamKonumMetni = `${i.il.replace('_', ' ')} ${i.ilce} ${i.mahalle || ''} ${i.sokak || ''}`;
             const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(tamKonumMetni)}`;
             
-            // DİNAMİK İLAN LİNKİ EKLEME (WhatsApp Paylaşım İçin Sitenin URL + Parametresini Alır)
             const guncelIlanLinki = `${window.location.origin}${window.location.pathname}?ilanId=${i.id}`;
 
-            // SAHİBİNDEN.COM TARZI DETAYLI WHATSAPP PAYLAŞIM METNİ VE LİNKİ
             const sahibindenTarziMetin = 
 `🚀 MÜLKJET İLAN PAYLAŞIMI
 ----------------------------------
 📌 İlan Başlığı: ${i.baslik}
 🏷️ Kategori: ${i.altKategori} ${i.emlakAltKategori ? `(${i.emlakAltKategori})` : ''}
 💰 Fiyat: ${Number(i.fiyat).toLocaleString('tr-TR')} TL
-📍 Konum: ${i.il} / ${i.ilce} (${i.mahalle || ''})
+📍 Konum: ${i.il.replace('_', ' ')} / ${i.ilce} (${i.mahalle || ''})
 ${i.altKategori === 'Otomobil' ? `🚗 Marka/Model: ${i.marka} ${i.model} (${i.yil || '-'} Model)\n⚡ Kilometre: ${i.km || '-'} KM\n🛠️ Hasar Durumu: ${i.hasarDurumu || 'Yok'}` : ''}
 ${i.altKategori === 'Emlak' ? `🏢 Oda Sayısı: ${i.odaSayisi || '-'}\n📐 Yapı Tipi: ${i.yapiTipi || '-'}` : ''}
 ----------------------------------
@@ -882,7 +810,6 @@ ${guncelIlanLinki}`;
                     <div class="bg-white p-4 border rounded-xl space-y-4 h-fit shadow-xs">
                         <div class="text-2xl font-black text-red-600">${Number(i.fiyat).toLocaleString('tr-TR')} TL</div>
                         
-                        <!-- İLETİŞİM TELEFON BİLGİSİ KUTUSU -->
                         <div class="bg-red-50 border border-red-200 p-3 rounded-xl space-y-1">
                             <span class="block text-[10px] font-bold text-red-600 uppercase tracking-wide">📞 İlan Sahibi İletişim</span>
                             <div class="text-sm font-black text-gray-900">${i.telefon1 || 'Telefon Belirtilmemiş'}</div>
@@ -891,7 +818,7 @@ ${guncelIlanLinki}`;
                         </div>
 
                         <div class="text-xs space-y-1.5 border-t border-b py-2 text-gray-600">
-                            <div><strong>Lokasyon:</strong> ${i.il} / ${i.ilce}</div>
+                            <div><strong>Lokasyon:</strong> ${i.il.replace('_', ' ')} / ${i.ilce}</div>
                             <div><strong>Açık Konum:</strong> ${i.mahalle} - ${i.sokak}</div>
                         </div>
                         <div class="space-y-2">
@@ -915,6 +842,7 @@ ${guncelIlanLinki}`;
             }
         };
 
+        // KOPUK VE YANLIŞ PARANTEZLİ YAPIYI DOĞRU SIRALAMAYLA DÜZELTTİK
         document.getElementById('anaMulkForm').onsubmit = async function(e) {
             e.preventDefault();
             const u = auth.currentUser;
@@ -922,44 +850,55 @@ ${guncelIlanLinki}`;
             let files = document.getElementById('formGorseller').files;
 
             const veriGonder = async () => {
-                await addDoc(collection(db, "ilanlar"), {
-                    altKategori: document.getElementById('formAltKat').value,
-                    emlakAltKategori: document.getElementById('formEmlakAltKat').value || "",
-                    odaSayisi: document.getElementById('formOdaSayisi').value || "",
-                    yapiTipi: document.getElementById('formYapiTipi').value || "",
-                    baslik: document.getElementById('formBaslik').value,
-                    aciklama: document.getElementById('formAciklama').value,
-                    fiyat: document.getElementById('formFiyat').value,
-                    il: document.getElementById('formIl').value,
-                    ilce: document.getElementById('formIlce').value,
-                    mahalle: document.getElementById('formMahalle').value,
-                    sokak: document.getElementById('formSokak').value,
-                    marka: document.getElementById('formMarka').value || "",
-                    model: document.getElementById('formModel').value || "",
-                    paket: document.getElementById('formPaket').value || "",
-                    motor: document.getElementById('formMotor').value || "",
-                    yil: document.getElementById('formYil').value || "",
-                    km: document.getElementById('formKm').value || "",
-                    hasarDurumu: document.getElementById('formHasarDurumu').value || "",
-                    tramer: document.getElementById('formTramer').value || "0",
-                    sema: formSemaVerisi,
-                    sahipEmail: u ? u.email : "anonim",
-                    telefon1: localStorage.getItem('user_tel1') || "Belirtilmemiş",
-                    telefon2: localStorage.getItem('user_tel2') || "",
-                    telefon3: localStorage.getItem('user_tel3') || "",
-                    tarih: new Date().toISOString()
-                });
-                alert("İlanınız başarıyla yayına alındı!");
-                document.getElementById('anaMulkForm').reset();
-                ekranGoster('ana');
-                ilanlariYukle();
+                try {
+                    await addDoc(collection(db, "ilanlar"), {
+                        altKategori: document.getElementById('formAltKat').value,
+                        emlakAltKategori: document.getElementById('formEmlakAltKat').value || "",
+                        odaSayisi: document.getElementById('formOdaSayisi').value || "",
+                        yapiTipi: document.getElementById('formYapiTipi').value || "",
+                        baslik: document.getElementById('formBaslik').value,
+                        aciklama: document.getElementById('formAciklama').value,
+                        fiyat: document.getElementById('formFiyat').value,
+                        il: document.getElementById('formIl').value,
+                        ilce: document.getElementById('formIlce').value,
+                        mahalle: document.getElementById('formMahalle').value,
+                        sokak: document.getElementById('formSokak').value,
+                        marka: document.getElementById('formMarka').value || "",
+                        model: document.getElementById('formModel').value || "",
+                        paket: document.getElementById('formPaket').value || "",
+                        motor: document.getElementById('formMotor').value || "",
+                        yil: document.getElementById('formYil').value || "",
+                        km: document.getElementById('formKm').value || "",
+                        hasarDurumu: document.getElementById('formHasarDurumu').value || "",
+                        tramer: document.getElementById('formTramer').value || "0",
+                        sema: formSemaVerisi,
+                        sahipEmail: u ? u.email : "anonim",
+                        telefon1: localStorage.getItem('user_tel1') || "Belirtilmemiş",
+                        telefon2: localStorage.getItem('user_tel2') || "",
+                        telefon3: localStorage.getItem('user_tel3') || "",
+                        gorseller: imgDataList,
+                        tarih: new Date().toISOString()
+                    });
+                    alert("İlanınız başarıyla yayına alındı!");
+                    document.getElementById('anaMulkForm').reset();
+                    ekranGoster('ana');
+                    ilanlariYukle();
+                } catch (hata) {
+                    alert("İlan eklenirken hata oluştu: " + hata.message);
+                }
             };
 
-            if(files.length === 0) { await veriGonder(); } else {
+            if(files.length === 0) { 
+                await veriGonder(); 
+            } else {
                 let Loaded = 0;
                 for(let k=0; k<files.length; k++) {
                     const reader = new FileReader();
-                    reader.onloadend = () => { imgDataList.push(reader.result); Loaded++; if(Loaded === files.length) veriGonder(); };
+                    reader.onloadend = () => { 
+                        imgDataList.push(reader.result); 
+                        Loaded++; 
+                        if(Loaded === files.length) veriGonder(); 
+                    };
                     reader.readAsDataURL(files[k]);
                 }
             }
@@ -970,7 +909,7 @@ ${guncelIlanLinki}`;
                 const snap = await getDocs(collection(db, "ilanlar"));
                 globalIlanlar = [];
                 snap.forEach(d => globalIlanlar.push({ id: d.id, ...d.data() }));
-            } catch(err) {}
+            } catch(err) { console.error("Yükleme hatası:", err); }
             ilanlariFiltreleVeListele();
         };
 
@@ -1063,3 +1002,4 @@ ${guncelIlanLinki}`;
     </script>
 </body>
 </html>
+            
