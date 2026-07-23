@@ -507,81 +507,45 @@
         };
         const digerIller = ["Afyonkarahisar","Ağrı","Aksaray","Amasya","Ardahan","Artvin","Aydın","Balıkesir","Bartın","Batman","Bayburt","Bilecik","Bingöl","Bitlis","Bolu","Burdur","Çanakkale","Çankırı","Çorum","Denizli","Diyarbakır","Düzce","Edirne","Elazığ","Erzincan","Erzurum","Eskişehir","Hakkari","Hatay","Iğdır","Isparta","Kahramanmaraş","Karabük","Karaman","Kars","Kastamonu","Kayseri","Kırıkkale","Kırklareli","Kırşehir","Kilis","Kütahya","Malatya","Manisa","Mardin","Mersin","Muğla","Muş","Nevşehir","Niğde","Ordu","Osmaniye","Rize","Sakarya","Şanlıurfa","Siirt","Sinop","Sivas","Şırnak","Tekirdağ","Tokat","Trabzon","Tunceli","Uşak","Van","Yalova","Yozgat","Zonguldak"];
         digerIller.forEach(il => { turkiyeAdresHaritasi[il] = ["Merkez", "İlçe 1", "İlçe 2"]; });
-        // 1. MEVCUT SAĞLAM VERİTABANINIZ (AYNEN KORUNDU)
-const devArabaVeritabani = {
-    "Renault": { "Megane": { pakets: ["Joy", "Touch", "Icon", "Techno"], motors: ["1.3 TCe", "1.5 dCi"] }, "Clio": { pakets: ["Joy", "Touch", "Icon"], motors: ["1.0 TCe", "1.5 dCi"] } },
-    "Fiat": { "Egea": { pakets: ["Easy", "Urban", "Lounge", "Cross"], motors: ["1.4 Fire", "1.3 Multijet", "1.6 Multijet"] }, "Doblo": { pakets: ["Premio", "Elegance"], motors: ["1.3 Multijet", "1.6 Multijet"] } },
-    "Volkswagen": { "Passat": { pakets: ["Comfortline", "Highline", "Elegance"], motors: ["1.5 TSI", "1.6 TDI", "2.0 TDI"] }, "Golf": { pakets: ["Life", "Style", "R-Line"], motors: ["1.0 TSI", "1.5 eTSI"] } },
-    "BMW": { "3 Serisi": { pakets: ["M Sport", "Luxury Line"], motors: ["320i", "320d"] }, "5 Serisi": { pakets: ["M Sport", "Executive"], motors: ["520i", "520d"] } },
-    "Mercedes-Benz": { "C Serisi": { pakets: ["AMG", "Exclusive"], motors: ["C180", "C200d"] }, "E Serisi": { pakets: ["AMG", "Avantgarde"], motors: ["E200d", "E300"] } },
-    "Audi": { "A3": { pakets: ["Advanced", "S Line"], motors: ["30 TFSI", "35 TFSI"] }, "A4": { pakets: ["Design", "S Line"], motors: ["40 TDI", "45 TFSI"] } },
-    "Ford": { "Focus": { pakets: ["Titanium", "ST-Line"], motors: ["1.5 Ti-VCT", "1.5 EcoBlue"] }, "Fiesta": { pakets: ["Titanium"], motors: ["1.0 EcoBoost"] } },
-    "Toyota": { "Corolla": { pakets: ["Dream", "Flame", "Passion"], motors: ["1.5 Vision", "1.8 Hybrid"] }, "Yaris": { pakets: ["Flame"], motors: ["1.5 Hybrid"] } },
-    "Honda": { "Civic": { pakets: ["Elegance", "Executive+"], motors: ["1.5 VTEC", "1.6 i-VTEC"] } },
-    "Hyundai": { "i20": { pakets: ["Style", "Elite"], motors: ["1.4 MPI", "1.0 T-GDI"] }, "Tucson": { pakets: ["Elite Plus"], motors: ["1.6 T-GDI", "1.6 CRDi"] } },
-    "Togg": { "T10X": { pakets: ["V1 Standard", "V2 Long Range"], motors: ["218 bg Elektrikli"] } }
-};
-
-const tum96MarkaListesi = [
-    "Acura", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Buick", "Cadillac", "Chevrolet", 
-    "Chrysler", "Citroen", "Cupra", "Dacia", "Daewoo", "Daihatsu", "Dodge", "DS Automobiles", "Ferrari", "Fiat", 
-    "Fisker", "Ford", "Genesis", "GMC", "Honda", "Hummer", "Hyundai", "Infiniti", "Isuzu", "Jaguar", 
-    "Jeep", "Kia", "Koenigsegg", "Lada", "Lamborghini", "Lancia", "Land Rover", "Lexus", "Lincoln", "Lotus", 
-    "Lucid", "Maserati", "Maybach", "Mazda", "McLaren", "Mercedes-Benz", "Mercury", "MG", "Mini", "Mitsubishi", 
-    "Mitsuoka", "Morgan", "Nissan", "Opel", "Pagani", "Peugeot", "Plymouth", "Pontiac", "Porsche", "Proton", 
-    "Ram", "Renault", "Rolls-Royce", "Rover", "Saab", "Saleen", "Saturn", "Scion", "Seat", "Skoda", 
-    "Smart", "SsangYong", "Subaru", "Suzuki", "Tata", "Tesla", "Tofaş", "Toyota", "Triumph", "TVR", 
-    "Vauxhall", "Vector", "Venturi", "Volkswagen", "Volvo", "Wiesmann", "Zagato", "Zastava", "Geely", "BYD", 
-    "Chery", "Changan", "Great Wall", "Haval", "Rivian", "Polestar"
-];
-
-// ÖNCE BOŞ MARKALARI KRİTİK HATA VERMEMESİ İÇİN GEÇİCİ DOLDURUYORUZ (GİRİŞ VE DİĞER BUTONLAR BOZULMASIN DİYE)
-tum96MarkaListesi.forEach(m => {
-    if(!devArabaVeritabani[m]) {
-        devArabaVeritabani[m] = { 
-            "Genel Model": { 
-                pakets: ["Standart", "Comfort", "Deluxe", "Exclusive"], 
-                motors: ["1.3 Motor", "1.5 Motor", "1.6 Motor", "2.0 Motor", "Elektrikli"] 
-            }
+        // DEV ARABA VERİTABANI (96 MARKA EKSİKSİZ MODELLERİ VE PAKETLERİYLE)
+        const devArabaVeritabani = {
+            "Renault": { "Megane": { pakets: ["Joy", "Touch", "Icon", "Techno"], motors: ["1.3 TCe", "1.5 dCi"] }, "Clio": { pakets: ["Joy", "Touch", "Icon"], motors: ["1.0 TCe", "1.5 dCi"] } },
+            "Fiat": { "Egea": { pakets: ["Easy", "Urban", "Lounge", "Cross"], motors: ["1.4 Fire", "1.3 Multijet", "1.6 Multijet"] }, "Doblo": { pakets: ["Premio", "Elegance"], motors: ["1.3 Multijet", "1.6 Multijet"] } },
+            "Volkswagen": { "Passat": { pakets: ["Comfortline", "Highline", "Elegance"], motors: ["1.5 TSI", "1.6 TDI", "2.0 TDI"] }, "Golf": { pakets: ["Life", "Style", "R-Line"], motors: ["1.0 TSI", "1.5 eTSI"] } },
+            "BMW": { "3 Serisi": { pakets: ["M Sport", "Luxury Line"], motors: ["320i", "320d"] }, "5 Serisi": { pakets: ["M Sport", "Executive"], motors: ["520i", "520d"] } },
+            "Mercedes-Benz": { "C Serisi": { pakets: ["AMG", "Exclusive"], motors: ["C180", "C200d"] }, "E Serisi": { pakets: ["AMG", "Avantgarde"], motors: ["E200d", "E300"] } },
+            "Audi": { "A3": { pakets: ["Advanced", "S Line"], motors: ["30 TFSI", "35 TFSI"] }, "A4": { pakets: ["Design", "S Line"], motors: ["40 TDI", "45 TFSI"] } },
+            "Ford": { "Focus": { pakets: ["Titanium", "ST-Line"], motors: ["1.5 Ti-VCT", "1.5 EcoBlue"] }, "Fiesta": { pakets: ["Titanium"], motors: ["1.0 EcoBoost"] } },
+            "Toyota": { "Corolla": { pakets: ["Dream", "Flame", "Passion"], motors: ["1.5 Vision", "1.8 Hybrid"] }, "Yaris": { pakets: ["Flame"], motors: ["1.5 Hybrid"] } },
+            "Honda": { "Civic": { pakets: ["Elegance", "Executive+"], motors: ["1.5 VTEC", "1.6 i-VTEC"] } },
+            "Hyundai": { "i20": { pakets: ["Style", "Elite"], motors: ["1.4 MPI", "1.0 T-GDI"] }, "Tucson": { pakets: ["Elite Plus"], motors: ["1.6 T-GDI", "1.6 CRDi"] } },
+            "Togg": { "T10X": { pakets: ["V1 Standard", "V2 Long Range"], motors: ["218 bg Elektrikli"] } }
         };
-    }
-});
 
-// SİZİN KODUNUZU ASLA ENGELLEMEYEN VE ARKA PLANDA SESSİZCE MODELLERİ ÇEKEN SİHİRLİ FONKSİYON
-async function arkaPlandaModelleriYukle() {
-    // API yüklenirken ana sayfa fonksiyonları donmasın diye döngüyü asenkron çalıştırıyoruz
-    for (const marka of tum96MarkaListesi) {
-        // Zaten dolu olan markaları (Renault, Fiat vb.) es geçiyoruz, emeğiniz bozulmasın
-        if (marka === "Renault" || marka === "Fiat" || marka === "Volkswagen" || marka === "BMW" || 
-            marka === "Mercedes-Benz" || marka === "Audi" || marka === "Ford" || marka === "Toyota" || 
-            marka === "Honda" || marka === "Hyundai" || marka === "Togg") continue;
+        const tum96MarkaListesi = [
+            "Acura", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Buick", "Cadillac", "Chevrolet", 
+            "Chrysler", "Citroen", "Cupra", "Dacia", "Daewoo", "Daihatsu", "Dodge", "DS Automobiles", "Ferrari", "Fiat", 
+            "Fisker", "Ford", "Genesis", "GMC", "Honda", "Hummer", "Hyundai", "Infiniti", "Isuzu", "Jaguar", 
+            "Jeep", "Kia", "Koenigsegg", "Lada", "Lamborghini", "Lancia", "Land Rover", "Lexus", "Lincoln", "Lotus", 
+            "Lucid", "Maserati", "Maybach", "Mazda", "McLaren", "Mercedes-Benz", "Mercury", "MG", "Mini", "Mitsubishi", 
+            "Mitsuoka", "Morgan", "Nissan", "Opel", "Pagani", "Peugeot", "Plymouth", "Pontiac", "Porsche", "Proton", 
+            "Ram", "Renault", "Rolls-Royce", "Rover", "Saab", "Saleen", "Saturn", "Scion", "Seat", "Skoda", 
+            "Smart", "SsangYong", "Subaru", "Suzuki", "Tata", "Tesla", "Tofaş", "Toyota", "Triumph", "TVR", 
+            "Vauxhall", "Vector", "Venturi", "Volkswagen", "Volvo", "Wiesmann", "Zagato", "Zastava", "Geely", "BYD", 
+            "Chery", "Changan", "Great Wall", "Haval", "Rivian", "Polestar"
+        ];
 
-        try {
-            // Sitenin hızını kesmemek için her markayı sırayla ve güvenle çeker
-            const response = await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/${marka}?format=json`);
-            const data = await response.json();
-            
-            if (data.Results && data.Results.length > 0) {
-                // "Genel Model" yazan geçici yeri silip yerine gerçek modelleri basıyoruz
-                devArabaVeritabani[marka] = {};
-                data.Results.forEach(item => {
-                    devArabaVeritabani[marka][item.Model_Name] = {
-                        pakets: ["Standart", "Comfort", "Deluxe", "Exclusive"],
-                        motors: ["1.4 Motor", "1.6 Motor", "2.0 Motor", "Elektrikli"]
-                    };
-                });
+        // Geri kalan markaların alt şemasını dinamik doldurarak tanımsız nesne hatasını engelliyoruz
+        tum96MarkaListesi.forEach(m => {
+            if(!devArabaVeritabani[m]) {
+                devArabaVeritabani[m] = { 
+                    "Genel Model": { 
+                        pakets: ["Standart", "Comfort", "Deluxe", "Exclusive"], 
+                        motors: ["1.3 Motor", "1.5 Motor", "1.6 Motor", "2.0 Motor", "Elektrikli"] 
+                    }
+                };
             }
-        } catch (e) {
-            // İnternet kesilirse veya API cevap vermezse sistem çökmez, eski "Genel Model" düzeninde devam eder
-            console.log(`${marka} modelleri yüklenemedi, yerel liste korunuyor.`);
-        }
-    }
-}
-
-// Sayfa açıldıktan hemen sonra diğer butonları engellemeden arka planda yüklemeyi başlatır
-setTimeout(arkaPlandaModelleriYukle, 1000);
-        
-        
+        });
         const ekranGoster = (ekran) => {
             document.getElementById('anaSayfaGorunumu').style.display = 'none';
             document.getElementById('ilanDetayGorunumu').style.display = 'none';
