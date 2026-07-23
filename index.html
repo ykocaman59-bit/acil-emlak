@@ -535,11 +535,11 @@ const tum96MarkaListesi = [
     "Chery", "Changan", "Great Wall", "Haval", "Rivian", "Polestar"
 ];
 
-// Boş markaları başlangıçta "Yükleniyor..." şemasıyla dolduruyoruz ki formlar hata vermesin
+// ÖNCE BOŞ MARKALARI KRİTİK HATA VERMEMESİ İÇİN GEÇİCİ DOLDURUYORUZ (GİRİŞ VE DİĞER BUTONLAR BOZULMASIN DİYE)
 tum96MarkaListesi.forEach(m => {
     if(!devArabaVeritabani[m]) {
         devArabaVeritabani[m] = { 
-            "Modeller Yükleniyor...": { 
+            "Genel Model": { 
                 pakets: ["Standart", "Comfort", "Deluxe", "Exclusive"], 
                 motors: ["1.3 Motor", "1.5 Motor", "1.6 Motor", "2.0 Motor", "Elektrikli"] 
             }
@@ -547,50 +547,40 @@ tum96MarkaListesi.forEach(m => {
     }
 });
 
-// 2. BOZULAN SİSTEMİ TAMİR EDEN VE MODELLERİ DİNAMİKLEŞTİREN AKILLI FONKSİYON
-// Sizin mevcut marka select kutunuzun id'sine göre (Örn: 'marka', 'arabaMarka' veya 'markaSelect') tetiklenir.
-async function markaSecildigindeModelleriGuncelle(secilenMarka, modelSelectElementId) {
-    const modelSelect = document.getElementById(modelSelectElementId);
-    if (!modelSelect) return;
+// SİZİN KODUNUZU ASLA ENGELLEMEYEN VE ARKA PLANDA SESSİZCE MODELLERİ ÇEKEN SİHİRLİ FONKSİYON
+async function arkaPlandaModelleriYukle() {
+    // API yüklenirken ana sayfa fonksiyonları donmasın diye döngüyü asenkron çalıştırıyoruz
+    for (const marka of tum96MarkaListesi) {
+        // Zaten dolu olan markaları (Renault, Fiat vb.) es geçiyoruz, emeğiniz bozulmasın
+        if (marka === "Renault" || marka === "Fiat" || marka === "Volkswagen" || marka === "BMW" || 
+            marka === "Mercedes-Benz" || marka === "Audi" || marka === "Ford" || marka === "Toyota" || 
+            marka === "Honda" || marka === "Hyundai" || marka === "Togg") continue;
 
-    // Eğer seçilen marka bizim elle doldurmadığımız boş markalardan biriyse, arkada hemen API'den gerçek modelleri çekiyoruz
-    if (secilenMarka && (!devArabaVeritabani[secilenMarka] || devArabaVeritabani[secilenMarka]["Modeller Yükleniyor..."])) {
         try {
-            const response = await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/${secilenMarka}?format=json`);
+            // Sitenin hızını kesmemek için her markayı sırayla ve güvenle çeker
+            const response = await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/${marka}?format=json`);
             const data = await response.json();
             
             if (data.Results && data.Results.length > 0) {
-                // Yeni gelen gerçek modelleri hafızaya kaydediyoruz
-                devArabaVeritabani[secilenMarka] = {};
+                // "Genel Model" yazan geçici yeri silip yerine gerçek modelleri basıyoruz
+                devArabaVeritabani[marka] = {};
                 data.Results.forEach(item => {
-                    devArabaVeritabani[secilenMarka][item.Model_Name] = {
+                    devArabaVeritabani[marka][item.Model_Name] = {
                         pakets: ["Standart", "Comfort", "Deluxe", "Exclusive"],
                         motors: ["1.4 Motor", "1.6 Motor", "2.0 Motor", "Elektrikli"]
                     };
                 });
-                
-                // Formun yapısı bozulmasın diye orjinal tetikleyici fonksiyonunuzu (Örn: modelDoldur()) yeniden çalıştırın
-                // (Eğer fonksiyonunuzun adı farklıysa aşağıya ekleyebilirsiniz)
-                if (typeof arabaModelleriniListele === "function") arabaModelleriniListele();
             }
-        } catch (error) {
-            console.error("Modeller API'den çekilemedi, yerel şemaya dönülüyor:", error);
+        } catch (e) {
+            // İnternet kesilirse veya API cevap vermezse sistem çökmez, eski "Genel Model" düzeninde devam eder
+            console.log(`${marka} modelleri yüklenemedi, yerel liste korunuyor.`);
         }
     }
 }
 
-// 3. EVENT LISTENER ENTEGRASYONU
-// HTML'deki marka seçici elementinizin ID'sini bulun (Aşağıda örnek olarak 'arabaMarka' verilmiştir)
-// Kendi kodunuza göre bu ID'leri güncelleyebilirsiniz.
-document.addEventListener("DOMContentLoaded", () => {
-    const markaKutusu = document.getElementById("arabaMarka") || document.getElementById("markaSelect") || document.getElementById("marka");
-    
-    if (markaKutusu) {
-        markaKutusu.addEventListener("change", function() {
-            markaSecildigindeModelleriGuncelle(this.value, "arabaModel" || "modelSelect" || "model");
-        });
-    }
-});
+// Sayfa açıldıktan hemen sonra diğer butonları engellemeden arka planda yüklemeyi başlatır
+setTimeout(arkaPlandaModelleriYukle, 1000);
+        
         
         const ekranGoster = (ekran) => {
             document.getElementById('anaSayfaGorunumu').style.display = 'none';
